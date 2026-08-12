@@ -165,7 +165,7 @@ function Inicio() {
         </p>
         <Link
           to="/parceria"
-          className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+          className="btn-primary mt-4"
         >
           Conheça a Auto Limpeza Pro <ArrowRight className="size-4" aria-hidden />
         </Link>

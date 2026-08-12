@@ -1,3 +1,10 @@
+# Isolamento
+
+Este repositório é o **Guia do Higienizador**, um produto independente.
+Não misture código, git, `.env` ou arquivos com Auto Limpeza Pro, Agenda Aqui
+Connect ou qualquer outro projeto. A identidade visual (paleta azul/ciano) é
+recriada neste repo; não copie código de outros workspaces.
+
 <!-- LOVABLE:BEGIN -->
 > [!IMPORTANT]
 > This project is connected to [Lovable](https://lovable.dev). Avoid rewriting

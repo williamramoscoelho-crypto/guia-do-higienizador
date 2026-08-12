@@ -1,0 +1,29 @@
+---
+description: Isolamento total do Guia do Higienizador em relação a qualquer outro projeto
+alwaysApply: true
+---
+
+# Projeto independente — nunca misturar
+
+Este repositório é o **Guia do Higienizador**. É um produto, git e workspace totalmente independentes.
+
+## Obrigatório
+
+- Trabalhe **somente** em `C:\Users\Administrator\Projects\guia-do-higienizador`.
+- Remote único: `https://github.com/williamramoscoelho-crypto/guia-do-higienizador.git`.
+- Não copie, importe, mescle, rebaseie ou referencie código, pastas, `.env`, banco, rotas, componentes ou commits de outros projetos (incluindo Auto Limpeza Pro, Agenda Aqui Connect e qualquer outro).
+- Não abra este app em workspace multi-root junto com outro projeto.
+- Não compartilhe `package.json`, PHP, Laravel, CMS, agendamento, login ou APIs de outro sistema.
+
+## Identidade visual
+
+Pode **recriar** a paleta dark tech (azul + ciano, Plus Jakarta Sans, radius 1rem) por tokens CSS **neste** projeto. Isso não autoriza copiar arquivos, componentes ou lógica de outro repositório.
+
+## Parceria editorial
+
+Mencionar Auto Limpeza Pro como empresa parceira no conteúdo é permitido. Código, git e deploy continuam separados.
+
+```
+❌ BAD: copiar src/ de Auto Limpeza Pro, abrir os dois repos juntos, commitar arquivo de outro projeto aqui
+✅ GOOD: editar só este repo; tokens de cor definidos em src/styles.css deste app
+```

@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ChevronRight, Star, TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFavoritos, registrarRecente } from "@/lib/local";
 import { cn } from "@/lib/utils";
 
@@ -178,6 +178,47 @@ export function RegistrarVisita({ nome, href, tipo }: { nome: string; href: stri
     registrarRecente({ nome, href, tipo });
   }, [nome, href, tipo]);
   return null;
+}
+
+export function CatalogList({
+  itens,
+  placeholder,
+}: {
+  itens: { key: string; to: string; params?: Record<string, string>; emoji?: string; titulo: string; descricao?: string }[];
+  placeholder: string;
+}) {
+  const [q, setQ] = useState("");
+  const filtrados = itens.filter((i) =>
+    `${i.titulo} ${i.descricao ?? ""}`.toLowerCase().includes(q.toLowerCase()),
+  );
+
+  return (
+    <>
+      <label className="sr-only" htmlFor="filtro-catalogo">
+        {placeholder}
+      </label>
+      <input
+        id="filtro-catalogo"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder={placeholder}
+        className="mt-4 min-h-12 w-full rounded-2xl border border-border bg-card px-4 text-sm outline-none focus:border-primary"
+      />
+      <ul className="mt-4 grid gap-2">
+        {filtrados.map((i) => (
+          <li key={i.key}>
+            <ItemLink
+              to={i.to}
+              titulo={i.titulo}
+              {...(i.params ? { params: i.params } : {})}
+              {...(i.emoji ? { emoji: i.emoji } : {})}
+              {...(i.descricao ? { descricao: i.descricao } : {})}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }
 
 export function Chip({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "warn" | "ok" }) {

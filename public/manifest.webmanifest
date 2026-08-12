@@ -1,0 +1,17 @@
+{
+  "name": "Guia do Higienizador",
+  "short_name": "Guia Higienizador",
+  "description": "Manual digital de consulta para higienização profissional de estofados.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A1620",
+  "theme_color": "#1EB8F5",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
