@@ -55,12 +55,20 @@ function Sobre() {
       </Section>
 
       <Section>
-        <Link
-          to="/parceria"
-          className="inline-flex min-h-12 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
-        >
-          Conheça a parceria com a Auto Limpeza Pro
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            to="/parceria"
+            className="inline-flex min-h-12 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+          >
+            Conheça a parceria com a Auto Limpeza Pro
+          </Link>
+          <Link
+            to="/transparencia"
+            className="inline-flex min-h-12 items-center rounded-full border border-border px-5 text-sm font-semibold"
+          >
+            Transparência
+          </Link>
+        </div>
       </Section>
     </div>
   );

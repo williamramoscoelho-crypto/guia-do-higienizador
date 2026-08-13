@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { marcas, criteriosCompra } from "@/data/marcas";
 import { perfilCompra } from "@/data/conteudo";
 import { Aviso, Breadcrumbs, InfoCard, ItemLink, PageHeader, Section } from "@/components/app/ui";
@@ -62,7 +62,17 @@ function OndeComprar() {
         </ul>
       </Section>
 
+      <Section>
+        <Link
+          to="/onde-comprar/comparar"
+          className="inline-flex min-h-12 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+        >
+          Comparar marcas lado a lado
+        </Link>
+      </Section>
+
       <Section titulo="Marcas do setor">
+
         <ul className="grid gap-2">
           {marcas.map((m) => (
             <li key={m.slug}>
