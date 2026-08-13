@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getEstofado } from "@/data/estofados";
+import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
 import {
   Aviso,
   Breadcrumbs,
@@ -83,6 +84,7 @@ function Detalhe() {
           <BulletList itens={e.posLimpeza} />
         </InfoCard>
       </Section>
+      <ConhecimentoVivo tema={e.nome} />
     </div>
   );
 }

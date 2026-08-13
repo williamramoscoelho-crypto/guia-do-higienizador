@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getTecido } from "@/data/tecidos";
+import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
 import {
   Aviso,
   Breadcrumbs,
@@ -178,6 +179,8 @@ function Detalhe() {
           </div>
         </Section>
       ) : null}
+
+      <ConhecimentoVivo tema={t.nome} />
     </div>
   );
 }

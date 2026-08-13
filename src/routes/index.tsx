@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Search, ArrowRight, Clock } from "lucide-react";
 import { useState } from "react";
 import { useRecentes } from "@/lib/local";
+import { SITE_ORIGIN, siteUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,9 +18,9 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Conhecimento para quem limpa. Experiência de quem faz. Manual de bolso do higienizador profissional.",
       },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: siteUrl("/") },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: siteUrl("/") }],
     scripts: [
       {
         type: "application/ld+json",
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Guia do Higienizador",
+          url: SITE_ORIGIN,
           description: "Manual digital de consulta para profissionais de higienização de estofados e estética automotiva.",
         }),
       },
@@ -38,14 +40,16 @@ export const Route = createFileRoute("/")({
 const atalhos = [
   { to: "/tecidos", emoji: "🧵", label: "Tecidos" },
   { to: "/produtos", emoji: "🧪", label: "Produtos" },
-  { to: "/fichas", emoji: "📄", label: "Fichas" },
   { to: "/manchas", emoji: "🟤", label: "Manchas" },
   { to: "/estofados", emoji: "🛋️", label: "Estofados" },
-  { to: "/equipamentos", emoji: "🧰", label: "Equipamentos" },
-  { to: "/cuidados", emoji: "⚠️", label: "Cuidados" },
   { to: "/automotiva", emoji: "🚗", label: "Automotiva" },
+  { to: "/equipamentos", emoji: "🧰", label: "Equipamentos" },
+  { to: "/comecar", emoji: "🚀", label: "Começar" },
+  { to: "/comunidade", emoji: "👥", label: "Comunidade" },
+  { to: "/fichas", emoji: "📄", label: "Fichas" },
   { to: "/onde-comprar", emoji: "🏪", label: "Onde comprar" },
   { to: "/aprender", emoji: "📚", label: "Aprender" },
+  { to: "/cuidados", emoji: "⚠️", label: "Cuidados" },
 ] as const;
 
 const ferramentas = [
@@ -65,6 +69,9 @@ function Inicio() {
       <header className="surface-hero -mx-4 rounded-b-[2rem] px-4 pb-8 pt-8">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-70">Guia do Higienizador</p>
         <h1 className="mt-2 text-3xl font-bold leading-tight">Olá, Higienizador 👋</h1>
+        <p className="mt-2 text-sm leading-relaxed opacity-90">
+          Aprenda, consulte, compartilhe experiências e evolua junto com outros profissionais.
+        </p>
         <p className="mt-1 text-sm opacity-85">Do que você precisa hoje?</p>
 
         <form
@@ -83,7 +90,7 @@ function Inicio() {
               id="busca-home"
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Buscar tecido, mancha, produto…"
+              placeholder="Buscar tecido, produto, mancha ou equipamento…"
               className="min-h-14 w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground"
             />
           </div>
@@ -92,6 +99,27 @@ function Inicio() {
         <p className="mt-4 text-xs font-medium opacity-75">
           “Conhecimento para quem limpa. Experiência de quem faz.”
         </p>
+        <p className="mt-1 text-xs opacity-70">Do primeiro atendimento à experiência profissional.</p>
+
+        <div className="mt-5 grid gap-2">
+          <Link to="/guia" className="btn-primary">
+            Explorar conteúdos <ArrowRight className="size-4" aria-hidden />
+          </Link>
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              to="/comecar"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white/10 px-4 text-sm font-semibold"
+            >
+              Quero começar
+            </Link>
+            <Link
+              to="/comunidade"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white/10 px-4 text-sm font-semibold"
+            >
+              Comunidade
+            </Link>
+          </div>
+        </div>
       </header>
 
       <section className="mt-7">
@@ -178,6 +206,9 @@ function Inicio() {
         </Link>
         <Link to="/sobre" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
           📖 Sobre o projeto
+        </Link>
+        <Link to="/comunidade" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
+          👥 Comunidade
         </Link>
         <Link to="/transparencia" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
           🔎 Transparência

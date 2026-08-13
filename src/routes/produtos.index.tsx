@@ -42,6 +42,10 @@ function Lista() {
         <Link to="/fichas" className="text-primary underline">
           fichas extraídas dos fabricantes
         </Link>
+        . Para comparar categorias, use o{" "}
+        <Link to="/produtos/comparar" className="text-primary underline">
+          comparador de produtos
+        </Link>
         .
       </p>
       <input

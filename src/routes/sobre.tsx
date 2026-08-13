@@ -60,6 +60,10 @@ function Sobre() {
             <Link to="/parceria" className="text-primary underline">
               Saiba mais sobre a parceria editorial
             </Link>
+            . A comunidade ao vivo ainda não está aberta — veja o{" "}
+            <Link to="/comunidade" className="text-primary underline">
+              código de conduta
+            </Link>
             .
           </p>
         </InfoCard>

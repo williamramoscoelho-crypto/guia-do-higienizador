@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { experienciaCampo } from "@/data/conteudo";
-import { Breadcrumbs, BulletList, InfoCard, PageHeader, Section } from "@/components/app/ui";
+import { Breadcrumbs, BulletList, InfoCard, ItemLink, PageHeader, Section } from "@/components/app/ui";
 
 export const Route = createFileRoute("/aprender")({
   head: () => ({
@@ -27,6 +27,14 @@ function Aprender() {
         eyebrow="Experiência de campo"
         descricao="Conteúdo prático de atendimento. Não substitui treinamento presencial nem a ficha do fabricante."
       />
+      <Section>
+        <ItemLink
+          to="/comunidade"
+          emoji="👥"
+          titulo="Código da comunidade"
+          descricao="Regras para quando o feed e as perguntas forem liberados"
+        />
+      </Section>
       <Section>
         <ul className="grid gap-3">
           {experienciaCampo.map((e) => (

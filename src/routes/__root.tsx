@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/app/BottomNav";
+import { SITE_ORIGIN } from "@/lib/site";
 
 function NotFoundComponent() {
   return (
@@ -83,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-title", content: "Guia do Higienizador" },
       { property: "og:site_name", content: "Guia do Higienizador" },
+      { property: "og:url", content: SITE_ORIGIN },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

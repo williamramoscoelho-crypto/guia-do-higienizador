@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getProduto } from "@/data/produtos";
+import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
 import {
   Aviso,
   Breadcrumbs,
@@ -88,6 +89,7 @@ function Detalhe() {
       <Aviso titulo="Diluição">
         Nunca invente concentração. Siga sempre a orientação do fabricante e a ficha técnica do lote que você está usando.
       </Aviso>
+      <ConhecimentoVivo tema={p.nome} />
     </div>
   );
 }

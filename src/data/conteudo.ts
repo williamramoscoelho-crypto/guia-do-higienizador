@@ -41,6 +41,9 @@ export const checklistItens = [
   "Realizar teste de produto",
   "Definir método de limpeza",
   "Explicar limitações ao cliente",
+  "Executar o serviço",
+  "Fazer inspeção final",
+  "Orientar o cliente sobre secagem e cuidados",
 ];
 
 export const perguntasIdentificacao: {

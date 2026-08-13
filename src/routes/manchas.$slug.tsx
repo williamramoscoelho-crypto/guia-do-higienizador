@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getMancha } from "@/data/manchas";
+import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
 import {
   Aviso,
   Breadcrumbs,
@@ -87,6 +88,7 @@ function Detalhe() {
       <Section titulo="Limitações">
         <Aviso titulo="Não prometa remoção total">{m.limitacoes}</Aviso>
       </Section>
+      <ConhecimentoVivo tema={m.nome} />
     </div>
   );
 }
