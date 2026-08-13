@@ -10,11 +10,48 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AprenderRouteImport } from './routes/aprender'
+import { Route as AutomotivaRouteImport } from './routes/automotiva'
 import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as ChecklistRouteImport } from './routes/checklist'
+import { Route as CuidadosRouteImport } from './routes/cuidados'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as FluxoRouteImport } from './routes/fluxo'
+import { Route as GlossarioRouteImport } from './routes/glossario'
+import { Route as GuiaRouteImport } from './routes/guia'
+import { Route as IdentificarRouteImport } from './routes/identificar'
+import { Route as ParceriaRouteImport } from './routes/parceria'
+import { Route as PhRouteImport } from './routes/ph'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
+import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
+import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
+import { Route as EstofadosSlugRouteImport } from './routes/estofados.$slug'
+import { Route as FerramentasIndexRouteImport } from './routes/ferramentas.index'
+import { Route as FerramentasDiluicaoRouteImport } from './routes/ferramentas.diluicao'
+import { Route as FerramentasPrecificacaoRouteImport } from './routes/ferramentas.precificacao'
+import { Route as ManchasIndexRouteImport } from './routes/manchas.index'
+import { Route as ManchasSlugRouteImport } from './routes/manchas.$slug'
+import { Route as OndeComprarIndexRouteImport } from './routes/onde-comprar.index'
+import { Route as OndeComprarSlugRouteImport } from './routes/onde-comprar.$slug'
+import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
+import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
+import { Route as TecidosIndexRouteImport } from './routes/tecidos.index'
+import { Route as TecidosSlugRouteImport } from './routes/tecidos.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AprenderRoute = AprenderRouteImport.update({
+  id: '/aprender',
+  path: '/aprender',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutomotivaRoute = AutomotivaRouteImport.update({
+  id: '/automotiva',
+  path: '/automotiva',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuscarRoute = BuscarRouteImport.update({
@@ -22,31 +59,352 @@ const BuscarRoute = BuscarRouteImport.update({
   path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChecklistRoute = ChecklistRouteImport.update({
+  id: '/checklist',
+  path: '/checklist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CuidadosRoute = CuidadosRouteImport.update({
+  id: '/cuidados',
+  path: '/cuidados',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FluxoRoute = FluxoRouteImport.update({
+  id: '/fluxo',
+  path: '/fluxo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlossarioRoute = GlossarioRouteImport.update({
+  id: '/glossario',
+  path: '/glossario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuiaRoute = GuiaRouteImport.update({
+  id: '/guia',
+  path: '/guia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IdentificarRoute = IdentificarRouteImport.update({
+  id: '/identificar',
+  path: '/identificar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParceriaRoute = ParceriaRouteImport.update({
+  id: '/parceria',
+  path: '/parceria',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhRoute = PhRouteImport.update({
+  id: '/ph',
+  path: '/ph',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
+  id: '/equipamentos/',
+  path: '/equipamentos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipamentosSlugRoute = EquipamentosSlugRouteImport.update({
+  id: '/equipamentos/$slug',
+  path: '/equipamentos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstofadosIndexRoute = EstofadosIndexRouteImport.update({
+  id: '/estofados/',
+  path: '/estofados/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstofadosSlugRoute = EstofadosSlugRouteImport.update({
+  id: '/estofados/$slug',
+  path: '/estofados/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FerramentasIndexRoute = FerramentasIndexRouteImport.update({
+  id: '/ferramentas/',
+  path: '/ferramentas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FerramentasDiluicaoRoute = FerramentasDiluicaoRouteImport.update({
+  id: '/ferramentas/diluicao',
+  path: '/ferramentas/diluicao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FerramentasPrecificacaoRoute = FerramentasPrecificacaoRouteImport.update({
+  id: '/ferramentas/precificacao',
+  path: '/ferramentas/precificacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManchasIndexRoute = ManchasIndexRouteImport.update({
+  id: '/manchas/',
+  path: '/manchas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManchasSlugRoute = ManchasSlugRouteImport.update({
+  id: '/manchas/$slug',
+  path: '/manchas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OndeComprarIndexRoute = OndeComprarIndexRouteImport.update({
+  id: '/onde-comprar/',
+  path: '/onde-comprar/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OndeComprarSlugRoute = OndeComprarSlugRouteImport.update({
+  id: '/onde-comprar/$slug',
+  path: '/onde-comprar/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
+  id: '/produtos/',
+  path: '/produtos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
+  id: '/produtos/$slug',
+  path: '/produtos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TecidosIndexRoute = TecidosIndexRouteImport.update({
+  id: '/tecidos/',
+  path: '/tecidos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TecidosSlugRoute = TecidosSlugRouteImport.update({
+  id: '/tecidos/$slug',
+  path: '/tecidos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aprender': typeof AprenderRoute
+  '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
+  '/checklist': typeof ChecklistRoute
+  '/cuidados': typeof CuidadosRoute
+  '/favoritos': typeof FavoritosRoute
+  '/fluxo': typeof FluxoRoute
+  '/glossario': typeof GlossarioRoute
+  '/guia': typeof GuiaRoute
+  '/identificar': typeof IdentificarRoute
+  '/parceria': typeof ParceriaRoute
+  '/ph': typeof PhRoute
+  '/sobre': typeof SobreRoute
+  '/equipamentos/$slug': typeof EquipamentosSlugRoute
+  '/estofados/$slug': typeof EstofadosSlugRoute
+  '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
+  '/ferramentas/precificacao': typeof FerramentasPrecificacaoRoute
+  '/manchas/$slug': typeof ManchasSlugRoute
+  '/onde-comprar/$slug': typeof OndeComprarSlugRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
+  '/tecidos/$slug': typeof TecidosSlugRoute
+  '/equipamentos/': typeof EquipamentosIndexRoute
+  '/estofados/': typeof EstofadosIndexRoute
+  '/ferramentas/': typeof FerramentasIndexRoute
+  '/manchas/': typeof ManchasIndexRoute
+  '/onde-comprar/': typeof OndeComprarIndexRoute
+  '/produtos/': typeof ProdutosIndexRoute
+  '/tecidos/': typeof TecidosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aprender': typeof AprenderRoute
+  '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
+  '/checklist': typeof ChecklistRoute
+  '/cuidados': typeof CuidadosRoute
+  '/favoritos': typeof FavoritosRoute
+  '/fluxo': typeof FluxoRoute
+  '/glossario': typeof GlossarioRoute
+  '/guia': typeof GuiaRoute
+  '/identificar': typeof IdentificarRoute
+  '/parceria': typeof ParceriaRoute
+  '/ph': typeof PhRoute
+  '/sobre': typeof SobreRoute
+  '/equipamentos/$slug': typeof EquipamentosSlugRoute
+  '/estofados/$slug': typeof EstofadosSlugRoute
+  '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
+  '/ferramentas/precificacao': typeof FerramentasPrecificacaoRoute
+  '/manchas/$slug': typeof ManchasSlugRoute
+  '/onde-comprar/$slug': typeof OndeComprarSlugRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
+  '/tecidos/$slug': typeof TecidosSlugRoute
+  '/equipamentos': typeof EquipamentosIndexRoute
+  '/estofados': typeof EstofadosIndexRoute
+  '/ferramentas': typeof FerramentasIndexRoute
+  '/manchas': typeof ManchasIndexRoute
+  '/onde-comprar': typeof OndeComprarIndexRoute
+  '/produtos': typeof ProdutosIndexRoute
+  '/tecidos': typeof TecidosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aprender': typeof AprenderRoute
+  '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
+  '/checklist': typeof ChecklistRoute
+  '/cuidados': typeof CuidadosRoute
+  '/favoritos': typeof FavoritosRoute
+  '/fluxo': typeof FluxoRoute
+  '/glossario': typeof GlossarioRoute
+  '/guia': typeof GuiaRoute
+  '/identificar': typeof IdentificarRoute
+  '/parceria': typeof ParceriaRoute
+  '/ph': typeof PhRoute
+  '/sobre': typeof SobreRoute
+  '/equipamentos/$slug': typeof EquipamentosSlugRoute
+  '/estofados/$slug': typeof EstofadosSlugRoute
+  '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
+  '/ferramentas/precificacao': typeof FerramentasPrecificacaoRoute
+  '/manchas/$slug': typeof ManchasSlugRoute
+  '/onde-comprar/$slug': typeof OndeComprarSlugRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
+  '/tecidos/$slug': typeof TecidosSlugRoute
+  '/equipamentos/': typeof EquipamentosIndexRoute
+  '/estofados/': typeof EstofadosIndexRoute
+  '/ferramentas/': typeof FerramentasIndexRoute
+  '/manchas/': typeof ManchasIndexRoute
+  '/onde-comprar/': typeof OndeComprarIndexRoute
+  '/produtos/': typeof ProdutosIndexRoute
+  '/tecidos/': typeof TecidosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/buscar'
+  fullPaths:
+    | '/'
+    | '/aprender'
+    | '/automotiva'
+    | '/buscar'
+    | '/checklist'
+    | '/cuidados'
+    | '/favoritos'
+    | '/fluxo'
+    | '/glossario'
+    | '/guia'
+    | '/identificar'
+    | '/parceria'
+    | '/ph'
+    | '/sobre'
+    | '/equipamentos/$slug'
+    | '/estofados/$slug'
+    | '/ferramentas/diluicao'
+    | '/ferramentas/precificacao'
+    | '/manchas/$slug'
+    | '/onde-comprar/$slug'
+    | '/produtos/$slug'
+    | '/tecidos/$slug'
+    | '/equipamentos/'
+    | '/estofados/'
+    | '/ferramentas/'
+    | '/manchas/'
+    | '/onde-comprar/'
+    | '/produtos/'
+    | '/tecidos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/buscar'
-  id: '__root__' | '/' | '/buscar'
+  to:
+    | '/'
+    | '/aprender'
+    | '/automotiva'
+    | '/buscar'
+    | '/checklist'
+    | '/cuidados'
+    | '/favoritos'
+    | '/fluxo'
+    | '/glossario'
+    | '/guia'
+    | '/identificar'
+    | '/parceria'
+    | '/ph'
+    | '/sobre'
+    | '/equipamentos/$slug'
+    | '/estofados/$slug'
+    | '/ferramentas/diluicao'
+    | '/ferramentas/precificacao'
+    | '/manchas/$slug'
+    | '/onde-comprar/$slug'
+    | '/produtos/$slug'
+    | '/tecidos/$slug'
+    | '/equipamentos'
+    | '/estofados'
+    | '/ferramentas'
+    | '/manchas'
+    | '/onde-comprar'
+    | '/produtos'
+    | '/tecidos'
+  id:
+    | '__root__'
+    | '/'
+    | '/aprender'
+    | '/automotiva'
+    | '/buscar'
+    | '/checklist'
+    | '/cuidados'
+    | '/favoritos'
+    | '/fluxo'
+    | '/glossario'
+    | '/guia'
+    | '/identificar'
+    | '/parceria'
+    | '/ph'
+    | '/sobre'
+    | '/equipamentos/$slug'
+    | '/estofados/$slug'
+    | '/ferramentas/diluicao'
+    | '/ferramentas/precificacao'
+    | '/manchas/$slug'
+    | '/onde-comprar/$slug'
+    | '/produtos/$slug'
+    | '/tecidos/$slug'
+    | '/equipamentos/'
+    | '/estofados/'
+    | '/ferramentas/'
+    | '/manchas/'
+    | '/onde-comprar/'
+    | '/produtos/'
+    | '/tecidos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AprenderRoute: typeof AprenderRoute
+  AutomotivaRoute: typeof AutomotivaRoute
   BuscarRoute: typeof BuscarRoute
+  ChecklistRoute: typeof ChecklistRoute
+  CuidadosRoute: typeof CuidadosRoute
+  FavoritosRoute: typeof FavoritosRoute
+  FluxoRoute: typeof FluxoRoute
+  GlossarioRoute: typeof GlossarioRoute
+  GuiaRoute: typeof GuiaRoute
+  IdentificarRoute: typeof IdentificarRoute
+  ParceriaRoute: typeof ParceriaRoute
+  PhRoute: typeof PhRoute
+  SobreRoute: typeof SobreRoute
+  EquipamentosSlugRoute: typeof EquipamentosSlugRoute
+  EstofadosSlugRoute: typeof EstofadosSlugRoute
+  FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
+  FerramentasPrecificacaoRoute: typeof FerramentasPrecificacaoRoute
+  ManchasSlugRoute: typeof ManchasSlugRoute
+  OndeComprarSlugRoute: typeof OndeComprarSlugRoute
+  ProdutosSlugRoute: typeof ProdutosSlugRoute
+  TecidosSlugRoute: typeof TecidosSlugRoute
+  EquipamentosIndexRoute: typeof EquipamentosIndexRoute
+  EstofadosIndexRoute: typeof EstofadosIndexRoute
+  FerramentasIndexRoute: typeof FerramentasIndexRoute
+  ManchasIndexRoute: typeof ManchasIndexRoute
+  OndeComprarIndexRoute: typeof OndeComprarIndexRoute
+  ProdutosIndexRoute: typeof ProdutosIndexRoute
+  TecidosIndexRoute: typeof TecidosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +416,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aprender': {
+      id: '/aprender'
+      path: '/aprender'
+      fullPath: '/aprender'
+      preLoaderRoute: typeof AprenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/automotiva': {
+      id: '/automotiva'
+      path: '/automotiva'
+      fullPath: '/automotiva'
+      preLoaderRoute: typeof AutomotivaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/buscar': {
       id: '/buscar'
       path: '/buscar'
@@ -65,12 +437,214 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checklist': {
+      id: '/checklist'
+      path: '/checklist'
+      fullPath: '/checklist'
+      preLoaderRoute: typeof ChecklistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cuidados': {
+      id: '/cuidados'
+      path: '/cuidados'
+      fullPath: '/cuidados'
+      preLoaderRoute: typeof CuidadosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fluxo': {
+      id: '/fluxo'
+      path: '/fluxo'
+      fullPath: '/fluxo'
+      preLoaderRoute: typeof FluxoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/glossario': {
+      id: '/glossario'
+      path: '/glossario'
+      fullPath: '/glossario'
+      preLoaderRoute: typeof GlossarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guia': {
+      id: '/guia'
+      path: '/guia'
+      fullPath: '/guia'
+      preLoaderRoute: typeof GuiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/identificar': {
+      id: '/identificar'
+      path: '/identificar'
+      fullPath: '/identificar'
+      preLoaderRoute: typeof IdentificarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parceria': {
+      id: '/parceria'
+      path: '/parceria'
+      fullPath: '/parceria'
+      preLoaderRoute: typeof ParceriaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ph': {
+      id: '/ph'
+      path: '/ph'
+      fullPath: '/ph'
+      preLoaderRoute: typeof PhRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipamentos/': {
+      id: '/equipamentos/'
+      path: '/equipamentos'
+      fullPath: '/equipamentos/'
+      preLoaderRoute: typeof EquipamentosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipamentos/$slug': {
+      id: '/equipamentos/$slug'
+      path: '/equipamentos/$slug'
+      fullPath: '/equipamentos/$slug'
+      preLoaderRoute: typeof EquipamentosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estofados/': {
+      id: '/estofados/'
+      path: '/estofados'
+      fullPath: '/estofados/'
+      preLoaderRoute: typeof EstofadosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estofados/$slug': {
+      id: '/estofados/$slug'
+      path: '/estofados/$slug'
+      fullPath: '/estofados/$slug'
+      preLoaderRoute: typeof EstofadosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ferramentas/': {
+      id: '/ferramentas/'
+      path: '/ferramentas'
+      fullPath: '/ferramentas/'
+      preLoaderRoute: typeof FerramentasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ferramentas/diluicao': {
+      id: '/ferramentas/diluicao'
+      path: '/ferramentas/diluicao'
+      fullPath: '/ferramentas/diluicao'
+      preLoaderRoute: typeof FerramentasDiluicaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ferramentas/precificacao': {
+      id: '/ferramentas/precificacao'
+      path: '/ferramentas/precificacao'
+      fullPath: '/ferramentas/precificacao'
+      preLoaderRoute: typeof FerramentasPrecificacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manchas/': {
+      id: '/manchas/'
+      path: '/manchas'
+      fullPath: '/manchas/'
+      preLoaderRoute: typeof ManchasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manchas/$slug': {
+      id: '/manchas/$slug'
+      path: '/manchas/$slug'
+      fullPath: '/manchas/$slug'
+      preLoaderRoute: typeof ManchasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onde-comprar/': {
+      id: '/onde-comprar/'
+      path: '/onde-comprar'
+      fullPath: '/onde-comprar/'
+      preLoaderRoute: typeof OndeComprarIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onde-comprar/$slug': {
+      id: '/onde-comprar/$slug'
+      path: '/onde-comprar/$slug'
+      fullPath: '/onde-comprar/$slug'
+      preLoaderRoute: typeof OndeComprarSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos/': {
+      id: '/produtos/'
+      path: '/produtos'
+      fullPath: '/produtos/'
+      preLoaderRoute: typeof ProdutosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos/$slug': {
+      id: '/produtos/$slug'
+      path: '/produtos/$slug'
+      fullPath: '/produtos/$slug'
+      preLoaderRoute: typeof ProdutosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tecidos/': {
+      id: '/tecidos/'
+      path: '/tecidos'
+      fullPath: '/tecidos/'
+      preLoaderRoute: typeof TecidosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tecidos/$slug': {
+      id: '/tecidos/$slug'
+      path: '/tecidos/$slug'
+      fullPath: '/tecidos/$slug'
+      preLoaderRoute: typeof TecidosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AprenderRoute: AprenderRoute,
+  AutomotivaRoute: AutomotivaRoute,
   BuscarRoute: BuscarRoute,
+  ChecklistRoute: ChecklistRoute,
+  CuidadosRoute: CuidadosRoute,
+  FavoritosRoute: FavoritosRoute,
+  FluxoRoute: FluxoRoute,
+  GlossarioRoute: GlossarioRoute,
+  GuiaRoute: GuiaRoute,
+  IdentificarRoute: IdentificarRoute,
+  ParceriaRoute: ParceriaRoute,
+  PhRoute: PhRoute,
+  SobreRoute: SobreRoute,
+  EquipamentosSlugRoute: EquipamentosSlugRoute,
+  EstofadosSlugRoute: EstofadosSlugRoute,
+  FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
+  FerramentasPrecificacaoRoute: FerramentasPrecificacaoRoute,
+  ManchasSlugRoute: ManchasSlugRoute,
+  OndeComprarSlugRoute: OndeComprarSlugRoute,
+  ProdutosSlugRoute: ProdutosSlugRoute,
+  TecidosSlugRoute: TecidosSlugRoute,
+  EquipamentosIndexRoute: EquipamentosIndexRoute,
+  EstofadosIndexRoute: EstofadosIndexRoute,
+  FerramentasIndexRoute: FerramentasIndexRoute,
+  ManchasIndexRoute: ManchasIndexRoute,
+  OndeComprarIndexRoute: OndeComprarIndexRoute,
+  ProdutosIndexRoute: ProdutosIndexRoute,
+  TecidosIndexRoute: TecidosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
