@@ -31,8 +31,16 @@ function Aprender() {
         <ItemLink
           to="/comunidade"
           emoji="👥"
+          titulo="Comunidade"
+          descricao="Feed, dicas e antes e depois de quem atende"
+        />
+      </Section>
+      <Section>
+        <ItemLink
+          to="/codigo-da-comunidade"
+          emoji="📜"
           titulo="Código da comunidade"
-          descricao="Regras para quando o feed e as perguntas forem liberados"
+          descricao="Regras de respeito, segurança e privacidade"
         />
       </Section>
       <Section>

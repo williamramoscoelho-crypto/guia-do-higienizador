@@ -10,12 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AprenderRouteImport } from './routes/aprender'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AutomotivaRouteImport } from './routes/automotiva'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as ComecarRouteImport } from './routes/comecar'
-import { Route as ComunidadeRouteImport } from './routes/comunidade'
+import { Route as CodigoDaComunidadeRouteImport } from './routes/codigo-da-comunidade'
 import { Route as CuidadosRouteImport } from './routes/cuidados'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as FluxoRouteImport } from './routes/fluxo'
@@ -24,8 +26,16 @@ import { Route as GuiaRouteImport } from './routes/guia'
 import { Route as IdentificarRouteImport } from './routes/identificar'
 import { Route as ParceriaRouteImport } from './routes/parceria'
 import { Route as PhRouteImport } from './routes/ph'
+import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as TransicoesRouteImport } from './routes/transicoes'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
+import { Route as AuthenticatedModeracaoRouteImport } from './routes/_authenticated/moderacao'
+import { Route as AuthenticatedNotificacoesRouteImport } from './routes/_authenticated/notificacoes'
+import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated/painel'
+import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
+import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
+import { Route as ComunidadeNovoRouteImport } from './routes/comunidade.novo'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -35,25 +45,41 @@ import { Route as FerramentasDiluicaoRouteImport } from './routes/ferramentas.di
 import { Route as FerramentasPrecificacaoRouteImport } from './routes/ferramentas.precificacao'
 import { Route as FichasIndexRouteImport } from './routes/fichas.index'
 import { Route as FichasSlugRouteImport } from './routes/fichas.$slug'
+import { Route as GruposIndexRouteImport } from './routes/grupos.index'
+import { Route as GruposSlugRouteImport } from './routes/grupos.$slug'
 import { Route as ManchasIndexRouteImport } from './routes/manchas.index'
 import { Route as ManchasSlugRouteImport } from './routes/manchas.$slug'
 import { Route as OndeComprarIndexRouteImport } from './routes/onde-comprar.index'
 import { Route as OndeComprarSlugRouteImport } from './routes/onde-comprar.$slug'
 import { Route as OndeComprarCompararRouteImport } from './routes/onde-comprar.comparar'
+import { Route as PHandleRouteImport } from './routes/p.$handle'
+import { Route as PerguntasIndexRouteImport } from './routes/perguntas.index'
+import { Route as PerguntasIdRouteImport } from './routes/perguntas.$id'
+import { Route as PerguntasNovaRouteImport } from './routes/perguntas.nova'
 import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
-import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 import { Route as ProdutosCompararRouteImport } from './routes/produtos.comparar'
+import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 import { Route as TecidosIndexRouteImport } from './routes/tecidos.index'
 import { Route as TecidosSlugRouteImport } from './routes/tecidos.$slug'
+import { Route as ComunidadePostIdRouteImport } from './routes/comunidade.post.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AprenderRoute = AprenderRouteImport.update({
   id: '/aprender',
   path: '/aprender',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutomotivaRoute = AutomotivaRouteImport.update({
@@ -71,14 +97,9 @@ const ChecklistRoute = ChecklistRouteImport.update({
   path: '/checklist',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ComecarRoute = ComecarRouteImport.update({
-  id: '/comecar',
-  path: '/comecar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComunidadeRoute = ComunidadeRouteImport.update({
-  id: '/comunidade',
-  path: '/comunidade',
+const CodigoDaComunidadeRoute = CodigoDaComunidadeRouteImport.update({
+  id: '/codigo-da-comunidade',
+  path: '/codigo-da-comunidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CuidadosRoute = CuidadosRouteImport.update({
@@ -121,14 +142,60 @@ const PhRoute = PhRouteImport.update({
   path: '/ph',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfissionaisRoute = ProfissionaisRouteImport.update({
+  id: '/profissionais',
+  path: '/profissionais',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransicoesRoute = TransicoesRouteImport.update({
+  id: '/transicoes',
+  path: '/transicoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TransparenciaRoute = TransparenciaRouteImport.update({
   id: '/transparencia',
   path: '/transparencia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComecarRoute = ComecarRouteImport.update({
+  id: '/comecar',
+  path: '/comecar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedModeracaoRoute = AuthenticatedModeracaoRouteImport.update({
+  id: '/moderacao',
+  path: '/moderacao',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNotificacoesRoute =
+  AuthenticatedNotificacoesRouteImport.update({
+    id: '/notificacoes',
+    path: '/notificacoes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedPainelRoute = AuthenticatedPainelRouteImport.update({
+  id: '/painel',
+  path: '/painel',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedPerfilRoute = AuthenticatedPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
+  id: '/comunidade/',
+  path: '/comunidade/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeNovoRoute = ComunidadeNovoRouteImport.update({
+  id: '/comunidade/novo',
+  path: '/comunidade/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
@@ -176,6 +243,16 @@ const FichasSlugRoute = FichasSlugRouteImport.update({
   path: '/fichas/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GruposIndexRoute = GruposIndexRouteImport.update({
+  id: '/grupos/',
+  path: '/grupos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GruposSlugRoute = GruposSlugRouteImport.update({
+  id: '/grupos/$slug',
+  path: '/grupos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ManchasIndexRoute = ManchasIndexRouteImport.update({
   id: '/manchas/',
   path: '/manchas/',
@@ -201,19 +278,39 @@ const OndeComprarCompararRoute = OndeComprarCompararRouteImport.update({
   path: '/onde-comprar/comparar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PHandleRoute = PHandleRouteImport.update({
+  id: '/p/$handle',
+  path: '/p/$handle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerguntasIndexRoute = PerguntasIndexRouteImport.update({
+  id: '/perguntas/',
+  path: '/perguntas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerguntasIdRoute = PerguntasIdRouteImport.update({
+  id: '/perguntas/$id',
+  path: '/perguntas/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerguntasNovaRoute = PerguntasNovaRouteImport.update({
+  id: '/perguntas/nova',
+  path: '/perguntas/nova',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
   id: '/produtos/',
   path: '/produtos/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
-  id: '/produtos/$slug',
-  path: '/produtos/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProdutosCompararRoute = ProdutosCompararRouteImport.update({
   id: '/produtos/comparar',
   path: '/produtos/comparar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
+  id: '/produtos/$slug',
+  path: '/produtos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TecidosIndexRoute = TecidosIndexRouteImport.update({
@@ -226,15 +323,21 @@ const TecidosSlugRoute = TecidosSlugRouteImport.update({
   path: '/tecidos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadePostIdRoute = ComunidadePostIdRouteImport.update({
+  id: '/comunidade/post/$id',
+  path: '/comunidade/post/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprender': typeof AprenderRoute
+  '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
   '/comecar': typeof ComecarRoute
-  '/comunidade': typeof ComunidadeRoute
+  '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
   '/cuidados': typeof CuidadosRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
@@ -243,36 +346,52 @@ export interface FileRoutesByFullPath {
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
+  '/profissionais': typeof ProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/transicoes': typeof TransicoesRoute
   '/transparencia': typeof TransparenciaRoute
+  '/moderacao': typeof AuthenticatedModeracaoRoute
+  '/notificacoes': typeof AuthenticatedNotificacoesRoute
+  '/painel': typeof AuthenticatedPainelRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/comunidade/novo': typeof ComunidadeNovoRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
   '/ferramentas/precificacao': typeof FerramentasPrecificacaoRoute
   '/fichas/$slug': typeof FichasSlugRoute
+  '/grupos/$slug': typeof GruposSlugRoute
   '/manchas/$slug': typeof ManchasSlugRoute
   '/onde-comprar/$slug': typeof OndeComprarSlugRoute
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
-  '/produtos/$slug': typeof ProdutosSlugRoute
   '/produtos/comparar': typeof ProdutosCompararRoute
+  '/p/$handle': typeof PHandleRoute
+  '/perguntas/$id': typeof PerguntasIdRoute
+  '/perguntas/nova': typeof PerguntasNovaRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
   '/estofados/': typeof EstofadosIndexRoute
   '/ferramentas/': typeof FerramentasIndexRoute
   '/fichas/': typeof FichasIndexRoute
+  '/grupos/': typeof GruposIndexRoute
   '/manchas/': typeof ManchasIndexRoute
   '/onde-comprar/': typeof OndeComprarIndexRoute
+  '/perguntas/': typeof PerguntasIndexRoute
   '/produtos/': typeof ProdutosIndexRoute
   '/tecidos/': typeof TecidosIndexRoute
+  '/comunidade/post/$id': typeof ComunidadePostIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aprender': typeof AprenderRoute
+  '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
   '/comecar': typeof ComecarRoute
-  '/comunidade': typeof ComunidadeRoute
+  '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
   '/cuidados': typeof CuidadosRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
@@ -281,37 +400,54 @@ export interface FileRoutesByTo {
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
+  '/profissionais': typeof ProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/transicoes': typeof TransicoesRoute
   '/transparencia': typeof TransparenciaRoute
+  '/moderacao': typeof AuthenticatedModeracaoRoute
+  '/notificacoes': typeof AuthenticatedNotificacoesRoute
+  '/painel': typeof AuthenticatedPainelRoute
+  '/perfil': typeof AuthenticatedPerfilRoute
+  '/comunidade/novo': typeof ComunidadeNovoRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
   '/ferramentas/precificacao': typeof FerramentasPrecificacaoRoute
   '/fichas/$slug': typeof FichasSlugRoute
+  '/grupos/$slug': typeof GruposSlugRoute
   '/manchas/$slug': typeof ManchasSlugRoute
   '/onde-comprar/$slug': typeof OndeComprarSlugRoute
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
-  '/produtos/$slug': typeof ProdutosSlugRoute
   '/produtos/comparar': typeof ProdutosCompararRoute
+  '/p/$handle': typeof PHandleRoute
+  '/perguntas/$id': typeof PerguntasIdRoute
+  '/perguntas/nova': typeof PerguntasNovaRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade': typeof ComunidadeIndexRoute
   '/equipamentos': typeof EquipamentosIndexRoute
   '/estofados': typeof EstofadosIndexRoute
   '/ferramentas': typeof FerramentasIndexRoute
   '/fichas': typeof FichasIndexRoute
+  '/grupos': typeof GruposIndexRoute
   '/manchas': typeof ManchasIndexRoute
   '/onde-comprar': typeof OndeComprarIndexRoute
+  '/perguntas': typeof PerguntasIndexRoute
   '/produtos': typeof ProdutosIndexRoute
   '/tecidos': typeof TecidosIndexRoute
+  '/comunidade/post/$id': typeof ComunidadePostIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/aprender': typeof AprenderRoute
+  '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
   '/comecar': typeof ComecarRoute
-  '/comunidade': typeof ComunidadeRoute
+  '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
   '/cuidados': typeof CuidadosRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
@@ -320,38 +456,54 @@ export interface FileRoutesById {
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
+  '/profissionais': typeof ProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/transicoes': typeof TransicoesRoute
   '/transparencia': typeof TransparenciaRoute
+  '/_authenticated/moderacao': typeof AuthenticatedModeracaoRoute
+  '/_authenticated/notificacoes': typeof AuthenticatedNotificacoesRoute
+  '/_authenticated/painel': typeof AuthenticatedPainelRoute
+  '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
+  '/comunidade/novo': typeof ComunidadeNovoRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
   '/ferramentas/precificacao': typeof FerramentasPrecificacaoRoute
   '/fichas/$slug': typeof FichasSlugRoute
+  '/grupos/$slug': typeof GruposSlugRoute
   '/manchas/$slug': typeof ManchasSlugRoute
   '/onde-comprar/$slug': typeof OndeComprarSlugRoute
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
-  '/produtos/$slug': typeof ProdutosSlugRoute
   '/produtos/comparar': typeof ProdutosCompararRoute
+  '/p/$handle': typeof PHandleRoute
+  '/perguntas/$id': typeof PerguntasIdRoute
+  '/perguntas/nova': typeof PerguntasNovaRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
   '/estofados/': typeof EstofadosIndexRoute
   '/ferramentas/': typeof FerramentasIndexRoute
   '/fichas/': typeof FichasIndexRoute
+  '/grupos/': typeof GruposIndexRoute
   '/manchas/': typeof ManchasIndexRoute
   '/onde-comprar/': typeof OndeComprarIndexRoute
+  '/perguntas/': typeof PerguntasIndexRoute
   '/produtos/': typeof ProdutosIndexRoute
   '/tecidos/': typeof TecidosIndexRoute
+  '/comunidade/post/$id': typeof ComunidadePostIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/aprender'
+    | '/auth'
     | '/automotiva'
     | '/buscar'
     | '/checklist'
     | '/comecar'
-    | '/comunidade'
+    | '/codigo-da-comunidade'
     | '/cuidados'
     | '/favoritos'
     | '/fluxo'
@@ -360,36 +512,52 @@ export interface FileRouteTypes {
     | '/identificar'
     | '/parceria'
     | '/ph'
+    | '/profissionais'
     | '/sobre'
+    | '/transicoes'
     | '/transparencia'
+    | '/moderacao'
+    | '/notificacoes'
+    | '/painel'
+    | '/perfil'
+    | '/comunidade/novo'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
     | '/ferramentas/precificacao'
     | '/fichas/$slug'
+    | '/grupos/$slug'
     | '/manchas/$slug'
     | '/onde-comprar/$slug'
     | '/onde-comprar/comparar'
-    | '/produtos/$slug'
     | '/produtos/comparar'
+    | '/p/$handle'
+    | '/perguntas/$id'
+    | '/perguntas/nova'
+    | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade/'
     | '/equipamentos/'
     | '/estofados/'
     | '/ferramentas/'
     | '/fichas/'
+    | '/grupos/'
     | '/manchas/'
     | '/onde-comprar/'
+    | '/perguntas/'
     | '/produtos/'
     | '/tecidos/'
+    | '/comunidade/post/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/aprender'
+    | '/auth'
     | '/automotiva'
     | '/buscar'
     | '/checklist'
     | '/comecar'
-    | '/comunidade'
+    | '/codigo-da-comunidade'
     | '/cuidados'
     | '/favoritos'
     | '/fluxo'
@@ -398,36 +566,53 @@ export interface FileRouteTypes {
     | '/identificar'
     | '/parceria'
     | '/ph'
+    | '/profissionais'
     | '/sobre'
+    | '/transicoes'
     | '/transparencia'
+    | '/moderacao'
+    | '/notificacoes'
+    | '/painel'
+    | '/perfil'
+    | '/comunidade/novo'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
     | '/ferramentas/precificacao'
     | '/fichas/$slug'
+    | '/grupos/$slug'
     | '/manchas/$slug'
     | '/onde-comprar/$slug'
     | '/onde-comprar/comparar'
-    | '/produtos/$slug'
     | '/produtos/comparar'
+    | '/p/$handle'
+    | '/perguntas/$id'
+    | '/perguntas/nova'
+    | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade'
     | '/equipamentos'
     | '/estofados'
     | '/ferramentas'
     | '/fichas'
+    | '/grupos'
     | '/manchas'
     | '/onde-comprar'
+    | '/perguntas'
     | '/produtos'
     | '/tecidos'
+    | '/comunidade/post/$id'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/aprender'
+    | '/auth'
     | '/automotiva'
     | '/buscar'
     | '/checklist'
     | '/comecar'
-    | '/comunidade'
+    | '/codigo-da-comunidade'
     | '/cuidados'
     | '/favoritos'
     | '/fluxo'
@@ -436,37 +621,54 @@ export interface FileRouteTypes {
     | '/identificar'
     | '/parceria'
     | '/ph'
+    | '/profissionais'
     | '/sobre'
+    | '/transicoes'
     | '/transparencia'
+    | '/_authenticated/moderacao'
+    | '/_authenticated/notificacoes'
+    | '/_authenticated/painel'
+    | '/_authenticated/perfil'
+    | '/comunidade/novo'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
     | '/ferramentas/precificacao'
     | '/fichas/$slug'
+    | '/grupos/$slug'
     | '/manchas/$slug'
     | '/onde-comprar/$slug'
     | '/onde-comprar/comparar'
-    | '/produtos/$slug'
     | '/produtos/comparar'
+    | '/p/$handle'
+    | '/perguntas/$id'
+    | '/perguntas/nova'
+    | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade/'
     | '/equipamentos/'
     | '/estofados/'
     | '/ferramentas/'
     | '/fichas/'
+    | '/grupos/'
     | '/manchas/'
     | '/onde-comprar/'
+    | '/perguntas/'
     | '/produtos/'
     | '/tecidos/'
+    | '/comunidade/post/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AprenderRoute: typeof AprenderRoute
+  AuthRoute: typeof AuthRoute
   AutomotivaRoute: typeof AutomotivaRoute
   BuscarRoute: typeof BuscarRoute
   ChecklistRoute: typeof ChecklistRoute
   ComecarRoute: typeof ComecarRoute
-  ComunidadeRoute: typeof ComunidadeRoute
+  CodigoDaComunidadeRoute: typeof CodigoDaComunidadeRoute
   CuidadosRoute: typeof CuidadosRoute
   FavoritosRoute: typeof FavoritosRoute
   FluxoRoute: typeof FluxoRoute
@@ -475,27 +677,38 @@ export interface RootRouteChildren {
   IdentificarRoute: typeof IdentificarRoute
   ParceriaRoute: typeof ParceriaRoute
   PhRoute: typeof PhRoute
+  ProfissionaisRoute: typeof ProfissionaisRoute
   SobreRoute: typeof SobreRoute
+  TransicoesRoute: typeof TransicoesRoute
   TransparenciaRoute: typeof TransparenciaRoute
+  ComunidadeNovoRoute: typeof ComunidadeNovoRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
   FerramentasPrecificacaoRoute: typeof FerramentasPrecificacaoRoute
   FichasSlugRoute: typeof FichasSlugRoute
+  GruposSlugRoute: typeof GruposSlugRoute
   ManchasSlugRoute: typeof ManchasSlugRoute
   OndeComprarSlugRoute: typeof OndeComprarSlugRoute
   OndeComprarCompararRoute: typeof OndeComprarCompararRoute
-  ProdutosSlugRoute: typeof ProdutosSlugRoute
   ProdutosCompararRoute: typeof ProdutosCompararRoute
+  PHandleRoute: typeof PHandleRoute
+  PerguntasIdRoute: typeof PerguntasIdRoute
+  PerguntasNovaRoute: typeof PerguntasNovaRoute
+  ProdutosSlugRoute: typeof ProdutosSlugRoute
   TecidosSlugRoute: typeof TecidosSlugRoute
+  ComunidadeIndexRoute: typeof ComunidadeIndexRoute
   EquipamentosIndexRoute: typeof EquipamentosIndexRoute
   EstofadosIndexRoute: typeof EstofadosIndexRoute
   FerramentasIndexRoute: typeof FerramentasIndexRoute
   FichasIndexRoute: typeof FichasIndexRoute
+  GruposIndexRoute: typeof GruposIndexRoute
   ManchasIndexRoute: typeof ManchasIndexRoute
   OndeComprarIndexRoute: typeof OndeComprarIndexRoute
+  PerguntasIndexRoute: typeof PerguntasIndexRoute
   ProdutosIndexRoute: typeof ProdutosIndexRoute
   TecidosIndexRoute: typeof TecidosIndexRoute
+  ComunidadePostIdRoute: typeof ComunidadePostIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -507,11 +720,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/aprender': {
       id: '/aprender'
       path: '/aprender'
       fullPath: '/aprender'
       preLoaderRoute: typeof AprenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/automotiva': {
@@ -535,18 +762,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChecklistRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/comecar': {
-      id: '/comecar'
-      path: '/comecar'
-      fullPath: '/comecar'
-      preLoaderRoute: typeof ComecarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/comunidade': {
-      id: '/comunidade'
-      path: '/comunidade'
-      fullPath: '/comunidade'
-      preLoaderRoute: typeof ComunidadeRouteImport
+    '/codigo-da-comunidade': {
+      id: '/codigo-da-comunidade'
+      path: '/codigo-da-comunidade'
+      fullPath: '/codigo-da-comunidade'
+      preLoaderRoute: typeof CodigoDaComunidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cuidados': {
@@ -605,6 +825,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PhRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profissionais': {
+      id: '/profissionais'
+      path: '/profissionais'
+      fullPath: '/profissionais'
+      preLoaderRoute: typeof ProfissionaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -612,11 +839,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transicoes': {
+      id: '/transicoes'
+      path: '/transicoes'
+      fullPath: '/transicoes'
+      preLoaderRoute: typeof TransicoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/transparencia': {
       id: '/transparencia'
       path: '/transparencia'
       fullPath: '/transparencia'
       preLoaderRoute: typeof TransparenciaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comecar': {
+      id: '/comecar'
+      path: '/comecar'
+      fullPath: '/comecar'
+      preLoaderRoute: typeof ComecarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/moderacao': {
+      id: '/_authenticated/moderacao'
+      path: '/moderacao'
+      fullPath: '/moderacao'
+      preLoaderRoute: typeof AuthenticatedModeracaoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/notificacoes': {
+      id: '/_authenticated/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/notificacoes'
+      preLoaderRoute: typeof AuthenticatedNotificacoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/painel': {
+      id: '/_authenticated/painel'
+      path: '/painel'
+      fullPath: '/painel'
+      preLoaderRoute: typeof AuthenticatedPainelRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/perfil': {
+      id: '/_authenticated/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedPerfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/comunidade/': {
+      id: '/comunidade/'
+      path: '/comunidade'
+      fullPath: '/comunidade/'
+      preLoaderRoute: typeof ComunidadeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade/novo': {
+      id: '/comunidade/novo'
+      path: '/comunidade/novo'
+      fullPath: '/comunidade/novo'
+      preLoaderRoute: typeof ComunidadeNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos/': {
@@ -682,6 +965,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FichasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/grupos/': {
+      id: '/grupos/'
+      path: '/grupos'
+      fullPath: '/grupos/'
+      preLoaderRoute: typeof GruposIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/grupos/$slug': {
+      id: '/grupos/$slug'
+      path: '/grupos/$slug'
+      fullPath: '/grupos/$slug'
+      preLoaderRoute: typeof GruposSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/manchas/': {
       id: '/manchas/'
       path: '/manchas'
@@ -717,6 +1014,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OndeComprarCompararRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/produtos/comparar': {
+      id: '/produtos/comparar'
+      path: '/produtos/comparar'
+      fullPath: '/produtos/comparar'
+      preLoaderRoute: typeof ProdutosCompararRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/p/$handle': {
+      id: '/p/$handle'
+      path: '/p/$handle'
+      fullPath: '/p/$handle'
+      preLoaderRoute: typeof PHandleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perguntas/': {
+      id: '/perguntas/'
+      path: '/perguntas'
+      fullPath: '/perguntas/'
+      preLoaderRoute: typeof PerguntasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perguntas/$id': {
+      id: '/perguntas/$id'
+      path: '/perguntas/$id'
+      fullPath: '/perguntas/$id'
+      preLoaderRoute: typeof PerguntasIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perguntas/nova': {
+      id: '/perguntas/nova'
+      path: '/perguntas/nova'
+      fullPath: '/perguntas/nova'
+      preLoaderRoute: typeof PerguntasNovaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/produtos/': {
       id: '/produtos/'
       path: '/produtos'
@@ -729,13 +1061,6 @@ declare module '@tanstack/react-router' {
       path: '/produtos/$slug'
       fullPath: '/produtos/$slug'
       preLoaderRoute: typeof ProdutosSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/produtos/comparar': {
-      id: '/produtos/comparar'
-      path: '/produtos/comparar'
-      fullPath: '/produtos/comparar'
-      preLoaderRoute: typeof ProdutosCompararRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tecidos/': {
@@ -752,17 +1077,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TecidosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidade/post/$id': {
+      id: '/comunidade/post/$id'
+      path: '/comunidade/post/$id'
+      fullPath: '/comunidade/post/$id'
+      preLoaderRoute: typeof ComunidadePostIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedModeracaoRoute: typeof AuthenticatedModeracaoRoute
+  AuthenticatedNotificacoesRoute: typeof AuthenticatedNotificacoesRoute
+  AuthenticatedPainelRoute: typeof AuthenticatedPainelRoute
+  AuthenticatedPerfilRoute: typeof AuthenticatedPerfilRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedModeracaoRoute: AuthenticatedModeracaoRoute,
+  AuthenticatedNotificacoesRoute: AuthenticatedNotificacoesRoute,
+  AuthenticatedPainelRoute: AuthenticatedPainelRoute,
+  AuthenticatedPerfilRoute: AuthenticatedPerfilRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AprenderRoute: AprenderRoute,
+  AuthRoute: AuthRoute,
   AutomotivaRoute: AutomotivaRoute,
   BuscarRoute: BuscarRoute,
   ChecklistRoute: ChecklistRoute,
   ComecarRoute: ComecarRoute,
-  ComunidadeRoute: ComunidadeRoute,
+  CodigoDaComunidadeRoute: CodigoDaComunidadeRoute,
   CuidadosRoute: CuidadosRoute,
   FavoritosRoute: FavoritosRoute,
   FluxoRoute: FluxoRoute,
@@ -771,27 +1122,38 @@ const rootRouteChildren: RootRouteChildren = {
   IdentificarRoute: IdentificarRoute,
   ParceriaRoute: ParceriaRoute,
   PhRoute: PhRoute,
+  ProfissionaisRoute: ProfissionaisRoute,
   SobreRoute: SobreRoute,
+  TransicoesRoute: TransicoesRoute,
   TransparenciaRoute: TransparenciaRoute,
+  ComunidadeNovoRoute: ComunidadeNovoRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
   FerramentasPrecificacaoRoute: FerramentasPrecificacaoRoute,
   FichasSlugRoute: FichasSlugRoute,
+  GruposSlugRoute: GruposSlugRoute,
   ManchasSlugRoute: ManchasSlugRoute,
   OndeComprarSlugRoute: OndeComprarSlugRoute,
   OndeComprarCompararRoute: OndeComprarCompararRoute,
-  ProdutosSlugRoute: ProdutosSlugRoute,
   ProdutosCompararRoute: ProdutosCompararRoute,
+  PHandleRoute: PHandleRoute,
+  PerguntasIdRoute: PerguntasIdRoute,
+  PerguntasNovaRoute: PerguntasNovaRoute,
+  ProdutosSlugRoute: ProdutosSlugRoute,
   TecidosSlugRoute: TecidosSlugRoute,
+  ComunidadeIndexRoute: ComunidadeIndexRoute,
   EquipamentosIndexRoute: EquipamentosIndexRoute,
   EstofadosIndexRoute: EstofadosIndexRoute,
   FerramentasIndexRoute: FerramentasIndexRoute,
   FichasIndexRoute: FichasIndexRoute,
+  GruposIndexRoute: GruposIndexRoute,
   ManchasIndexRoute: ManchasIndexRoute,
   OndeComprarIndexRoute: OndeComprarIndexRoute,
+  PerguntasIndexRoute: PerguntasIndexRoute,
   ProdutosIndexRoute: ProdutosIndexRoute,
   TecidosIndexRoute: TecidosIndexRoute,
+  ComunidadePostIdRoute: ComunidadePostIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

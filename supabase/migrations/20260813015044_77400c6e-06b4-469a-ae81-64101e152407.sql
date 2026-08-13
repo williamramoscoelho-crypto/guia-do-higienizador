@@ -1,0 +1,10 @@
+ALTER TABLE public.posts ADD CONSTRAINT posts_author_profile_fkey FOREIGN KEY (author_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.comments ADD CONSTRAINT comments_author_profile_fkey FOREIGN KEY (author_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.questions ADD CONSTRAINT questions_author_profile_fkey FOREIGN KEY (author_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.answers ADD CONSTRAINT answers_author_profile_fkey FOREIGN KEY (author_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.group_members ADD CONSTRAINT group_members_profile_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.follows ADD CONSTRAINT follows_follower_profile_fkey FOREIGN KEY (follower_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.follows ADD CONSTRAINT follows_following_profile_fkey FOREIGN KEY (following_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.user_points ADD CONSTRAINT user_points_profile_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.user_badges ADD CONSTRAINT user_badges_profile_fkey FOREIGN KEY (user_id) REFERENCES public.profiles(id) ON DELETE CASCADE;
+ALTER TABLE public.reports ADD CONSTRAINT reports_reporter_profile_fkey FOREIGN KEY (reporter_id) REFERENCES public.profiles(id) ON DELETE CASCADE;

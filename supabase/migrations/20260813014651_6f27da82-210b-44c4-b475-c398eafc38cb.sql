@@ -1,0 +1,13 @@
+REVOKE ALL ON FUNCTION public.handle_new_user() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.add_points(UUID, INTEGER) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.on_post_change() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.on_comment_change() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.on_post_like_change() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.on_answer_change() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.on_answer_like_change() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.on_comment_like_change() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.touch_updated_at() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.has_role(UUID, public.app_role) FROM PUBLIC, anon;
+REVOKE ALL ON FUNCTION public.is_staff(UUID) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.has_role(UUID, public.app_role) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.is_staff(UUID) TO authenticated;

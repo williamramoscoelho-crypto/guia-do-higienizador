@@ -1,13 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { Home, Search, BookOpen, FlaskConical, TriangleAlert } from "lucide-react";
+import { Home, BookOpen, Users, MessagesSquare, CircleUser } from "lucide-react";
 
 const itens = [
   { to: "/", label: "Início", Icon: Home, exact: true },
-  { to: "/buscar", label: "Buscar", Icon: Search, exact: false },
   { to: "/guia", label: "Guia", Icon: BookOpen, exact: false },
-  { to: "/produtos", label: "Produtos", Icon: FlaskConical, exact: false },
-  { to: "/cuidados", label: "Cuidados", Icon: TriangleAlert, exact: false },
+  { to: "/comunidade", label: "Comunidade", Icon: Users, exact: false },
+  { to: "/perguntas", label: "Dúvidas", Icon: MessagesSquare, exact: false },
+  { to: "/painel", label: "Perfil", Icon: CircleUser, exact: false },
 ] as const;
+
 
 export function BottomNav() {
   return (

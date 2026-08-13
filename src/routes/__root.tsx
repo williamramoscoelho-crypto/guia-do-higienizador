@@ -1,3 +1,4 @@
+import { AuthProvider } from "@/lib/auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -12,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/app/BottomNav";
+import { PageTransition } from "@/components/app/PageTransition";
 import { SITE_ORIGIN } from "@/lib/site";
 
 function NotFoundComponent() {
@@ -125,12 +127,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen bg-background">
-        <main className="app-shell overflow-x-hidden pb-28">
-          <Outlet />
-        </main>
-        <BottomNav />
-      </div>
+      <AuthProvider>
+        <div className="min-h-screen bg-background">
+          <main className="app-shell overflow-x-hidden pb-28">
+            <PageTransition>
+              <Outlet />
+            </PageTransition>
+          </main>
+          <BottomNav />
+        </div>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
