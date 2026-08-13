@@ -19,6 +19,11 @@ dist-ssr
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
+dist/
+
+# Pacote gerado para cPanel (rode npm run build:cpanel)
+cpanel/
+cpanel.zip
 
 # Editor directories and files
 .vscode/*

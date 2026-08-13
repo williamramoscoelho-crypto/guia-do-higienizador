@@ -23,6 +23,7 @@ const secoes = [
       { to: "/estofados", emoji: "🛋️", titulo: "Tipos de estofados", desc: "Sofás, colchões, bancos automotivos e mais" },
       { to: "/manchas", emoji: "🟤", titulo: "Tipos de manchas", desc: "Procedimento, cuidados e limitações reais" },
       { to: "/produtos", emoji: "🧪", titulo: "Produtos e química", desc: "Função, pH, riscos e compatibilidade" },
+      { to: "/fichas", emoji: "📄", titulo: "Fichas de fabricantes", desc: "Produtos oficiais com diluição e FISPQ" },
       { to: "/equipamentos", emoji: "🧰", titulo: "Equipamentos", desc: "Uso correto, manutenção e erros comuns" },
     ],
   },
@@ -41,7 +42,9 @@ const secoes = [
     itens: [
       { to: "/automotiva", emoji: "🚗", titulo: "Estética automotiva", desc: "Interior, bancos, couro e categorias de produto" },
       { to: "/onde-comprar", emoji: "🏪", titulo: "Onde comprar", desc: "Marcas, kits e critérios de compra" },
+      { to: "/onde-comprar/comparar", emoji: "⚖️", titulo: "Comparar marcas", desc: "Até 3 marcas lado a lado, sem ranking" },
       { to: "/aprender", emoji: "📚", titulo: "Aprender", desc: "Experiência de campo e capacitação" },
+      { to: "/transparencia", emoji: "🔎", titulo: "Transparência", desc: "Política editorial e independência" },
       { to: "/ferramentas", emoji: "🧮", titulo: "Ferramentas", desc: "Diluição e precificação" },
       { to: "/glossario", emoji: "📖", titulo: "Glossário profissional", desc: "Termos técnicos em linguagem simples" },
     ],

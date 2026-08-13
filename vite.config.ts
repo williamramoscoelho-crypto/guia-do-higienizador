@@ -1,15 +1,65 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - TanStack devtools (dev-only, first), tanstackStart, viteReact, tailwindcss, tsConfigPaths,
-//     nitro (build-only using cloudflare as a default target), VITE_* env injection, @ path alias,
-//     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { equipamentos } from "./src/data/equipamentos.ts";
+import { estofados } from "./src/data/estofados.ts";
+import { manchas } from "./src/data/manchas.ts";
+import { marcas } from "./src/data/marcas.ts";
+import { produtos } from "./src/data/produtos.ts";
+import { tecidos } from "./src/data/tecidos.ts";
+import { fichasFabricantes } from "./src/data/fichas-fabricantes.ts";
+
+const cpanel = process.env.CPANEL_BUILD === "1";
+
+const pages = [
+  "/",
+  "/buscar",
+  "/guia",
+  "/tecidos",
+  "/produtos",
+  "/manchas",
+  "/estofados",
+  "/equipamentos",
+  "/cuidados",
+  "/fluxo",
+  "/ph",
+  "/glossario",
+  "/checklist",
+  "/identificar",
+  "/ferramentas",
+  "/ferramentas/diluicao",
+  "/ferramentas/precificacao",
+  "/automotiva",
+  "/onde-comprar",
+  "/aprender",
+  "/parceria",
+  "/favoritos",
+  "/sobre",
+  "/transparencia",
+  "/fichas",
+  "/onde-comprar/comparar",
+  ...tecidos.map((t) => `/tecidos/${t.slug}`),
+  ...produtos.map((p) => `/produtos/${p.slug}`),
+  ...manchas.map((m) => `/manchas/${m.slug}`),
+  ...estofados.map((e) => `/estofados/${e.slug}`),
+  ...equipamentos.map((e) => `/equipamentos/${e.slug}`),
+  ...marcas.map((m) => `/onde-comprar/${m.slug}`),
+  ...fichasFabricantes.map((f) => `/fichas/${f.slug}`),
+].map((path) => ({ path }));
 
 export default defineConfig({
+  nitro: cpanel ? false : undefined,
   tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
     server: { entry: "server" },
+    ...(cpanel
+      ? {
+          prerender: {
+            enabled: true,
+            crawlLinks: true,
+            autoStaticPathsDiscovery: true,
+            autoSubfolderIndex: true,
+            failOnError: false,
+          },
+          pages,
+        }
+      : {}),
   },
 });

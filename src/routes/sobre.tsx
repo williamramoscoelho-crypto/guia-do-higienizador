@@ -64,6 +64,14 @@ function Sobre() {
           </p>
         </InfoCard>
       </Section>
+      <Section>
+        <Link
+          to="/transparencia"
+          className="inline-flex min-h-12 items-center rounded-full border border-border bg-card px-5 text-sm font-semibold"
+        >
+          Transparência e política editorial
+        </Link>
+      </Section>
     </div>
   );
 }

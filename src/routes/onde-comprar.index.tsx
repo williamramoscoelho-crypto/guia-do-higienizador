@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { criteriosCompra, marcas } from "@/data/marcas";
 import { kitsHigienizacao, perfilCompra } from "@/data/conteudo";
-import { Aviso, Breadcrumbs, BulletList, CatalogList, InfoCard, PageHeader, Section } from "@/components/app/ui";
+import { Aviso, Breadcrumbs, BulletList, CatalogList, InfoCard, ItemLink, PageHeader, Section } from "@/components/app/ui";
 
 export const Route = createFileRoute("/onde-comprar/")({
   head: () => ({
@@ -79,6 +79,14 @@ function OndeComprar() {
         </ul>
       </Section>
       <Section titulo="Marcas (consulta, sem ranking)">
+        <div className="mb-3">
+          <Link
+            to="/onde-comprar/comparar"
+            className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
+          >
+            Comparar marcas lado a lado
+          </Link>
+        </div>
         <CatalogList
           placeholder="Filtrar marca…"
           itens={marcas.map((m) => ({
@@ -89,6 +97,12 @@ function OndeComprar() {
             descricao: m.tipoProduto,
           }))}
         />
+      </Section>
+      <Section titulo="Fichas técnicas oficiais">
+        <p className="mb-3 text-sm text-muted-foreground">
+          Catálogo lido nos sites dos fabricantes, focado em estofados, interior e couro.
+        </p>
+        <ItemLink to="/fichas" titulo="Abrir fichas de fabricantes" descricao="Vonixx, Vintex, Protelim, Easytech, Alcance, Finisher e Spartan" />
       </Section>
       <Aviso titulo="Política editorial">
         Nenhuma marca é apresentada como superior. Links, preços e características específicas devem ser confirmados no

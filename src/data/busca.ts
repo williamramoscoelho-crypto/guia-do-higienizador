@@ -5,6 +5,7 @@ import { estofados } from "./estofados";
 import { equipamentos } from "./equipamentos";
 import { glossario } from "./glossario";
 import { marcas } from "./marcas";
+import { fichasFabricantes, marcasFichas } from "./fichas-fabricantes";
 import { fluxoHigienizacao, experienciaCampo, etapasAutomotivas } from "./conteudo";
 
 export type ResultadoBusca = {
@@ -87,6 +88,14 @@ export const indiceBusca: ResultadoBusca[] = [
     href: `/onde-comprar/${m.slug}`,
     termos: [m.nome, ...m.categorias, m.tipoProduto].join(" "),
   })),
+  ...fichasFabricantes.map((f) => ({
+    id: `ficha-${f.slug}`,
+    grupo: "Fichas técnicas",
+    titulo: f.nome,
+    descricao: f.resumo,
+    href: `/fichas/${f.slug}`,
+    termos: [f.nome, f.marca, f.resumo, f.diluicao, f.usoRecomendado, marcasFichas.find((m) => m.slug === f.marca)?.nome ?? ""].join(" "),
+  })),
   ...experienciaCampo.map((e) => ({
     id: `exp-${e.slug}`,
     grupo: "Aprender",
@@ -103,6 +112,22 @@ export const indiceBusca: ResultadoBusca[] = [
     href: "/automotiva",
     termos: `${e.titulo} ${e.pontos.join(" ")} automotiva banco carro`,
   })),
+  {
+    id: "pagina-transparencia",
+    grupo: "Sobre",
+    titulo: "Transparência e política editorial",
+    descricao: "Como o conteúdo é produzido, neutralidade entre marcas e privacidade.",
+    href: "/transparencia",
+    termos: "transparencia politica editorial independencia privacidade fispq",
+  },
+  {
+    id: "pagina-comparar-marcas",
+    grupo: "Marcas",
+    titulo: "Comparar marcas",
+    descricao: "Compare até 3 marcas lado a lado, sem ranking.",
+    href: "/onde-comprar/comparar",
+    termos: "comparar marcas lado a lado onde comprar",
+  },
 ];
 
 export function buscar(q: string): ResultadoBusca[] {

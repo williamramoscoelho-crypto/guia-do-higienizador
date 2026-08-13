@@ -1,10 +1,12 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getMarca } from "@/data/marcas";
+import { fichasPorMarca, marcasFichas } from "@/data/fichas-fabricantes";
 import {
   Aviso,
   Breadcrumbs,
   DataList,
   InfoCard,
+  ItemLink,
   PageHeader,
   RegistrarVisita,
   Section,
@@ -35,6 +37,8 @@ export const Route = createFileRoute("/onde-comprar/$slug")({
 
 function Detalhe() {
   const { marca: m } = Route.useLoaderData();
+  const fichas = fichasPorMarca(m.slug);
+  const catalogo = marcasFichas.find((x) => x.slug === m.slug);
   return (
     <div className="pb-4">
       <RegistrarVisita nome={m.nome} href={`/onde-comprar/${m.slug}`} tipo="Marca" />
@@ -57,6 +61,29 @@ function Detalhe() {
           ]}
         />
       </Section>
+      {m.siteOficial ? (
+        <Section titulo="Site oficial">
+          <a href={m.siteOficial} target="_blank" rel="noreferrer" className="text-sm text-primary underline">
+            {m.siteOficial}
+          </a>
+        </Section>
+      ) : null}
+      {fichas.length > 0 ? (
+        <Section titulo="Fichas lidas no site oficial">
+          <ul className="grid gap-2">
+            {fichas.map((f) => (
+              <li key={f.slug}>
+                <ItemLink to="/fichas/$slug" params={{ slug: f.slug }} titulo={f.nome} descricao={f.resumo} />
+              </li>
+            ))}
+          </ul>
+          {catalogo ? (
+            <p className="mt-3 text-xs text-muted-foreground">
+              Lista parcial, focada em estofados, interior e couro. Catálogo completo: {catalogo.site}
+            </p>
+          ) : null}
+        </Section>
+      ) : null}
       <Section titulo="Observações">
         <InfoCard>
           <p className="text-sm leading-relaxed">{m.observacoes}</p>

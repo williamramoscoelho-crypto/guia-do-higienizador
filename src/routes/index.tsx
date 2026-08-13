@@ -38,6 +38,7 @@ export const Route = createFileRoute("/")({
 const atalhos = [
   { to: "/tecidos", emoji: "🧵", label: "Tecidos" },
   { to: "/produtos", emoji: "🧪", label: "Produtos" },
+  { to: "/fichas", emoji: "📄", label: "Fichas" },
   { to: "/manchas", emoji: "🟤", label: "Manchas" },
   { to: "/estofados", emoji: "🛋️", label: "Estofados" },
   { to: "/equipamentos", emoji: "🧰", label: "Equipamentos" },
@@ -177,6 +178,9 @@ function Inicio() {
         </Link>
         <Link to="/sobre" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
           📖 Sobre o projeto
+        </Link>
+        <Link to="/transparencia" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
+          🔎 Transparência
         </Link>
       </section>
     </div>

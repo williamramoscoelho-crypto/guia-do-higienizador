@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "build:cpanel": "node scripts/build-cpanel.mjs",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "scrape:fichas": "node scripts/scrape-fichas-pass2.mjs && node scripts/generate-fichas.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

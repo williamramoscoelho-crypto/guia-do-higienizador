@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { categoriasProdutos, produtos } from "@/data/produtos";
 import { Breadcrumbs, ItemLink, PageHeader, Section } from "@/components/app/ui";
@@ -37,6 +37,13 @@ function Lista() {
         eyebrow="Consulta técnica"
         descricao="Organize a escolha pela função. Diluição, tempo de ação e concentração vêm sempre da ficha do fabricante."
       />
+      <p className="mt-3 text-sm text-muted-foreground">
+        Para SKUs de marca, veja as{" "}
+        <Link to="/fichas" className="text-primary underline">
+          fichas extraídas dos fabricantes
+        </Link>
+        .
+      </p>
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
