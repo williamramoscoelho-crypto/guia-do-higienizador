@@ -11,6 +11,9 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as GuiaRouteImport } from './routes/guia'
+import { Route as TecidosIndexRouteImport } from './routes/tecidos.index'
+import { Route as TecidosSlugRouteImport } from './routes/tecidos.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +25,58 @@ const BuscarRoute = BuscarRouteImport.update({
   path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GuiaRoute = GuiaRouteImport.update({
+  id: '/guia',
+  path: '/guia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TecidosIndexRoute = TecidosIndexRouteImport.update({
+  id: '/tecidos/',
+  path: '/tecidos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TecidosSlugRoute = TecidosSlugRouteImport.update({
+  id: '/tecidos/$slug',
+  path: '/tecidos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/buscar': typeof BuscarRoute
+  '/guia': typeof GuiaRoute
+  '/tecidos/$slug': typeof TecidosSlugRoute
+  '/tecidos/': typeof TecidosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/buscar': typeof BuscarRoute
+  '/guia': typeof GuiaRoute
+  '/tecidos/$slug': typeof TecidosSlugRoute
+  '/tecidos': typeof TecidosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/buscar': typeof BuscarRoute
+  '/guia': typeof GuiaRoute
+  '/tecidos/$slug': typeof TecidosSlugRoute
+  '/tecidos/': typeof TecidosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/buscar'
+  fullPaths: '/' | '/buscar' | '/guia' | '/tecidos/$slug' | '/tecidos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/buscar'
-  id: '__root__' | '/' | '/buscar'
+  to: '/' | '/buscar' | '/guia' | '/tecidos/$slug' | '/tecidos'
+  id: '__root__' | '/' | '/buscar' | '/guia' | '/tecidos/$slug' | '/tecidos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BuscarRoute: typeof BuscarRoute
+  GuiaRoute: typeof GuiaRoute
+  TecidosSlugRoute: typeof TecidosSlugRoute
+  TecidosIndexRoute: typeof TecidosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +95,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/guia': {
+      id: '/guia'
+      path: '/guia'
+      fullPath: '/guia'
+      preLoaderRoute: typeof GuiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tecidos/': {
+      id: '/tecidos/'
+      path: '/tecidos'
+      fullPath: '/tecidos/'
+      preLoaderRoute: typeof TecidosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tecidos/$slug': {
+      id: '/tecidos/$slug'
+      path: '/tecidos/$slug'
+      fullPath: '/tecidos/$slug'
+      preLoaderRoute: typeof TecidosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BuscarRoute: BuscarRoute,
+  GuiaRoute: GuiaRoute,
+  TecidosSlugRoute: TecidosSlugRoute,
+  TecidosIndexRoute: TecidosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
