@@ -93,7 +93,22 @@ function Detalhe() {
                 FISPQ / FDS (PDF do fabricante)
               </a>
             </li>
-          ) : null}
+          ) : (
+            <li className="text-muted-foreground">
+              FISPQ não localizada na página oficial. Informação não encontrada — consulte o fabricante
+              {marca ? (
+                <>
+                  {" "}
+                  em{" "}
+                  <a href={marca.site} target="_blank" rel="noreferrer" className="text-primary underline">
+                    {marca.nome}
+                  </a>
+                </>
+              ) : null}
+              .
+            </li>
+          )}
+
           {f.fichaPdf ? (
             <li>
               <a href={f.fichaPdf} target="_blank" rel="noreferrer" className="text-primary underline">
