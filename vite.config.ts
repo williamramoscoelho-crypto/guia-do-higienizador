@@ -7,7 +7,7 @@ import { produtos } from "./src/data/produtos.ts";
 import { tecidos } from "./src/data/tecidos.ts";
 import { fichasFabricantes } from "./src/data/fichas-fabricantes.ts";
 
-const cpanel = process.env.CPANEL_BUILD === "1";
+const cpanel = process.env['CPANEL_BUILD'] === "1";
 
 const pages = [
   "/",
