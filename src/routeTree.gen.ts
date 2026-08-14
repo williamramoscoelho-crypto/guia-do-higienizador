@@ -19,6 +19,7 @@ import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as FluxoRouteImport } from './routes/fluxo'
 import { Route as GlossarioRouteImport } from './routes/glossario'
 import { Route as GuiaRouteImport } from './routes/guia'
+import { Route as IaRouteImport } from './routes/ia'
 import { Route as IdentificarRouteImport } from './routes/identificar'
 import { Route as ParceriaRouteImport } from './routes/parceria'
 import { Route as PhRouteImport } from './routes/ph'
@@ -92,6 +93,11 @@ const GlossarioRoute = GlossarioRouteImport.update({
 const GuiaRoute = GuiaRouteImport.update({
   id: '/guia',
   path: '/guia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IaRoute = IaRouteImport.update({
+  id: '/ia',
+  path: '/ia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IdentificarRoute = IdentificarRouteImport.update({
@@ -226,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
@@ -337,6 +346,7 @@ export interface FileRouteTypes {
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
@@ -373,6 +383,7 @@ export interface FileRouteTypes {
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
@@ -409,6 +420,7 @@ export interface FileRouteTypes {
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
@@ -446,6 +458,7 @@ export interface RootRouteChildren {
   FluxoRoute: typeof FluxoRoute
   GlossarioRoute: typeof GlossarioRoute
   GuiaRoute: typeof GuiaRoute
+  IaRoute: typeof IaRoute
   IdentificarRoute: typeof IdentificarRoute
   ParceriaRoute: typeof ParceriaRoute
   PhRoute: typeof PhRoute
@@ -542,6 +555,13 @@ declare module '@tanstack/react-router' {
       path: '/guia'
       fullPath: '/guia'
       preLoaderRoute: typeof GuiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ia': {
+      id: '/ia'
+      path: '/ia'
+      fullPath: '/ia'
+      preLoaderRoute: typeof IaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/identificar': {
@@ -726,6 +746,7 @@ const rootRouteChildren: RootRouteChildren = {
   FluxoRoute: FluxoRoute,
   GlossarioRoute: GlossarioRoute,
   GuiaRoute: GuiaRoute,
+  IaRoute: IaRoute,
   IdentificarRoute: IdentificarRoute,
   ParceriaRoute: ParceriaRoute,
   PhRoute: PhRoute,
