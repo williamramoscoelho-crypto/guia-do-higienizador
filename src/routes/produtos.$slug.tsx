@@ -39,6 +39,8 @@ export const Route = createFileRoute("/produtos/$slug")({
 
 function Detalhe() {
   const { produto: p } = Route.useLoaderData();
+  const fichas = fichasDoProduto(p.slug);
+
   return (
     <div className="pb-4">
       <RegistrarVisita nome={p.nome} href={`/produtos/${p.slug}`} tipo="Produto" />
