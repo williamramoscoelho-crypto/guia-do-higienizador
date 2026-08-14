@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "scrape:fichas": "node scripts/scrape-fichas-pass2.mjs && node scripts/generate-fichas.mjs"
+    "scrape:fichas": "node scripts/scrape-fichas-pass2.mjs && node scripts/generate-fichas.mjs",
+    "scrape:manchas": "node scripts/scrape-manchas-produtos.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

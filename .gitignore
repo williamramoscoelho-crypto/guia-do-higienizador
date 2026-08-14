@@ -25,6 +25,9 @@ dist/
 /cpanel/
 /cpanel.zip
 
+# Coleta bruta de páginas (navegação/HTML; não versionar)
+src/data/manchas-produtos.raw.json
+
 # Segredos — nunca versionar
 .env
 .env.*

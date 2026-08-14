@@ -6,6 +6,7 @@ import { equipamentos } from "./equipamentos";
 import { glossario } from "./glossario";
 import { marcas } from "./marcas";
 import { fichasFabricantes, marcasFichas } from "./fichas-fabricantes";
+import { indicacoesPorMancha } from "./manchas-produtos";
 import { fluxoHigienizacao, experienciaCampo, etapasAutomotivas } from "./conteudo";
 
 export type ResultadoBusca = {
@@ -38,7 +39,17 @@ export const indiceBusca: ResultadoBusca[] = [
     titulo: m.nome,
     descricao: `${m.categoria} — ${m.caracteristica}`,
     href: `/manchas/${m.slug}`,
-    termos: [m.nome, m.categoria, m.origem, m.caracteristica, ...m.produtos].join(" "),
+    termos: [
+      m.nome,
+      m.categoria,
+      m.origem,
+      m.caracteristica,
+      ...m.produtos,
+      ...(indicacoesPorMancha[m.slug] ?? []).flatMap((i) => {
+        const f = fichasFabricantes.find((x) => x.slug === i.fichaSlug);
+        return f ? [f.nome, f.marca] : [];
+      }),
+    ].join(" "),
   })),
   ...produtos.map((p) => ({
     id: `produto-${p.slug}`,

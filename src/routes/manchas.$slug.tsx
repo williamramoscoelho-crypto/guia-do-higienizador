@@ -1,5 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getMancha } from "@/data/manchas";
+import { indicacoesDaMancha, nomeMarcaFicha, rotuloPapel } from "@/data/manchas-produtos";
 import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
 import {
   Aviso,
@@ -39,6 +40,7 @@ export const Route = createFileRoute("/manchas/$slug")({
 
 function Detalhe() {
   const { mancha: m } = Route.useLoaderData();
+  const indicacoes = indicacoesDaMancha(m.slug);
   return (
     <div className="pb-4">
       <RegistrarVisita nome={m.nome} href={`/manchas/${m.slug}`} tipo="Mancha" />
@@ -65,6 +67,58 @@ function Detalhe() {
         <InfoCard>
           <BulletList itens={m.produtos} tone="ok" />
         </InfoCard>
+      </Section>
+      <Section titulo="Produto da lista (por tipo de tecido)">
+        <Aviso titulo="Não é ranking e não garante remoção">
+          Indicação cruzada com a ficha oficial. Confirme diluição, pH e superfície no rótulo do lote. Alvejante de cloro
+          (hipoclorito) não é o mesmo que peróxido profissional (BAC PEROXY, BACTRAN, OXY-4D).
+        </Aviso>
+        {indicacoes.length === 0 ? (
+          <InfoCard className="mt-3">
+            <p className="text-sm leading-relaxed">Informação não encontrada. Consulte o fabricante.</p>
+          </InfoCard>
+        ) : (
+          <ul className="mt-3 grid gap-3">
+            {indicacoes.map((ind) => (
+              <li key={`${ind.papel}-${ind.ficha.slug}`}>
+                <InfoCard>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Chip>{rotuloPapel(ind.papel)}</Chip>
+                    <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {nomeMarcaFicha(ind.ficha.marca)}
+                    </span>
+                  </div>
+                  <Link
+                    to="/fichas/$slug"
+                    params={{ slug: ind.ficha.slug }}
+                    className="mt-2 block text-sm font-semibold text-primary underline-offset-2 hover:underline"
+                  >
+                    {ind.ficha.nome}
+                  </Link>
+                  <p className="mt-2 text-sm leading-relaxed">{ind.citacaoFabricante}</p>
+                  <dl className="mt-3 space-y-2 text-sm leading-relaxed">
+                    <div>
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Quando usar</dt>
+                      <dd className="mt-0.5">{ind.quandoUsar}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Evitar</dt>
+                      <dd className="mt-0.5">{ind.evitarEm}</dd>
+                    </div>
+                  </dl>
+                  <a
+                    href={ind.fonte}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-block text-xs text-primary underline-offset-2 hover:underline"
+                  >
+                    Página oficial do fabricante
+                  </a>
+                </InfoCard>
+              </li>
+            ))}
+          </ul>
+        )}
       </Section>
       <Section titulo="Procedimento sugerido">
         <InfoCard>

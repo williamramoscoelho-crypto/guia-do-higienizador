@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { categoriasManchas, manchas } from "@/data/manchas";
+import { resumoProdutoLista } from "@/data/manchas-produtos";
 import { Breadcrumbs, ItemLink, PageHeader, Section } from "@/components/app/ui";
 
 export const Route = createFileRoute("/manchas/")({
@@ -35,7 +36,7 @@ function Lista() {
       <PageHeader
         titulo="Tipos de manchas"
         eyebrow="Consulta rápida"
-        descricao="Nenhuma mancha tem garantia de 100% de remoção. Antigas, queimadas ou com dano químico podem ser permanentes."
+        descricao="Cada tipo aponta um produto da lista de fabricantes, segundo a ficha e o tecido. Nenhuma mancha tem garantia de 100% de remoção."
       />
       <input
         value={q}
@@ -56,7 +57,7 @@ function Lista() {
                     params={{ slug: m.slug }}
                     emoji={m.emoji}
                     titulo={m.nome}
-                    descricao={`${m.dificuldade} — ${m.caracteristica}`}
+                    descricao={`${m.dificuldade} · ${resumoProdutoLista(m.slug) ?? "Consulte o fabricante"} — ${m.caracteristica}`}
                   />
                 </li>
               ))}

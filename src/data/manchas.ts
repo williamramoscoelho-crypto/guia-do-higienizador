@@ -20,7 +20,11 @@ export const manchas: Mancha[] = [
       "Extrair e enxaguar quando o produto exigir.",
       "Secar com ventilação e reavaliar.",
     ],
-    naoFazer: ["Esfregar com força", "Aplicar alvejante", "Usar calor sobre a mancha antes de removê-la"],
+    naoFazer: [
+      "Esfregar com força",
+      "Aplicar alvejante de cloro (hipoclorito / água sanitária) — peróxido profissional é outra química",
+      "Usar calor sobre a mancha antes de removê-la",
+    ],
     limitacoes: "Manchas antigas de café podem oxidar e deixar sombra permanente, principalmente em fibras naturais.",
   },
   {
