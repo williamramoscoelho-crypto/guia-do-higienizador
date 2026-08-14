@@ -46,7 +46,8 @@ const pages = [
 ].map((path) => ({ path }));
 
 export default defineConfig({
-  nitro: cpanel ? false : undefined,
+  ...(cpanel ? { nitro: false as const } : {}),
+
   tanstackStart: {
     server: { entry: "server" },
     ...(cpanel
