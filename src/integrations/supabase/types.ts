@@ -14,10 +14,134 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string
+          bio: string
+          cidade: string
+          created_at: string
+          empresa: string
+          especialidades: string[]
+          estado: string
+          id: string
+          instagram: string
+          mostrar_cidade: boolean
+          mostrar_instagram: boolean
+          mostrar_site: boolean
+          mostrar_whatsapp: boolean
+          nome: string
+          nome_profissional: string
+          perfil_publico: boolean
+          permitir_mensagens: boolean
+          servicos: string[]
+          site: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          avatar_url?: string
+          bio?: string
+          cidade?: string
+          created_at?: string
+          empresa?: string
+          especialidades?: string[]
+          estado?: string
+          id: string
+          instagram?: string
+          mostrar_cidade?: boolean
+          mostrar_instagram?: boolean
+          mostrar_site?: boolean
+          mostrar_whatsapp?: boolean
+          nome?: string
+          nome_profissional?: string
+          perfil_publico?: boolean
+          permitir_mensagens?: boolean
+          servicos?: string[]
+          site?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          avatar_url?: string
+          bio?: string
+          cidade?: string
+          created_at?: string
+          empresa?: string
+          especialidades?: string[]
+          estado?: string
+          id?: string
+          instagram?: string
+          mostrar_cidade?: boolean
+          mostrar_instagram?: boolean
+          mostrar_site?: boolean
+          mostrar_whatsapp?: boolean
+          nome?: string
+          nome_profissional?: string
+          perfil_publico?: boolean
+          permitir_mensagens?: boolean
+          servicos?: string[]
+          site?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      perfis_publicos: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          cidade: string | null
+          created_at: string | null
+          empresa: string | null
+          especialidades: string[] | null
+          estado: string | null
+          id: string | null
+          instagram: string | null
+          nome: string | null
+          nome_profissional: string | null
+          permitir_mensagens: boolean | null
+          servicos: string[] | null
+          site: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          cidade?: never
+          created_at?: string | null
+          empresa?: string | null
+          especialidades?: string[] | null
+          estado?: never
+          id?: string | null
+          instagram?: never
+          nome?: string | null
+          nome_profissional?: never
+          permitir_mensagens?: boolean | null
+          servicos?: string[] | null
+          site?: never
+          whatsapp?: never
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          cidade?: never
+          created_at?: string | null
+          empresa?: string | null
+          especialidades?: string[] | null
+          estado?: never
+          id?: string | null
+          instagram?: never
+          nome?: string | null
+          nome_profissional?: never
+          permitir_mensagens?: boolean | null
+          servicos?: string[] | null
+          site?: never
+          whatsapp?: never
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
