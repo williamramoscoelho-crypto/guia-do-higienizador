@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AprenderRouteImport } from './routes/aprender'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AutomotivaRouteImport } from './routes/automotiva'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as ChecklistRouteImport } from './routes/checklist'
@@ -53,6 +54,11 @@ const IndexRoute = IndexRouteImport.update({
 const AprenderRoute = AprenderRouteImport.update({
   id: '/aprender',
   path: '/aprender',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AutomotivaRoute = AutomotivaRouteImport.update({
@@ -224,6 +230,7 @@ const TecidosSlugRoute = TecidosSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/aprender': typeof AprenderRoute
+  '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
@@ -261,6 +268,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/aprender': typeof AprenderRoute
+  '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/aprender': typeof AprenderRoute
+  '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
@@ -338,6 +347,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/aprender'
+    | '/auth'
     | '/automotiva'
     | '/buscar'
     | '/checklist'
@@ -375,6 +385,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/aprender'
+    | '/auth'
     | '/automotiva'
     | '/buscar'
     | '/checklist'
@@ -412,6 +423,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/aprender'
+    | '/auth'
     | '/automotiva'
     | '/buscar'
     | '/checklist'
@@ -450,6 +462,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AprenderRoute: typeof AprenderRoute
+  AuthRoute: typeof AuthRoute
   AutomotivaRoute: typeof AutomotivaRoute
   BuscarRoute: typeof BuscarRoute
   ChecklistRoute: typeof ChecklistRoute
@@ -499,6 +512,13 @@ declare module '@tanstack/react-router' {
       path: '/aprender'
       fullPath: '/aprender'
       preLoaderRoute: typeof AprenderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/automotiva': {
@@ -738,6 +758,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AprenderRoute: AprenderRoute,
+  AuthRoute: AuthRoute,
   AutomotivaRoute: AutomotivaRoute,
   BuscarRoute: BuscarRoute,
   ChecklistRoute: ChecklistRoute,
