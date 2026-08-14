@@ -1,5 +1,7 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getProduto } from "@/data/produtos";
+import { fichasDoProduto, nomeDaMarca } from "@/data/fichas-fabricantes";
+
 import {
   Aviso,
   Breadcrumbs,
