@@ -1,6 +1,6 @@
 project_id = "ivdymghkcwgwoedrruhx"
 
-# Higienizador IA: a chave OpenAI fica em Secrets, não no frontend.
-# verify_jwt = false porque a chave publishable nova (sb_publishable_) não é JWT.
+# Higienizador IA (Supabase opcional): chave OpenAI em Secrets, não no frontend.
+# HostGator usa api/lib/ia.php (Gemini/OpenAI). verify_jwt = false: sb_publishable_ não é JWT.
 [functions.higienizador-ia]
 verify_jwt = false
