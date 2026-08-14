@@ -24,6 +24,7 @@ import { Route as ParceriaRouteImport } from './routes/parceria'
 import { Route as PhRouteImport } from './routes/ph'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
+import { Route as ApiIaRouteImport } from './routes/api/ia'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -116,6 +117,11 @@ const SobreRoute = SobreRouteImport.update({
 const TransparenciaRoute = TransparenciaRouteImport.update({
   id: '/transparencia',
   path: '/transparencia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiIaRoute = ApiIaRouteImport.update({
+  id: '/api/ia',
+  path: '/api/ia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
@@ -225,6 +231,7 @@ export interface FileRoutesByFullPath {
   '/ph': typeof PhRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
+  '/api/ia': typeof ApiIaRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -260,6 +267,7 @@ export interface FileRoutesByTo {
   '/ph': typeof PhRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
+  '/api/ia': typeof ApiIaRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/ph': typeof PhRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
+  '/api/ia': typeof ApiIaRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/ph'
     | '/sobre'
     | '/transparencia'
+    | '/api/ia'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -368,6 +378,7 @@ export interface FileRouteTypes {
     | '/ph'
     | '/sobre'
     | '/transparencia'
+    | '/api/ia'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -403,6 +414,7 @@ export interface FileRouteTypes {
     | '/ph'
     | '/sobre'
     | '/transparencia'
+    | '/api/ia'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -439,6 +451,7 @@ export interface RootRouteChildren {
   PhRoute: typeof PhRoute
   SobreRoute: typeof SobreRoute
   TransparenciaRoute: typeof TransparenciaRoute
+  ApiIaRoute: typeof ApiIaRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
@@ -564,6 +577,13 @@ declare module '@tanstack/react-router' {
       path: '/transparencia'
       fullPath: '/transparencia'
       preLoaderRoute: typeof TransparenciaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ia': {
+      id: '/api/ia'
+      path: '/api/ia'
+      fullPath: '/api/ia'
+      preLoaderRoute: typeof ApiIaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos/': {
@@ -711,6 +731,7 @@ const rootRouteChildren: RootRouteChildren = {
   PhRoute: PhRoute,
   SobreRoute: SobreRoute,
   TransparenciaRoute: TransparenciaRoute,
+  ApiIaRoute: ApiIaRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
