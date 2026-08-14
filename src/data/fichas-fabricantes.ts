@@ -1070,3 +1070,91 @@ export const marcasFichas = [
 export const getFicha = (slug: string) => fichasFabricantes.find((f) => f.slug === slug);
 
 export const fichasPorMarca = (marca: string) => fichasFabricantes.filter((f) => f.marca === marca);
+
+/** Cruzamento categoria de produto (genérica) × produtos reais de fabricantes. */
+const fichasPorCategoriaProduto: Record<string, string[]> = {
+  "detergente-neutro": [
+    "vonixx-extractus-sensitive",
+    "easytech-plurisensitive",
+    "easytech-ecotextil",
+    "alcance-aquo-neutro",
+    "protelim-detergente-multiuso-prot-mult",
+  ],
+  "limpador-multiuso-apc": [
+    "vonixx-sintra-fast",
+    "vonixx-sintra-pro",
+    "vintex-limpador-multiacao-apc-500ml",
+    "protelim-apc-limpador-de-alta-performance",
+    "protelim-multi-ecco-apc-limpador-apc-multiuso",
+    "easytech-multiinteriores",
+    "easytech-quickinteriores",
+  ],
+  desengraxante: ["vintex-desengraxante-biodegradavel", "finisher-canelinha"],
+  alcalino: [
+    "vonixx-vertex",
+    "easytech-pluri",
+    "alcance-aquo-alcalino",
+    "protelim-prot-carp-20-limpa-tapetes-e-carpetes",
+  ],
+  acido: [],
+  neutralizante: [],
+  enzimatico: [],
+  desinfetante: [
+    "vonixx-bactran",
+    "vonixx-sanitizante-finalizador",
+    "protelim-bactericida-prot-ecco-ds-air-neutro",
+    "easytech-zbac",
+    "finisher-limpador-germicida",
+  ],
+  "removedor-de-manchas": [
+    "vonixx-extractus",
+    "easytech-oxyfast",
+    "easytech-oxy4d",
+    "easytech-plurifast",
+    "easytech-tapetex",
+    "protelim-bac-peroxy-limpador-de-uso-geral-de-alta-performance",
+    "spartan-peroxy-flot",
+    "spartan-xtraction-ii",
+  ],
+  "controlador-de-odor": [
+    "alcance-new-ar",
+    "easytech-soul",
+    "vintex-sanitizante-frutal",
+    "vintex-sanitizante-fresh",
+    "vintex-sanitizante-carro-novo",
+    "vintex-sanitizante-bom-ar",
+  ],
+  "limpador-de-couro": [
+    "vonixx-higicouro",
+    "easytech-limpacouro",
+    "easytech-couroqd",
+    "protelim-leather-cleaner-limpa-couro",
+    "finisher-limpa-couro",
+  ],
+  "hidratante-de-couro": [
+    "vonixx-hidracouro",
+    "vonixx-v-leather",
+    "vonixx-kit-couro-vonixx",
+    "easytech-insignialeather",
+    "protelim-prot-couro-revitalizador-de-couro",
+  ],
+  impermeabilizante: [
+    "vonixx-impermax",
+    "protelim-water-guard",
+    "protelim-prot-water-protetor-de-tecido",
+    "easytech-proimper",
+    "easytech-proimperpremium",
+    "alcance-impernano",
+    "alcance-master-dry",
+  ],
+};
+
+export const fichasDoProduto = (produtoSlug: string): FichaFabricante[] =>
+  (fichasPorCategoriaProduto[produtoSlug] ?? [])
+    .map((s) => getFicha(s))
+    .filter((f): f is FichaFabricante => Boolean(f));
+
+export const siteDaMarca = (marca: string) => marcasFichas.find((m) => m.slug === marca)?.site ?? "";
+
+export const nomeDaMarca = (marca: string) => marcasFichas.find((m) => m.slug === marca)?.nome ?? marca;
+
