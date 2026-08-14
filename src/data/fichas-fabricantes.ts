@@ -4,6 +4,7 @@ export type FichaFabricante = {
   nome: string;
   url: string;
   resumo: string;
+  /** Texto do fabricante. A calculadora em `/ferramentas/diluicao` só parseia `1:N` daqui — nunca invente a razão. */
   diluicao: string;
   ph: string;
   usoRecomendado: string;
@@ -14,6 +15,11 @@ export type FichaFabricante = {
   fichaPdf: string;
   fdsPdf: string;
   coletadoEm: string;
+  linha?: string;
+  fichaTecnica?: string;
+  sdsPdf?: string;
+  faq?: { p: string; r: string }[];
+  documentos?: { label: string; url: string }[];
 };
 
 /** Catálogo extraído de páginas oficiais. Confirme sempre no fabricante — fichas mudam. */
@@ -57,17 +63,30 @@ export const fichasFabricantes: FichaFabricante[] = [
     "marca": "vonixx",
     "nome": "SINTRA FAST",
     "url": "https://www.vonixx.com.br/produto/sintra-fast/",
-    "resumo": "Transforme a limpeza interna de seu carro com Sintra Fast da Vonixx. Com sua fórmula avançada, ele remove sujeiras, manchas e odores indesejáveis rapidamente, deixando o interior do seu veículo limpo e com um aroma fresco.",
-    "diluicao": "",
-    "ph": "alcalino. Não recomendamos realizar a aplicação em vidros automotivos.",
+    "resumo": "Sintra Fast é a escolha certa para quem quer manter o interior de seu carro sempre limpo e agradável.",
+    "diluicao": "Produto pronto uso.",
+    "ph": "Alcalino. Não recomendamos realizar a aplicação em vidros automotivos (Vonixx).",
     "usoRecomendado": "Painéis, couro, carpetes, estofados. ATENÇÃO Produto com pH alcalino. Não recomendamos realizar a aplicação em vidros automotivos.",
     "naoRecomendado": "",
     "composicao": "",
-    "modoDeUsar": "1 Pulverizar o produto na superfície a ser limpa e desinfetada. 2 Utilizar pincel, escova macia ou aplicador de espuma e realizar movimentos circulares até observar o desprendimento total da sujeira. 3 Remover o excesso com auxílio de toalha de microfibra úmida. Secar em seguida com uma toalha de microfibra seca.",
-    "embalagens": "ou rótulo do produto. CEATOX: 0800 014 8110. Manter o produto na embalagem origi…",
+    "modoDeUsar": "1. Pulverizar o produto na superfície a ser limpa e desinfetada. 2. Utilizar pincel, escova macia ou aplicador de espuma e realizar movimentos circulares até observar o desprendimento total da sujeira. 3. Remover o excesso com auxílio de toalha de microfibra úmida. Secar em seguida com uma toalha de microfibra seca.",
+    "embalagens": "500ml",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2025/03/sintra-fast_fdsbrasil_v1_rev0-1.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2025/03/sintra-fast_sds_v1_rev0.pdf",
+    "linha": "Interior pronto uso",
+    "fichaTecnica": "OBSERVAÇÃO: A ação desinfetante é comprovada para o produto puro em um tempo de contado de 30 minutos. PRECAUÇÕES: CUIDADO! Perigosa sua ingestão. Pode provocar danos ao sistema respiratório por exposição repetida ou prolongada. CONSERVE FORA DO ALCANCE DAS CRIANÇAS E ANIMAIS DOMÉSTICOS. Evite contato prolongado com a pele. Lavar as mãos após o uso. Em caso de contato com os olhos, lavar com água corrente em abundância durante 15 minutos. Se inalado em excesso, remover a pessoa para local bem ventilado. Se ingerido, não provocar vômito e consultar de imediato Centro de Intoxicações ou Serviço de Saúde mais próximo, portando a embalagem ou rótulo do produto. CEATOX: 0800 014 8110. Manter o produto na embalagem original. Proteger o produto do sol e do calor. Não reutilizar a embalagem vazia para outra finalidade. USO RECOMENDADO Painéis, couro, carpetes, estofados. ATENÇÃO Produto com pH alcalino. Não recomendamos realizar a aplicação em vidros automotivos.",
+    "faq": [
+      {
+        "p": "QUAL A DILUIÇÃO DO SINTRA FAST?",
+        "r": "Produto pronto uso."
+      },
+      {
+        "p": "QUAL USO RECOMENDADO?",
+        "r": "Painéis, couro, carpetes, estofados."
+      }
+    ]
   },
   {
     "slug": "vonixx-vertex",
@@ -75,84 +94,203 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "VERTEX",
     "url": "https://www.vonixx.com.br/produto/vertex/",
     "resumo": "Vertex é um limpador de estofados automotivos e residenciais. O produto tem alta concentração de ativos a fim de aumentar o rendimento e limpar com eficiência.",
-    "diluicao": "Sujeira pesada acumulada por muito tempo: 1:20 | Sujeira média: 1:40 Sujeira leve: 1:80 Obs: As diluições são sugestivas e poderão ser alteradas para mais ou para menos de acordo com a necessidade.",
-    "ph": "",
-    "usoRecomendado": "do veículo, tais como: couro, vidros, plásticos e demais superfícies internas do carro a fim de evitar manchas.",
-    "naoRecomendado": "Tecidos naturais como linho, seda, lã e demais tecidos naturais, pois poderá causar manchas.",
+    "diluicao": "Sujeira pesada acumulada por muito tempo: 1:20 | Sujeira média: 1:40 Sujeira leve: 1:80 Obs: As diluições são sugestivas e poderão ser alteradas para mais ou para menos de acordo com a necessidade",
+    "ph": "Alcalino",
+    "usoRecomendado": "",
+    "naoRecomendado": "Tecidos naturais como linho, seda, lã e demais tecidos naturais, pois poderá causar manchas. Em caso de limpeza de estofados automotivo, evitar respingar o produto em outras superfícies do veículo, tais como: couro, vidros, plásticos e demais superfícies internas do carro a fim de evitar manchas.",
     "composicao": "",
-    "modoDeUsar": "1 Proteger todas as áreas que não serão higienizadas. 2 Aspirar a sujeira solta na área a ser limpa. 3 Pulverizar o produto já diluído em toda área a ser limpa. 4 Fazer ação mecânica utilizando escova manual ou com auxílio de máquinas rotativas. 5 Enxaguar bem com água limpa para não deixar residual de produto.",
-    "embalagens": "500ML 1,5L 5L",
+    "modoDeUsar": "1. Proteger todas as áreas que não serão higienizadas. 2. Aspirar a sujeira solta na área a ser limpa. 3. Pulverizar o produto já diluído em toda área a ser limpa. 4. Fazer ação mecânica utilizando escova manual ou com auxílio de máquinas rotativas. 5. Enxaguar bem com água limpa para não deixar residual de produto. 6. Se necessário repetir a operação.",
+    "embalagens": "500ml, 1,5L, 5L",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2024/11/vertex_fdsbrasil_v1_rev0.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2024/11/vertex_sds_v1_rev0.pdf",
+    "linha": "Limpador de estofados automotivos e residenciais",
+    "fichaTecnica": "DILUIÇÃO Sujeira pesada acumulada por muito tempo: 1:20 | Sujeira média: 1:40 Sujeira leve: 1:80 Obs: As diluições são sugestivas e poderão ser alteradas para mais ou para menos de acordo com a necessidade. OBSERVAÇÃO IMPORTANTE: Em caso de contato com cerâmica ou porcelanato, recomendamos enxaguar imediatamente para evitar possíveis manchas IMPORTANTE O produto é alcalino e recomendamos o uso de óculos e luvas. NÃO RECOMENDADO Tecidos naturais como linho, seda, lã e demais tecidos naturais, pois poderá causar manchas. Em caso de limpeza de estofados automotivo, evitar respingar o produto em outras superfícies do veículo, tais como: couro, vidros, plásticos e demais superfícies internas do carro a fim de evitar manchas."
   },
   {
     "slug": "vonixx-extractus",
     "marca": "vonixx",
     "nome": "EXTRACTUS",
     "url": "https://www.vonixx.com.br/produto/extractus/",
-    "resumo": "Extractus é um limpador ultra concentrado de alta performance e baixa espumação, desenvolvido para limpeza profissional de estofados, carpetes e tapetes. Seu uso é indicado em extratoras.",
-    "diluicao": "poderá ser alterada para mais ou para menos a depender do resultado observado. OBSERVAÇÃO: Recomendamos spot test para verificar a compatibilidade do produto com a superfície. USO RECOMENDADO Tecidos sintéticos.",
-    "ph": "Básico, conforme rótulo. DILUIÇÕES • Sujeira pesada – 1:10 • Sujeira média – 1:30 • Sujeira leve – 1:60 A diluição poder…",
-    "usoRecomendado": "Tecidos sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em plástico, piso de porcelanato e materiais de fibras naturais, como linho e camurça.",
+    "resumo": "Extractus é um limpador ultra concentrado de alta performance e baixa espumação, desenvolvido para limpeza profissional de estofados, carpetes e tapetes. Seu uso é indicado em extratoras. Sua fórmula contém tensoativos e alcalinizantes especiais que removem facilmente os mais diversos tipos de sujeira, em especial as derivadas de graxa, suor e gorduras em geral.",
+    "diluicao": "Sujeira pesada – 1:10 • Sujeira média – 1:30 • Sujeira leve – 1:60 A diluição poderá ser alterada para mais ou para menos a depender do resultado observado Spot test recomendado pelo fabricante.",
+    "ph": "Básico, conforme rótulo.",
+    "usoRecomendado": "Tecidos sintéticos.",
     "naoRecomendado": "Não utilizar este produto em plástico, piso de porcelanato e materiais de fibras naturais, como linho e camurça.",
     "composicao": "",
-    "modoDeUsar": "1 Diluir o produto na proporção ideal de acordo com o nível de sujeira. 2 Pulverizar uma fina névoa do produto, mantendo distância entre 20cm a 30cm da superfície, a fim de evitar encharcamento do estofado ou carpete. 3 Aguardar 2 minutos.",
-    "embalagens": "1,5L 3L 5L",
+    "modoDeUsar": "1. Diluir o produto na proporção ideal de acordo com o nível de sujeira. 2. Pulverizar uma fina névoa do produto, mantendo distância entre 20cm a 30cm da superfície, a fim de evitar encharcamento do estofado ou carpete. 3. Aguardar 2 minutos. 4. Utilizar escova macia e realizar a esfregação para auxiliar no desprendimento da sujeira. 5. Realizar a extração ou aspiração sem enxágue. 6. Realizar uma segunda extração, dessa vez com enxágue.",
+    "embalagens": "1,5L, 3L, 5L",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/extractus_fdsbrasil_v1_rev0-1.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/extractus_sds_v1_rev0.pdf",
+    "linha": "Sistema VSC — passo 1 (sintéticos / extratora)",
+    "fichaTecnica": "pH Básico, conforme rótulo. DILUIÇÕES • Sujeira pesada – 1:10 • Sujeira média – 1:30 • Sujeira leve – 1:60 A diluição poderá ser alterada para mais ou para menos a depender do resultado observado. Spot test recomendado pelo fabricante. USO RECOMENDADO Tecidos sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em plástico, piso de porcelanato e materiais de fibras naturais, como linho e camurça.",
+    "faq": [
+      {
+        "p": "QUAL A DIFERENÇA DO EXTRACTUS PARA O EXTRACTUS SENSITIVE ?",
+        "r": "O Extractus é pra todo tipo de tecido e o Extractus sensitive foi feito pra tecidos mais delicados e tem ph neutro."
+      },
+      {
+        "p": "PRODUTO IDEAL PARA QUAL TIPO DE USO?",
+        "r": "Desenvolvido para limpeza profissional de estofados, carpetes e tapetes."
+      },
+      {
+        "p": "INDICADO PARA EXTRATORAS?",
+        "r": "Seu uso é indicado em extratoras."
+      }
+    ],
+    "documentos": [
+      {
+        "label": "CHECKLIST DE INSPEÇÃO TÉCNICA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/cheklist-de-higienizacao-1.pdf"
+      },
+      {
+        "label": "CERTIFICADO DE GARANTIA ANVISA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/certificado-de-limpeza-e-higienizacao-1-1-2.pdf"
+      }
+    ]
   },
   {
     "slug": "vonixx-extractus-sensitive",
     "marca": "vonixx",
     "nome": "EXTRACTUS SENSITIVE",
     "url": "https://www.vonixx.com.br/produto/extractus-sensitive/",
-    "resumo": "O produto que todo profissional que atua com higienização de estofados precisa ter!",
-    "diluicao": "Sujeira pesada 1:10 | Sujeira média: 1:30 | Sujeira leve: 1:60 pH Neutro USO RECOMENDADO Tecidos sensíveis SUPERFÍCIES ESTOFADOS INDICAÇÃO LIMPADOR ULTRA CONCENTRADO PARA TECIDOS DELICADOS E DE FIBRAS NATURAIS",
-    "ph": "Neutro USO RECOMENDADO Tecidos sensíveis SUPERFÍCIES ESTOFADOS INDICAÇÃO LIMPADOR ULTRA CONCENTRADO PARA TECIDOS DELICAD…",
-    "usoRecomendado": "Tecidos sensíveis SUPERFÍCIES ESTOFADOS INDICAÇÃO LIMPADOR ULTRA CONCENTRADO PARA TECIDOS DELICADOS E DE FIBRAS NATURAIS",
+    "resumo": "Esse produto chegou como um complemento da linha VSC e foi desenvolvido principalmente para uso em tecidos mais delicados e de fibras naturais como seda, linho, lã e camurça, porque tem pH neutro em sua composição. Seu uso também é indicado para limpeza profissional de estofados automotivos, carpetes, sofás, colchões e tapetes. Sua fórmula contém tensoativos especiais que removem diversos tipos de sujeira nos tecidos mais sensíveis sem causar nenhum dano.",
+    "diluicao": "Sujeira pesada 1:10 | Sujeira média: 1:30 | Sujeira leve: 1:60",
+    "ph": "Neutro",
+    "usoRecomendado": "Tecidos sensíveis",
     "naoRecomendado": "",
-    "composicao": ". Seu uso também é indicado para limpeza profissional de estofados automotivos, carpetes, sofás, colchões e tapetes.",
-    "modoDeUsar": "1 Diluir o produto na proporção ideal de acordo com o nível de sujeira. 2 Pulverizar uma fina névoa do produto, mantendo distância entre 20cm a 30cm da superfície, a fim de evitar encharcamento do estofado ou carpete. Aguardar 2 minutos.",
-    "embalagens": "1,5L 3L",
+    "composicao": "",
+    "modoDeUsar": "1. Diluir o produto na proporção ideal de acordo com o nível de sujeira. 2. Pulverizar uma fina névoa do produto, mantendo distância entre 20cm a 30cm da superfície, a fim de evitar encharcamento do estofado ou carpete. Aguardar 2 minutos. 3. Utilizar escova macia e realizar a esfregação para auxiliar no desprendimento da sujeira. 4. Realizar a extração ou aspiração sem enxágue. 5. Realizar uma segunda extração, dessa vez com enxágue.",
+    "embalagens": "1,5L, 3L",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/extractus-sensitive_fdsbrasil_v1_rev0.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/extractus-sensitive_sds_v1_rev0.pdf",
+    "linha": "Sistema VSC — tecidos delicados / fibras naturais",
+    "fichaTecnica": "DILUIÇÃO Sujeira pesada 1:10 | Sujeira média: 1:30 | Sujeira leve: 1:60 pH Neutro USO RECOMENDADO Tecidos sensíveis SUPERFÍCIES ESTOFADOS INDICAÇÃO LIMPADOR ULTRA CONCENTRADO PARA TECIDOS DELICADOS E DE FIBRAS NATURAIS",
+    "faq": [
+      {
+        "p": "DEVE SER UTILIZADO EM QUAL PASSO DO SISTEMA VSC?",
+        "r": "Passo 1."
+      },
+      {
+        "p": "É INDICADO PARA QUAL TIPO DE ESTOFADO?",
+        "r": "Estofados de tecidos delicados e de fibras naturais. Quais tipos de superficeis a ser utilizado? Tecidos mais delicados e de fibras naturais como seda, linho, lã e camurça. É indicado para qual tipo de limpeza? Limpeza profissional de estofados automotivos, carpetes, sofás, colchões e tapetes."
+      }
+    ],
+    "documentos": [
+      {
+        "label": "CHECKLIST DE INSPEÇÃO TÉCNICA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/cheklist-de-higienizacao-1.pdf"
+      },
+      {
+        "label": "CERTIFICADO DE GARANTIA ANVISA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/certificado-de-limpeza-e-higienizacao-1-1-2.pdf"
+      }
+    ]
   },
   {
     "slug": "vonixx-sanitizante-finalizador",
     "marca": "vonixx",
     "nome": "SANITIZANTE FINALIZADOR",
     "url": "https://www.vonixx.com.br/produto/sanitizante-finalizador/",
-    "resumo": "SANITIZANTE FINALIZADOR é um produto 4×1, desenvolvido exclusivamente para ser aplicado sob forma de pulverização na última etapa da limpeza de estofados, carpetes e tapetes.",
-    "diluicao": "Única padrão: 1:10 OBSERVAÇÃO Recomendamos spot test para verificar a compatibilidade do produto com a superfície. USO RECOMENDADO Tecidos naturais e sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em plástico.",
-    "ph": "Neutro. DILUIÇÃO Única padrão: 1:10 OBSERVAÇÃO Recomendamos spot test para verificar a compatibilidade do produto com a…",
-    "usoRecomendado": "Tecidos naturais e sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em plástico.",
+    "resumo": "SANITIZANTE FINALIZADOR é um produto 4×1, desenvolvido exclusivamente para ser aplicado sob forma de pulverização na última etapa da limpeza de estofados, carpetes e tapetes. Sua fórmula mata germes, bactérias e deixa um ativo residual com efeito bacteriostático, diminuindo as chances de crescimento de germes por até três meses. O produto promove agradável aroma na superfície e toque de maciez nas fibras.",
+    "diluicao": "Única padrão: 1:10 Spot test recomendado pelo fabricante.",
+    "ph": "Neutro.",
+    "usoRecomendado": "Tecidos naturais e sintéticos.",
     "naoRecomendado": "Não utilizar este produto em plástico.",
     "composicao": "",
-    "modoDeUsar": "1 Após a lavar o estofado, aplicar uma fina névoa do Sanitizante Finalizador diluído na proporção de 1:10 e aguardar 10 minutos para o produto agir. 2 Realizar a extração ou aspiração sem enxágue a fim de deixar um residual do produto.",
-    "embalagens": "1,5L 3L 5L",
+    "modoDeUsar": "1. Após a lavar o estofado, aplicar uma fina névoa do Sanitizante Finalizador diluído na proporção de 1:10 e aguardar 10 minutos para o produto agir. 2. Realizar a extração ou aspiração sem enxágue a fim de deixar um residual do produto. 3. Essa pequena quantidade de produto residual auxiliará na eliminação de bactérias que porventura não foram removidas, agindo também na prevenção do crescimento de bactérias por até três meses.",
+    "embalagens": "1,5L, 3L, 5L",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/sanitizantes_fdsbrasil_v1_rev0.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/sanitizantes_sds_v1_rev0.pdf",
+    "linha": "Sistema VSC — finalização / pulverização",
+    "fichaTecnica": "pH Neutro. DILUIÇÃO Única padrão: 1:10 OBSERVAÇÃO Recomendamos spot test para verificar a compatibilidade do produto com a superfície. USO RECOMENDADO Tecidos naturais e sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em plástico.",
+    "faq": [
+      {
+        "p": "QUAL O MODO DE APLICAÇÃO?",
+        "r": "O Sanitizante Finalizador da Vonixx é um produto 4 em 1, desenvolvido exclusivamente para ser aplicado sob forma de pulverização na última etapa da limpeza de estofados, carpetes e tapetes."
+      },
+      {
+        "p": "ESSE PRODUTO É BACTERICIDA?",
+        "r": "O Sanitizante Finalizador mata germes, bactérias e deixa um ativo residual com efeito bacteriostático, diminuindo as chances de crescimento de germes por até três meses."
+      },
+      {
+        "p": "POSSO DILUIR O PRODUTO?",
+        "r": "Sim. Após lavar o estofado, carpete ou tapete, aplique uma fina névoa do sanitizante finalizador diluído na proporção de 1:10. Aguarde 10 minutos para o produto agir. Em seguida, realize a extração ou aspiração sem enxágue a fim de deixar um residual do produto."
+      },
+      {
+        "p": "QUAL A DURABILIDADE DA APLICAÇÃO?",
+        "r": "O Sanitizante Finalizador 4em 1 deixa um ativo residual com efeito bacteriostático, diminuindo as chances de crescimento de germes por até três meses."
+      }
+    ],
+    "documentos": [
+      {
+        "label": "CHECKLIST DE INSPEÇÃO TÉCNICA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/cheklist-de-higienizacao-1.pdf"
+      },
+      {
+        "label": "CERTIFICADO DE GARANTIA ANVISA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/certificado-de-limpeza-e-higienizacao-1-1-2.pdf"
+      }
+    ]
   },
   {
     "slug": "vonixx-bactran",
     "marca": "vonixx",
     "nome": "BACTRAN",
     "url": "https://www.vonixx.com.br/produto/bactran/",
-    "resumo": "Bactran é um limpador bactericida ultra concentrado de alta performance e baixa espumação, desenvolvido para limpeza profissional de estofados, carpetes e tapetes. Seu uso é indicado com extratoras.",
-    "diluicao": "1:2 e aguardar por 5 minutos antes de realizar a extração. ⚠️ Recomendamos spot test para verificar a compatibilidade do produto com a superfície. VERSÕES DISPONÍVEIS",
-    "ph": "",
-    "usoRecomendado": "Tecidos naturais e sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em vidro. OBSERVAÇÃO: Recomendamos spot test para verificar a compatibilidade do produto com a superfície.",
-    "naoRecomendado": "Não utilizar este produto em vidro. OBSERVAÇÃO: Recomendamos spot test para verificar a compatibilidade do produto com a superfície.",
+    "resumo": "Bactran é um limpador bactericida ultra concentrado de alta performance e baixa espumação, desenvolvido para limpeza profissional de estofados, carpetes e tapetes. Seu uso é indicado com extratoras. Sua fórmula contém tensoativos especiais que agem em sinergia com o peróxido de hidrogênio e remove facilmente os mais diversos tipos de sujeira, em especial manchas de sangue, suco, café e bolores, além de eliminar fungos e bactérias. pH Ácido. 7 em 1: – Tira manchas; – Limpa; – Alveja; – Neutraliza o pH; – Desinfeta mata até 99,99% de bactérias; – Neutraliza odores; – Elimina fungos.",
+    "diluicao": "Sujeira Pesada 1:10 | Sujeira Média: 1:30 | Sujeira leve: 1:60 diluição 1:2 e aguardar por 5 minutos antes de realizar a extração. Spot test recomendado pelo fabricante.",
+    "ph": "Ácido.",
+    "usoRecomendado": "Tecidos naturais e sintéticos.",
+    "naoRecomendado": "Não utilizar este produto em vidro. Spot test recomendado pelo fabricante.",
     "composicao": "",
-    "modoDeUsar": "1 A depender do nível de sujeira, diluir o produto na proporção conforme indicado nas diluições. 2 Pulverizar o produto umedecendo o estofado, mantendo distância entre 20cm a 30cm da superfície, a fim de evitar encharcamento do estofado ou carpete. 3 Aguardar 5 minutos.",
-    "embalagens": "1,5L 3L 5L",
+    "modoDeUsar": "1. A depender do nível de sujeira, diluir o produto na proporção conforme indicado nas diluições. 2. Pulverizar o produto umedecendo o estofado, mantendo distância entre 20cm a 30cm da superfície, a fim de evitar encharcamento do estofado ou carpete. 3. Aguardar 5 minutos. 4. Utilize escova macia e realize a esfregação para auxiliar na remoção da sujeira. 5. Realizar a extração ou aspiração sem enxágue. 6. Realizar uma segunda extração, dessa vez com enxágue. Obs: Para remoção de manchas localizadas, aplicar pequena quantidade do produto na diluição 1:2 e aguardar por 5 minutos antes de realizar a extração. ⚠️ Recomendamos spot test para verificar a compatibilidade do produto com a superfície.",
+    "embalagens": "1,5L, 3L, 5L",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/bactran_fdsbrasil_v1_rev0-1.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/bactran_sds_v1_rev0.pdf",
+    "linha": "Sistema VSC — bactericida / peróxido",
+    "fichaTecnica": "DILUIÇÃO A diluição poderá ser alterada a depender do resultado observado. Sujeira Pesada 1:10 | Sujeira Média: 1:30 | Sujeira leve: 1:60. USO RECOMENDADO Tecidos naturais e sintéticos. INFORMAÇÕES ADICIONAIS Não utilizar este produto em vidro. Spot test recomendado pelo fabricante.",
+    "faq": [
+      {
+        "p": "ESSE PRODUTO PODE LIMPAR CADEIRA DE TECIDO ?",
+        "r": "Sim. É indicado para cadeiras de tecido."
+      },
+      {
+        "p": "É INDICADO PARA ESTOFADOS EM LINHO?",
+        "r": "Sim. Conforme diluição e modo de uso do rótulo. TEM FRAGRÂNCIA"
+      },
+      {
+        "p": "NO PRODUTO?",
+        "r": "Não tem fragância. É um produto neutro."
+      },
+      {
+        "p": "TIRA CHEIRO DE URINA?",
+        "r": "Sim. Ele elimina odores através da ação do ativo."
+      },
+      {
+        "p": "É NECESSÁRIO LUVA PARA SUA APLICAÇÃO?",
+        "r": "Sim. O Ideal é que sejam utilizados EPIs como luva e óculos de proteção."
+      }
+    ],
+    "documentos": [
+      {
+        "label": "CHECKLIST DE INSPEÇÃO TÉCNICA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/cheklist-de-higienizacao-1.pdf"
+      },
+      {
+        "label": "CERTIFICADO DE GARANTIA ANVISA",
+        "url": "https://www.vonixx.com.br/wp-content/uploads/2023/07/certificado-de-limpeza-e-higienizacao-1-1-2.pdf"
+      }
+    ]
   },
   {
     "slug": "vonixx-v-leather",
@@ -176,17 +314,34 @@ export const fichasFabricantes: FichaFabricante[] = [
     "marca": "vonixx",
     "nome": "SINTRA PRO",
     "url": "https://www.vonixx.com.br/produto/sintra-pro/",
-    "resumo": "Sintra Pro é um multilimpador flotador universal, bactericida e germicida de pH balanceado, indicado para limpeza de painéis, laterais e cantos de portas, bancadas de couro, carpetes e estofados.",
-    "diluicao": "Limpeza de laterais de portas, plásticos e couro muito encardido – 1:5. Carpetes, estofados e limpeza de teto – 1:10 (sujeira pesada); 1:20 (sujeira média); 1:30 (sujeira leve). Manutenção de limpeza interna em painéis, laterais de portas e bancos de couro – 1:50.",
-    "ph": "alcalino. Não recomendamos realizar a aplicação em vidros automotivos.",
-    "usoRecomendado": "Painéis, couro, carpetes, estofados. Produto com pH alcalino. Não recomendamos realizar a aplicação em vidros automotivos. OBSERVAÇÃO Em extratoras com diluição de até 1:60 e em tornador com diluição 1:10.",
+    "resumo": "Sintra Pro é um multilimpador flotador universal, bactericida e germicida de pH balanceado, indicado para limpeza de painéis, laterais e cantos de portas, bancadas de couro, carpetes e estofados. Promove alto poder de remoção de manchas de gordura e sujeiras diversas, além de eliminar microrganismos causadores de doenças no interior do veículo. Sintra Fast diminui maus odores no interior do veículo, tornando-o mais saudável e livre de impurezas. OBSERVAÇÃO: Em extratoras com diluição de até 1:60 e em tornador com diluição 1:10.",
+    "diluicao": "Limpeza de laterais de portas, plásticos e couro muito encardido – 1:5. Carpetes, estofados e limpeza de teto – 1:10 (sujeira pesada); 1:20 (sujeira média); 1:30 (sujeira leve). Manutenção de limpeza interna em painéis, laterais de portas e bancos de couro – 1:50. Em extratoras com diluição de até 1:60 e em tornador com diluição 1:10.",
+    "ph": "Alcalino. Não recomendamos realizar a aplicação em vidros automotivos (Vonixx).",
+    "usoRecomendado": "Painéis, couro, carpetes, estofados. Produto com pH alcalino. Não recomendamos realizar a aplicação em vidros automotivos.",
     "naoRecomendado": "",
     "composicao": "",
-    "modoDeUsar": "Em painéis, laterais, cantos de portas e bancos de couro. 1 Pulverizar o produto na superfície a ser limpa e desinfetada. 2 Utilizar pincel, escova macia ou aplicador de espuma e realizar movimentos circulares até observar o desprendimento total da sujeira.",
-    "embalagens": "ou rótulo do produto. CEATOX: 0800 014 8110. Manter o produto na embalagem origi…",
+    "modoDeUsar": "1. Pulverizar o produto na superfície a ser limpa e desinfetada. 2. Utilizar pincel, escova macia ou aplicador de espuma e realizar movimentos circulares até observar o desprendimento total da sujeira. 3. Remover o excesso com auxílio de toalha de microfibra úmida. Secar em seguida com uma toalha de microfibra seca.",
+    "embalagens": "1,5L, 3L, 5L",
     "fichaPdf": "",
     "fdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/sintra-pro_fdsbrasil_v1_rev0.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "sdsPdf": "https://www.vonixx.com.br/wp-content/uploads/2023/07/sintra-pro_sds_v1_rev0.pdf",
+    "linha": "Interior / flotador (painéis, couro, carpete, estofado)",
+    "fichaTecnica": "OBSERVAÇÃO: A ação desinfetante é comprovada para o produto puro em um tempo de contado de 30 minutos. PRECAUÇÕES: CUIDADO! Perigosa sua ingestão. Pode provocar danos ao sistema respiratório por exposição repetida ou prolongada. CONSERVE FORA DO ALCANCE DAS CRIANÇAS E ANIMAIS DOMÉSTICOS. Evite contato prolongado com a pele. Lavar as mãos após o uso. Em caso de contato com os olhos, lavar com água corrente em abundância durante 15 minutos. Se inalado em excesso, remover a pessoa para local bem ventilado. Se ingerido, não provocar vômito e consultar de imediato Centro de Intoxicações ou Serviço de Saúde mais próximo, portando a embalagem ou rótulo do produto. CEATOX: 0800 014 8110. Manter o produto na embalagem original. Proteger o produto do sol e do calor. Não reutilizar a embalagem vazia para outra finalidade. DILUIÇÃO Limpeza de laterais de portas, plásticos e couro muito encardido – 1:5. Carpetes, estofados e limpeza de teto – 1:10 (sujeira pesada); 1:20 (sujeira média); 1:30 (sujeira leve). Manutenção de limpeza interna em painéis, laterais de portas e bancos de couro – 1:50. OBSERVAÇÃO: Em extratoras com diluição de até 1:60 e em tornador com diluição 1:10.",
+    "faq": [
+      {
+        "p": "PARA QUAL INDICAÇÃO É ESSE PRODUTO?",
+        "r": "Indicado para limpeza de painéis, laterais e cantos de portas, bancadas de couro, carpetes e estofados."
+      },
+      {
+        "p": "ELIMINA ODORES?",
+        "r": "Sintra Fast diminui maus odores no interior do veículo, tornando-o mais saudável e livre de impurezas."
+      },
+      {
+        "p": "PODE SER APLICADO EM VIDROS DOS CARROS?",
+        "r": "Não recomendamos realizar a aplicação em vidros automotivos."
+      }
+    ]
   },
   {
     "slug": "vonixx-impermax",
@@ -346,51 +501,63 @@ export const fichasFabricantes: FichaFabricante[] = [
     "marca": "protelim",
     "nome": "CARP 20 – LIMPA TAPETES E CARPETES",
     "url": "https://protelim.com.br/produto/prot-carp-20-limpa-tapetes-e-carpetes/",
-    "resumo": "CARP 20 é um limpa tapetes e carpetes cuidadosamente elaborado para auxiliar você no processo de limpeza desses tecidos. É um produto líquido, concentrado, possui uma formação de espuma abundante, que permite uma lavagem quase seca de carpetes e tapetes.",
-    "diluicao": ", agite a solução até a formação de espuma abundante. Aplicar somente a espuma sobre o local a ser limpo, no caso de aplicação manual. No caso de pulverização, borrifar o produto, esfregar com escova de cerdas macias. Secar com pano limpo e seco.",
+    "resumo": "CARP 20 é um limpa tapetes e carpetes cuidadosamente elaborado para auxiliar você no processo de limpeza desses tecidos. É um produto líquido, concentrado, possui uma formação de espuma abundante, que permite uma lavagem quase seca de carpetes e tapetes. Além de limpar, reaviva as cores, protege as fibras mais delicadas que compõem os carpetes e tapetes. Devido a sua formulação concentrada, possibilita um grande rendimento e, assim, evita o desperdício do mesmo.",
+    "diluicao": "Limpeza manual – 1:20 Limpeza com extratora – 1:60",
     "ph": "",
-    "usoRecomendado": "e aplique na superfície a ser limpa. * As diluições citadas são apenas orientativas, podendo ser alteradas de acordo com seu uso e sujidade. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
-    "naoRecomendado": "",
+    "usoRecomendado": "Produto para limpar carpetes e tapetes profundamente.",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
-    "modoDeUsar": "Dilua o produto de acordo com as instruções abaixo: Limpeza manual – 1:20 Limpeza com extratora – 1:60. Para uso manual: Após a diluição, agite a solução até a formação de espuma abundante. Aplicar somente a espuma sobre o local a ser limpo, no caso de aplicação manual.",
-    "embalagens": "",
+    "modoDeUsar": "Dilua o produto de acordo com as instruções abaixo: Limpeza manual – 1:20 Limpeza com extratora – 1:60. Para uso manual: Após a diluição, agite a solução até a formação de espuma abundante. Aplicar somente a espuma sobre o local a ser limpo, no caso de aplicação manual. No caso de pulverização, borrifar o produto, esfregar com escova de cerdas macias. Secar com pano limpo e seco. Para uso em extratoras, faça a diluição conforme indicação e aplique na superfície a ser limpa. * As diluições citadas são apenas orientativas, podendo ser alteradas de acordo com seu uso e sujidade. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1,5L, 5L, 20L e 50L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-CARP-20_Rev07_2025.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "SHP — limpa tapetes e carpetes",
+    "fichaTecnica": "CARP 20 é um limpa tapetes e carpetes cuidadosamente elaborado para auxiliar você no processo de limpeza desses tecidos. É um produto líquido, concentrado, possui uma formação de espuma abundante, que permite uma lavagem quase seca de carpetes e tapetes. Além de limpar, reaviva as cores, protege as fibras mais delicadas que compõem os carpetes e tapetes. Devido a sua formulação concentrada, possibilita um grande rendimento e, assim, evita o desperdício do mesmo. EMBALAGENS: 1,5L, 5L, 20L e 50L BENEFÍCIOS: Não danifica as fibras do tecido Perfume prolongado EMBALAGENS: 1,5L, 5L, 20L e 50L Diluição: Limpeza manual – 1:20 Limpeza com extratora – 1:60 Modo de usar: Dilua o produto de acordo com as instruções abaixo: Limpeza manual – 1:20 Limpeza com extratora – 1:60. Para uso manual: Após a diluição, agite a solução até a formação de espuma abundante. Aplicar somente a espuma sobre o local a ser limpo, no caso de aplicação manual. No caso de pulverização, borrifar o produto, esfregar com escova de cerdas macias. Secar com pano limpo e seco. Para uso em extratoras, faça a diluição conforme indicação e aplique na superfície a ser limpa."
   },
   {
     "slug": "protelim-bac-peroxy-limpador-de-uso-geral-de-alta-performance",
     "marca": "protelim",
-    "nome": "BAC PEROXY",
+    "nome": "BAC PEROXY – LIMPADOR DE USO GERAL DE ALTA PERFORMANCE 9 EM 1",
     "url": "https://protelim.com.br/produto/bac-peroxy-limpador-de-uso-geral-de-alta-performance/",
-    "resumo": "BAC PEROXY é um limpador de uso geral concentrado, com alta performance, que combina a força de Peróxido de Hidrogênio e Tensoativos, facilitando a limpeza e higienização de superfícies laváveis, com alto grau de sujidades.",
-    "diluicao": "indicada acima, não será necessário o enxágue. Caso haja necessidade, reaplique o produto. IMPORTANTE: Este produto não pode ser aplicado em superfícies como madeira, alumínio, bronze e cobre. Não diluir o produto em recipientes metálicos.",
-    "ph": "8 – Odorizante 9 – Ação Bacteriostática EMBALAGENS: 1,5 L e 5 L BENEFÍCIOS: Remove manchas pesadas e orgânicas Bloqueia…",
-    "usoRecomendado": "Dilua o limpador de uso geral Bac Peroxy de acordo com as instruções abaixo: Limpeza pesada – 1:10 (100 ml do produto para 1 litro de água), 1:20 (50 ml do produto para 1 litro de água) e 1:40 (25 ml do produto para 1 li…",
-    "naoRecomendado": "",
+    "resumo": "BAC PEROXY é um limpador de uso geral concentrado, com alta performance, que combina a força de Peróxido de Hidrogênio e Tensoativos, facilitando a limpeza e higienização de superfícies laváveis, com alto grau de sujidades. Eficiente na limpeza e higienização de tecidos em geral, mofos, rejuntes, azulejos, porcelanatos, louças sanitárias, entre outros. Este produto possui oxigênio ativo, reduz odores, remove manchas pesadas, sujidades orgânicas e não contém cloro.",
+    "diluicao": "Limpeza pesada – 1:10 (100 ml do produto para 1 litro de água), 1:20 (50 ml do produto para 1 litro de água) e 1:40 (25 ml do produto para 1 litro de água) Limpeza média – 1:40 até 1:60 Limpeza leve (diária) – 1:100 até 1:200 Remova da superfície toda a partícula sólida com o auxílio de um pano, flanela, vassoura ou mop",
+    "ph": "",
+    "usoRecomendado": "Eficiente na limpeza e higienização de tecidos em geral, mofos, rejuntes, azulejos, porcelanatos, louças sanitárias, entre outros.",
+    "naoRecomendado": "Este produto não pode ser aplicado em superfícies como madeira, alumínio, bronze e cobre. Não diluir o produto em recipientes metálicos. Não utilizar o produto com diluições inferiores a de 1:40 em mármores e granitos. Proteger o produto de fontes de calor. Antes de utilizar o produto em qualquer superfície, faça um teste em uma área não visível. Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
-    "modoDeUsar": "Dilua o limpador de uso geral Bac Peroxy de acordo com as instruções abaixo: Limpeza pesada – 1:10 (100 ml do produto para 1 litro de água), 1:20 (50 ml do produto para 1 litro de água) e 1:40 (25 ml do produto para 1 litro de água). Limpeza média – 1:40 até 1:60.",
-    "embalagens": "",
+    "modoDeUsar": "Dilua o limpador de uso geral Bac Peroxy de acordo com as instruções abaixo: Limpeza pesada – 1:10 (100 ml do produto para 1 litro de água), 1:20 (50 ml do produto para 1 litro de água) e 1:40 (25 ml do produto para 1 litro de água). Limpeza média – 1:40 até 1:60. Limpeza leve (diária) – 1:100 até 1:200 Remova da superfície toda a partícula sólida com o auxílio de um pano, flanela, vassoura ou mop. Aplique o produto diluído com um pulverizador, pano, flanela ou mop úmido, escova, esponja, extratora ou tornador. Deixe agir por 5 minutos. Em seguida, utilize ação mecânica com equipamentos ou manualmente. Enxágue a superfície com água limpa ou remova com pano úmido. Em casos de limpezas diárias com a diluição indicada acima, não será necessário o enxágue. Caso haja necessidade, reaplique o produto.",
+    "embalagens": "1,5 L e 5 L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-BAC-PEROXY_Rev04_2024.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "SHP — limpador de uso geral / tecidos",
+    "fichaTecnica": "BAC PEROXY é um limpador de uso geral concentrado, com alta performance, que combina a força de Peróxido de Hidrogênio e Tensoativos, facilitando a limpeza e higienização de superfícies laváveis, com alto grau de sujidades. Eficiente na limpeza e higienização de tecidos em geral, mofos, rejuntes, azulejos, porcelanatos, louças sanitárias, entre outros. Este produto possui oxigênio ativo, reduz odores, remove manchas pesadas, sujidades orgânicas e não contém cloro."
   },
   {
     "slug": "protelim-water-guard",
     "marca": "protelim",
     "nome": "WATER GUARD – PROTETOR DE TECIDOS À BASE DE ÁGUA",
     "url": "https://protelim.com.br/produto/water-guard/",
-    "resumo": "O Water Guard é um protetor para tecidos à base de água, que retarda a penetração de líquidos aquosos, evitando manchas na fibra.",
-    "diluicao": "",
+    "resumo": "O Water Guard é um protetor para tecidos à base de água, que retarda a penetração de líquidos aquosos, evitando manchas na fibra. É muito seguro, não é inflamável, fácil de aplicar e de baixo odor, podendo ser aplicado em ambientes fechados de forma segura. Water Guard é indicado para estofados, poltronas, tênis de tecido, almofadas, cadeiras etc.",
+    "diluicao": "Produto pronto para uso.",
     "ph": "",
     "usoRecomendado": "Water Guard é indicado para estofados, poltronas, tênis de tecido, almofadas, cadeiras etc.",
-    "naoRecomendado": "",
+    "naoRecomendado": "Antes de aplicar o produto, baixe o manual de aplicação do nosso sistema de higienização e proteção Protelim SHP em nosso site. Uso profissional. Antes de aplicar o produto, o tecido deverá estar lavado e seco. Faça um teste em um local pouco visível para verificar a firmeza da cor, pois alguns tecidos podem manchar até com água.",
     "composicao": "",
-    "modoDeUsar": "Produto de pronto uso. Antes de aplicar o produto, baixe o manual de aplicação do nosso sistema de higienização e proteção SHP em nosso site. Após seguir todos os procedimentos do sistema SHP, regule o jato em forma de leque e aplique com uma distância de 15/20 cm da superfície.",
-    "embalagens": "5 L BENEFÍCIOS: Produto à base de água Não é inflamável Alta concentração de ati…",
+    "modoDeUsar": "Produto de pronto uso. Antes de aplicar o produto, baixe o manual de aplicação do nosso sistema de higienização e proteção SHP em nosso site. Após seguir todos os procedimentos do sistema SHP, regule o jato em forma de leque e aplique com uma distância de 15/20 cm da superfície. Aplique de 2 a 3 demãos do produto na vertical e horizontal, obedecendo um intervalo de 5 a 10 minutos de uma aplicação para outra. Com ajuda de um rodo de silicone ou espátula, passe levemente sobre a superfície onde o Water Guard foi aplicado para obter maior uniformidade e absorção do produto pelas fibras dos tecidos. Aguarde a secagem do produto que será de 24 a 48 horas, dependendo da temperatura ambiente. Se necessário, em dias de muito frio ou chuvosos, utilizar secadores de ar frio ou quente.",
+    "embalagens": "5 L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2022/03/FDS-WATER-GUARD_Rev_02_2025.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "SHP — protetor de tecido (base água)",
+    "fichaTecnica": "O Water Guard é um protetor para tecidos à base de água, que retarda a penetração de líquidos aquosos, evitando manchas na fibra. É muito seguro, não é inflamável, fácil de aplicar e de baixo odor, podendo ser aplicado em ambientes fechados de forma segura. Water Guard é indicado para estofados, poltronas, tênis de tecido, almofadas, cadeiras etc. EMBALAGEM: 5 L BENEFÍCIOS: Produto à base de água Não é inflamável Alta concentração de ativo Baixo odor EMBALAGENS: 5 L Diluição: Produto pronto para uso. Modo de usar: Produto de pronto uso. Antes de aplicar o produto, baixe o manual de aplicação do nosso sistema de higienização e proteção SHP em nosso site. Após seguir todos os procedimentos do sistema SHP, regule o jato em forma de leque e aplique com uma distância de 15/20 cm da superfície. Aplique de 2 a 3 demãos do produto na vertical e horizontal, obedecendo um intervalo de 5 a 10 minutos de uma aplicação para outra. Com ajuda de um rodo de silicone ou espátula, passe levemente sobre a superfície onde o Water Guard foi aplicado para obter maior uniformidade e absorção do produto pelas fibras dos tecidos.",
+    "documentos": [
+      {
+        "label": "Baixar SHP",
+        "url": "https://protelim.com.br/wp-content/uploads/2024/03/Manual-SHP-Water-Guard.pdf"
+      }
+    ]
   },
   {
     "slug": "protelim-prot-water-protetor-de-tecido",
@@ -398,101 +565,119 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "PROT WATER – PROTETOR DE TECIDO À BASE DE SOLVENTE",
     "url": "https://protelim.com.br/produto/prot-water-protetor-de-tecido/",
     "resumo": "PROT WATER é um produto que proporciona às fibras maior resistência a manchas provocadas por líquidos e outras substâncias. Este protetor de tecido facilita a remoção, garantindo maior durabilidade, sem alterar seu toque ou cor.",
-    "diluicao": "",
+    "diluicao": "Produto pronto para uso.",
     "ph": "",
-    "usoRecomendado": "Produto pronto para uso. Antes de utilizar, requisite o Guia de Aplicação Profissional do protetor de tecido PROT WATER com seu fornecedor. Proteja plásticos, madeiras, acrílicos etc.",
-    "naoRecomendado": "",
+    "usoRecomendado": "",
+    "naoRecomendado": "Alguns tecidos contêm corantes sensíveis que não seguram as cores com aplicação de tratamento de vaporização, e o material do forro frequentemente contém corantes econômicos que não seguram as cores. Evite este problema testando uma área escondida antes de tratar toda a peça. Aplique o protetor de tecido PROT WATER na traseira da peça do estofado, ou no lado de trás da saia.",
     "composicao": "",
-    "modoDeUsar": "Produto pronto para uso. Antes de utilizar, requisite o Guia de Aplicação Profissional do protetor de tecido PROT WATER com seu fornecedor. Proteja plásticos, madeiras, acrílicos etc. Garanta que o tecido esteja seco e livre de resíduos de detergentes.",
-    "embalagens": "",
+    "modoDeUsar": "Produto pronto para uso. Antes de utilizar, requisite o Guia de Aplicação Profissional do protetor de tecido PROT WATER com seu fornecedor. Proteja plásticos, madeiras, acrílicos etc. Garanta que o tecido esteja seco e livre de resíduos de detergentes. Durante a aplicação e secagem do produto, mantenha AS JANELAS ABERTAS, LONGE DE FONTES DE CALOR E FAÍSCAS (em média 48 horas). Utilize sempre máscara para vapores durante a aplicação. Não aplique o produto por meio de aerossol. Aplique o produto puro, com movimentos lentos na horizontal e vertical, mantendo o bico do leque afastado em torno de 25 cm do tecido. IMPORTANTE: Alguns tecidos contêm corantes sensíveis que não seguram as cores com aplicação de tratamento de vaporização, e o material do forro frequentemente contém corantes econômicos que não seguram as cores.",
+    "embalagens": "5L e 20L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-WATER_Rev07_2025.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "SHP — protetor de tecido (solvente)",
+    "fichaTecnica": "PROT WATER é um produto que proporciona às fibras maior resistência a manchas provocadas por líquidos e outras substâncias. Este protetor de tecido facilita a remoção, garantindo maior durabilidade, sem alterar seu toque ou cor. EMBALAGENS: 5L e 20L BENEFÍCIOS: Hidrorrepelência Fácil aplicação Secagem rápida EMBALAGENS: 5L e 20L Diluição: Produto pronto para uso. Modo de usar: Produto pronto para uso. Antes de utilizar, requisite o Guia de Aplicação Profissional do protetor de tecido PROT WATER com seu fornecedor. Proteja plásticos, madeiras, acrílicos etc. Garanta que o tecido esteja seco e livre de resíduos de detergentes. Durante a aplicação e secagem do produto, mantenha AS JANELAS ABERTAS, LONGE DE FONTES DE CALOR E FAÍSCAS (em média 48 horas). Utilize sempre máscara para vapores durante a aplicação. Não aplique o produto por meio de aerossol. Aplique o produto puro, com movimentos lentos na horizontal e vertical, mantendo o bico do leque afastado em torno de 25 cm do tecido.",
+    "documentos": [
+      {
+        "label": "Baixar SHP",
+        "url": "https://protelim.com.br/wp-content/uploads/2024/03/Manual-SHP-Prot-Water.pdf"
+      }
+    ]
   },
   {
     "slug": "protelim-leather-cleaner-limpa-couro",
     "marca": "protelim",
     "nome": "Leather Cleaner – Limpa Couro",
     "url": "https://protelim.com.br/produto/leather-cleaner-limpa-couro/",
-    "resumo": "O Leather Cleaner da Protelim é um produto desenvolvido para limpeza profunda de superfícies revestidas com couro natural ou sintético.",
-    "diluicao": "",
-    "ph": "neutro, deixando um aspecto natural e uma fragrância agradável.",
-    "usoRecomendado": "Produto pronto para uso. Borrife o Leather Cleaner Protelim sobre a superfície ou em uma flanela de microfibra.",
-    "naoRecomendado": "",
+    "resumo": "O Leather Cleaner da Protelim é um produto desenvolvido para limpeza profunda de superfícies revestidas com couro natural ou sintético. Leather Cleaner possui tensoativos biodegradáveis de última geração, é neutro e age somente sobre a sujidade, removendo as impurezas mais profundas com extrema facilidade, sem danificar a área a ser limpa. A superfície do couro é pigmentada e tem aspecto rugoso, o que demanda um correto processo de limpeza. Leather Cleaner não remove a tinta do couro, não é abrasivo e nem corrosivo, possui o PH neutro, deixando um aspecto natural e uma fragrância agradável.",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "neutro",
+    "usoRecomendado": "",
+    "naoRecomendado": "Sempre faça o teste de aplicação em uma pequena parte antes da aplicação total. Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
-    "modoDeUsar": "Produto pronto para uso. Borrife o Leather Cleaner Protelim sobre a superfície ou em uma flanela de microfibra. Utilize uma flanela de microfibra seca para espalhar o produto sobre o couro com movimentos verticais e horizontais. Se preferir, utilize uma escova super macia para realizar a esfregação.",
-    "embalagens": "",
+    "modoDeUsar": "Produto pronto para uso. Borrife o Leather Cleaner Protelim sobre a superfície ou em uma flanela de microfibra. Utilize uma flanela de microfibra seca para espalhar o produto sobre o couro com movimentos verticais e horizontais. Se preferir, utilize uma escova super macia para realizar a esfregação. Se necessário, repita a operação. Utilize um pano seco e macio para remover o excesso do produto. Não necessita enxágue. IMPORTANTE: Sempre faça o teste de aplicação em uma pequena parte antes da aplicação total. Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "500ML",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2022/05/FDS-LEATHER-CLEANER_Rev02_2024.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Couro / interior",
+    "fichaTecnica": "O Leather Cleaner da Protelim é um produto desenvolvido para limpeza profunda de superfícies revestidas com couro natural ou sintético. Leather Cleaner possui tensoativos biodegradáveis de última geração, é neutro e age somente sobre a sujidade, removendo as impurezas mais profundas com extrema facilidade, sem danificar a área a ser limpa. A superfície do couro é pigmentada e tem aspecto rugoso, o que demanda um correto processo de limpeza. Leather Cleaner não remove a tinta do couro, não é abrasivo e nem corrosivo, possui o PH neutro, deixando um aspecto natural e uma fragrância agradável. EMBALAGENS: 500ML BENEFÍCIOS: pH neutro Alto rendimento Preserva a pigmentação do couro Limpa profundamente e sem esforço EMBALAGENS: 500ML pH: neutro Diluição: Produto pronto para uso. Modo de usar: Produto pronto para uso. Borrife o Leather Cleaner Protelim sobre a superfície ou em uma flanela de microfibra. Utilize uma flanela de microfibra seca para espalhar o produto sobre o couro com movimentos verticais e horizontais. Se preferir, utilize uma escova super macia para realizar a esfregação. Se necessário, repita a operação. Utilize um pano seco e macio para remover o excesso do produto."
   },
   {
     "slug": "protelim-prot-couro-revitalizador-de-couro",
     "marca": "protelim",
     "nome": "LEATHER – HIDRATANTE DE COURO",
     "url": "https://protelim.com.br/produto/prot-couro-revitalizador-de-couro/",
-    "resumo": "LEATHER protege o couro, recuperando a aparência de novo sem deixar oleosidade, tornando-o macio e evitando rachaduras. Sua fórmula balanceada de PH neutro possui óleos e emulsionantes especiais, que revitalizam o couro.",
-    "diluicao": "",
-    "ph": "neutro possui óleos e emulsionantes especiais, que revitalizam o couro.",
+    "resumo": "LEATHER protege o couro, recuperando a aparência de novo sem deixar oleosidade, tornando-o macio e evitando rachaduras. Sua fórmula balanceada de PH neutro possui óleos e emulsionantes especiais, que revitalizam o couro. Pode ser usado em estofados de autos, embarcações, aeronaves, escritórios, residências, jaquetas, sapatos, cintos, carteiras, bolsas, entre outros. BENEFÍCIOS Restaura e protege Não deixa resíduos Revitalizador para couro Prolonga a vida EMBALAGENS 500ml",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "neutro",
     "usoRecomendado": "Pode ser usado em estofados de autos, embarcações, aeronaves, escritórios, residências, jaquetas, sapatos, cintos, carteiras, bolsas, entre outros.",
-    "naoRecomendado": "",
+    "naoRecomendado": "Sempre faça o teste de aplicação em uma pequena parte antes da aplicação total. Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
-    "modoDeUsar": "Produto pronto para uso. Agite o produto. Aplique o produto suavemente com um aplicador de espuma sobre a superfície. Deixe por 5 minutos. Remova o excesso com uma flanela de microfibra macia, seca e limpa. Se necessário repita o processo.",
+    "modoDeUsar": "Produto pronto para uso. Agite o produto. Aplique o produto suavemente com um aplicador de espuma sobre a superfície. Deixe por 5 minutos. Remova o excesso com uma flanela de microfibra macia, seca e limpa. Se necessário repita o processo. IMPORTANTE: Sempre faça o teste de aplicação em uma pequena parte antes da aplicação total. Utilize Equipamento de Proteção Individual (EPIs).",
     "embalagens": "",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-LEATHER_Rev07_2025-1.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Couro / interior",
+    "fichaTecnica": "LEATHER protege o couro, recuperando a aparência de novo sem deixar oleosidade, tornando-o macio e evitando rachaduras. Sua fórmula balanceada de PH neutro possui óleos e emulsionantes especiais, que revitalizam o couro. Pode ser usado em estofados de autos, embarcações, aeronaves, escritórios, residências, jaquetas, sapatos, cintos, carteiras, bolsas, entre outros. BENEFÍCIOS Restaura e protege Não deixa resíduos Revitalizador para couro Prolonga a vida EMBALAGENS 500ml pH: neutro Diluição: Produto pronto para uso. Modo de usar: Produto pronto para uso. Agite o produto. Aplique o produto suavemente com um aplicador de espuma sobre a superfície. Deixe por 5 minutos. Remova o excesso com uma flanela de microfibra macia, seca e limpa. Se necessário repita o processo. IMPORTANTE: Sempre faça o teste de aplicação em uma pequena parte antes da aplicação total. Utilize Equipamento de Proteção Individual (EPIs). Indicação: Pode ser usado em estofados de autos, embarcações, aeronaves, escritórios, residências, jaquetas, sapatos, cintos, carteiras, bolsas, entre outros. Notas: Sempre faça o teste de aplicação em uma pequena parte antes da aplicação total."
   },
   {
     "slug": "protelim-apc-limpador-de-alta-performance",
     "marca": "protelim",
     "nome": "APC – Limpador de Alta Performance",
     "url": "https://protelim.com.br/produto/apc-limpador-de-alta-performance/",
-    "resumo": "APC Protelim é um multilimpador instantâneo, de pronto uso, com muito mais poder de limpeza. Foi desenvolvido para limpeza profunda em superfícies com sujidades variadas.",
-    "diluicao": "",
-    "ph": "equilibrado, e respeitando a orientação de uso, não altera as características das superfícies.",
+    "resumo": "APC Protelim é um multilimpador instantâneo, de pronto uso, com muito mais poder de limpeza. Foi desenvolvido para limpeza profunda em superfícies com sujidades variadas. Com a perfeita combinação dos componentes de sua fórmula, permite a dispersão das partículas de sujeira, facilitando a remoção dos resíduos. Por ter um pH equilibrado, e respeitando a orientação de uso, não altera as características das superfícies. Limpa instantaneamente e sem esforço.",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "equilibrado",
     "usoRecomendado": "Indicado para limpeza de estofados, carpetes, couro, vinil, plásticos, borrachas, motor, rodas, pneus e superfícies em geral.",
-    "naoRecomendado": "",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
-    "modoDeUsar": "Borrife o limpador APC Protelim direto na superfície ou em uma flanela de microfibra. Com uma leve pressão, faça movimentos horizontais e verticais para que a limpeza seja concluída. Em seguida, passe uma flanela de microfibra limpa e seca para remover o resíduo sobre a superfície. Caso necessário, repita a aplicação.",
-    "embalagens": "500ml BENEFÍCIOS: Pode ser aplicado em couro, plástico, vinil e tecido.",
+    "modoDeUsar": "Borrife o limpador APC Protelim direto na superfície ou em uma flanela de microfibra. Com uma leve pressão, faça movimentos horizontais e verticais para que a limpeza seja concluída. Em seguida, passe uma flanela de microfibra limpa e seca para remover o resíduo sobre a superfície. Caso necessário, repita a aplicação. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "500ml",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-APC_-Rev03_2024.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "SHP — APC interiores pronto uso",
+    "fichaTecnica": "APC Protelim é um multilimpador instantâneo, de pronto uso, com muito mais poder de limpeza. Foi desenvolvido para limpeza profunda em superfícies com sujidades variadas. Com a perfeita combinação dos componentes de sua fórmula, permite a dispersão das partículas de sujeira, facilitando a remoção dos resíduos. Por ter um pH equilibrado, e respeitando a orientação de uso, não altera as características das superfícies. Limpa instantaneamente e sem esforço. EMBALAGEM: 500ml BENEFÍCIOS: Pode ser aplicado em couro, plástico, vinil e tecido. Remove gorduras EMBALAGENS: 500ml pH: equilibrado Diluição: Produto pronto para uso. Modo de usar: Borrife o limpador APC Protelim direto na superfície ou em uma flanela de microfibra. Com uma leve pressão, faça movimentos horizontais e verticais para que a limpeza seja concluída. Em seguida, passe uma flanela de microfibra limpa e seca para remover o resíduo sobre a superfície. Caso necessário, repita a aplicação. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs). Indicação: Indicado para limpeza de estofados, carpetes, couro, vinil, plásticos, borrachas, motor, rodas, pneus e superfícies em geral."
   },
   {
     "slug": "protelim-multi-ecco-apc-limpador-apc-multiuso",
     "marca": "protelim",
     "nome": "MULTI ECCO APC – LIMPADOR APC MULTIUSO",
     "url": "https://protelim.com.br/produto/multi-ecco-apc-limpador-apc-multiuso/",
-    "resumo": "MULTI ECCO APC é um limpador APC multiuso automotivo instantâneo, super concentrado, com grande poder de limpeza. Foi desenvolvido para fazer limpezas profundas em superfícies com sujidades variadas.",
-    "diluicao": "e tempo de exposição do produto pode causar alterações na originalidade da peça. Utilize Equipamento de Proteção Individual (EPIs).",
-    "ph": "equilibrado, respeitando as orientações de uso, ele não altera as características originais das superfícies aplicadas.",
+    "resumo": "MULTI ECCO APC é um limpador APC multiuso automotivo instantâneo, super concentrado, com grande poder de limpeza. Foi desenvolvido para fazer limpezas profundas em superfícies com sujidades variadas. Com a perfeita combinação dos componentes de sua fórmula, permite a dispersão das partículas de sujeira, facilitando a remoção dos resíduos. Por conter um pH equilibrado, respeitando as orientações de uso, ele não altera as características originais das superfícies aplicadas. Limpa instantaneamente e sem esforço estofados, carpetes, couro, vinil, plásticos, borrachas, motor, rodas, entre outras.",
+    "diluicao": "Limpeza pesada – 1 litro de produto para até 10 litros de água Limpeza média – 1 litro de produto para até 20 litros de água Limpeza leve – 1 litro de produto para até 50 litros de água 1 litro de produto para até 10 litros de água 1 litro de produto para até 20 litros de água 1 litro de produto para até 50 litros de água",
+    "ph": "equilibrado",
     "usoRecomendado": "Indicado para limpezas profundas em superfícies com sujidades variadas: estofados, carpetes, couro, vinil, plásticos, borrachas, motor, rodas, entre outras.",
-    "naoRecomendado": "",
+    "naoRecomendado": "Faça a aplicação manualmente, com extratoras, borrifadores, tornadores, etc. Teste com um produto em uma pequena parte da superfície a ser limpa, antes da aplicação na sua totalidade. A diluição e tempo de exposição do produto pode causar alterações na originalidade da peça. Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
-    "modoDeUsar": "Dilua o limpador APC multiuso automotivo de acordo com as instruções abaixo: Limpeza pesada – 1 litro de produto para até 10 litros de água. Limpeza média – 1 litro de produto para até 20 litros de água. Limpeza leve – 1 litro de produto para até 50 litros de água.",
-    "embalagens": "",
+    "modoDeUsar": "Dilua o limpador APC multiuso automotivo de acordo com as instruções abaixo: Limpeza pesada – 1 litro de produto para até 10 litros de água. Limpeza média – 1 litro de produto para até 20 litros de água. Limpeza leve – 1 litro de produto para até 50 litros de água. Faça a aplicação manualmente, com extratoras, borrifadores, tornadores, etc. Deixe agir por poucos segundos e remova totalmente o resíduo deixado na superfície. IMPORTANTE: Faça a aplicação manualmente, com extratoras, borrifadores, tornadores, etc. Teste com um produto em uma pequena parte da superfície a ser limpa, antes da aplicação na sua totalidade. A diluição e tempo de exposição do produto pode causar alterações na originalidade da peça. Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1,5L e 5L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-MULT-ECCO-APC_Rev04_2025.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "SHP — APC concentrado (estofados, carpetes, interiores)",
+    "fichaTecnica": "MULTI ECCO APC é um limpador APC multiuso automotivo instantâneo, super concentrado, com grande poder de limpeza. Foi desenvolvido para fazer limpezas profundas em superfícies com sujidades variadas. Com a perfeita combinação dos componentes de sua fórmula, permite a dispersão das partículas de sujeira, facilitando a remoção dos resíduos. Por conter um pH equilibrado, respeitando as orientações de uso, ele não altera as características originais das superfícies aplicadas. Limpa instantaneamente e sem esforço estofados, carpetes, couro, vinil, plásticos, borrachas, motor, rodas, entre outras."
   },
   {
     "slug": "protelim-detergente-multiuso-prot-mult",
     "marca": "protelim",
     "nome": "PROT MULT – DETERGENTE MULTIUSO",
     "url": "https://protelim.com.br/produto/detergente-multiuso-prot-mult/",
-    "resumo": "PROT MULT é um detergente multiuso concentrado de altas diluições, o qual foi desenvolvido para substituir os desengraxantes à base de solventes de petróleo.",
-    "diluicao": "1:5",
+    "resumo": "PROT MULT é um detergente multiuso concentrado de altas diluições, o qual foi desenvolvido para substituir os desengraxantes à base de solventes de petróleo. À base de água, remove as mais diversas sujidades, dentre elas, graxas e fuligem. Também pode ser utilizado em pisos, equipamentos em geral, pistas de rolamento, fornos, máquinas têxteis, empilhadeiras, impressoras, tanques e motores. Não contém fenóis, cresóis, solventes clorados, alvejantes, amônia e outros solventes tóxicos. É um produto que contém Tensoativo biodegradável.",
+    "diluicao": "Usar puro ou na diluição de 1 parte do produto em até 5 partes de água em recipiente plástico",
     "ph": "",
-    "usoRecomendado": "Usar puro ou na diluição de 1 parte do produto em até 5 partes de água em recipiente plástico.",
-    "naoRecomendado": "",
+    "usoRecomendado": "",
+    "naoRecomendado": "Faça teste com o produto em uma pequena parte da superfície a ser limpa, antes da aplicação em sua totalidade. A diluição e tempo de exposição do produto pode causar alterações na originalidade da peça. Todo produto químico diluição e tempo de exposição do produto, pode causar alterações na originalidade da peça.",
     "composicao": "",
-    "modoDeUsar": "Usar puro ou na diluição de 1 parte do produto em até 5 partes de água em recipiente plástico. Aplicar no local a ser limpo e deixar agir de 10 a 20 minutos em seguida realizar ação mecânica na sujidade e enxaguar com água limpa na sequência.",
-    "embalagens": "",
+    "modoDeUsar": "Usar puro ou na diluição de 1 parte do produto em até 5 partes de água em recipiente plástico. Aplicar no local a ser limpo e deixar agir de 10 a 20 minutos em seguida realizar ação mecânica na sujidade e enxaguar com água limpa na sequência. Dependendo do grau de sujidade, o nível de diluição para preparo da solução pode variar. IMPORTANTE: Faça teste com o produto em uma pequena parte da superfície a ser limpa, antes da aplicação em sua totalidade. A diluição e tempo de exposição do produto pode causar alterações na originalidade da peça. Todo produto químico diluição e tempo de exposição do produto, pode causar alterações na originalidade da peça. Todo produto químico pode gerar alterações na superfície aplicada, portanto, sempre proteja partes delicadas e elétricas. Não aplicar em superfícies pintadas. Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "5L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-MULT_Rev06_2025.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Multiuso (slug já existente no Guia)",
+    "fichaTecnica": "PROT MULT é um detergente multiuso concentrado de altas diluições, o qual foi desenvolvido para substituir os desengraxantes à base de solventes de petróleo. À base de água, remove as mais diversas sujidades, dentre elas, graxas e fuligem. Também pode ser utilizado em pisos, equipamentos em geral, pistas de rolamento, fornos, máquinas têxteis, empilhadeiras, impressoras, tanques e motores. Não contém fenóis, cresóis, solventes clorados, alvejantes, amônia e outros solventes tóxicos. É um produto que contém Tensoativo biodegradável. EMBALAGENS: 5L DILUIÇÃO: 1:5 EMBALAGENS: 5L Diluição: Usar puro ou na diluição de 1 parte do produto em até 5 partes de água em recipiente plástico Modo de usar: Usar puro ou na diluição de 1 parte do produto em até 5 partes de água em recipiente plástico. Aplicar no local a ser limpo e deixar agir de 10 a 20 minutos em seguida realizar ação mecânica na sujidade e enxaguar com água limpa na sequência. Dependendo do grau de sujidade, o nível de diluição para preparo da solução pode variar. IMPORTANTE: Faça teste com o produto em uma pequena parte da superfície a ser limpa, antes da aplicação em sua totalidade."
   },
   {
     "slug": "protelim-bactericida-prot-ecco-ds-air-neutro",
@@ -500,33 +685,151 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "BACTERICIDA ECCO DS AIR – NEUTRO",
     "url": "https://protelim.com.br/produto/bactericida-prot-ecco-ds-air-neutro/",
     "resumo": "PROT ECCO DS AIR NEUTRO é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
-    "diluicao": "",
-    "ph": "neutro Sem fragrâncias",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "neutro",
     "usoRecomendado": "Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
-    "naoRecomendado": "",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
     "composicao": "",
     "modoDeUsar": "Produto pronto para uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
-    "embalagens": "",
+    "embalagens": "1L e 5L",
     "fichaPdf": "",
     "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-ECCO-DS_Rev04_2024.pdf",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Interior — bactericida",
+    "fichaTecnica": "PROT ECCO DS AIR NEUTRO é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. EMBALAGENS: 1L e 5L BENEFÍCIOS: Produto hipoalergênico pH neutro Sem fragrâncias EMBALAGENS: 1L e 5L pH: neutro Diluição: Produto pronto para uso. Modo de usar: Produto pronto para uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs). Indicação: Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. Notas: Utilize Equipamento de Proteção Individual (EPIs)."
+  },
+  {
+    "slug": "protelim-lava-a-seco-automotivo-prot-dry",
+    "marca": "protelim",
+    "nome": "PROT DRY – LAVA A SECO AUTOMOTIVO",
+    "url": "https://protelim.com.br/produto/lava-a-seco-automotivo-prot-dry/",
+    "resumo": "PROT DRY é um lava a seco automotivo inovador e de última geração, indicado para lavagem a seco de pinturas de automóveis, ônibus, caminhões, aeronaves e barcos. Formulado para uso profissional, ele limpa, dá brilho e protege, sem riscar a superfície, encapsulando a sujeira.",
+    "diluicao": "Dilua o produto de 1 para 10 partes de água 1 para 10 partes de água",
+    "ph": "",
+    "usoRecomendado": "Indicado para lavagem a seco de pinturas de automóveis, ônibus, caminhões, aeronaves e barcos.",
+    "naoRecomendado": "Produto de uso profissional. Não aplicar o produto sob a luz do sol ou com a superfície aquecida. Utilize Equipamento de Proteção Individual (EPIs).",
+    "composicao": "",
+    "modoDeUsar": "Agite o produto. Dilua o produto de 1 para 10 partes de água. Aplique o produto com um pulverizador spray. Remova com uma flanela de microfibra Protelim úmida a sujeira encapsulada. Passe outra flanela de microfibra Protelim limpa e seca para dar o acabamento especial. * Todas as vezes que a flanela de microfibra umedecida for utilizada, lave-a com auxílio de um balde ou uma torneira para a reutilização da mesma. IMPORTANTE: Produto de uso profissional. Não aplicar o produto sob a luz do sol ou com a superfície aquecida. Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1,5L e 5L",
+    "fichaPdf": "",
+    "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-DRY_Rev06_2024-1.pdf",
+    "coletadoEm": "2026-08-14",
+    "linha": "Lavagem a seco (SKU pedido)",
+    "fichaTecnica": "PROT DRY é um lava a seco automotivo inovador e de última geração, indicado para lavagem a seco de pinturas de automóveis, ônibus, caminhões, aeronaves e barcos. Formulado para uso profissional, ele limpa, dá brilho e protege, sem riscar a superfície, encapsulando a sujeira. EMBALAGENS: 1,5L e 5L BENEFÍCIOS: Lava e encera Limpa e protege Acabamento impecável com alto brilho Toque de seda Embalagem Ergonômica EMBALAGENS: 1,5L e 5L Diluição: Dilua o produto de 1 para 10 partes de água 1 para 10 partes de água Modo de usar: Agite o produto. Dilua o produto de 1 para 10 partes de água. Aplique o produto com um pulverizador spray. Remova com uma flanela de microfibra Protelim úmida a sujeira encapsulada. Passe outra flanela de microfibra Protelim limpa e seca para dar o acabamento especial. * Todas as vezes que a flanela de microfibra umedecida for utilizada, lave-a com auxílio de um balde ou uma torneira para a reutilização da mesma. IMPORTANTE: Produto de uso profissional. Não aplicar o produto sob a luz do sol ou com a superfície aquecida. Utilize Equipamento de Proteção Individual (EPIs)."
+  },
+  {
+    "slug": "protelim-prot-dry-pronto-uso-lavagem-a-seco-automotiva",
+    "marca": "protelim",
+    "nome": "PROT DRY PRONTO USO – LAVAGEM A SECO AUTOMOTIVA",
+    "url": "https://protelim.com.br/produto/prot-dry-pronto-uso-lavagem-a-seco-automotiva/",
+    "resumo": "Produto inovador e de última geração para lavagem a seco automotiva, indicado para dar agilidade na limpeza da superfície de automóveis, ônibus, caminhões, etc. Para pronto uso, possui um bico pulverizador que agiliza os serviços. Ideal para manutenção de veículos em showrooms, concessionárias, locadoras, oficinas mecânicas etc, sem precisar lavar diariamente. Ideal para inspeção final em polimento, remoção de resíduos de ceras e polidores.",
+    "diluicao": "1 para 10 partes de água Produto pronto para uso.",
+    "ph": "",
+    "usoRecomendado": "indicado para dar agilidade na limpeza da superfície de automóveis, ônibus, caminhões, etc.",
+    "naoRecomendado": "Não aplicar o produto sob a luz do sol ou com a superfície aquecida. Utilize Equipamento de Proteção Individual (EPIs).",
+    "composicao": "",
+    "modoDeUsar": "Produto pronto para uso. Para começar a lavagem a seco automotiva, agite o produto. Aplique o produto com um pulverizador spray com diluição de 1 para 10 partes de água. Remova com uma flanela de microfibra Protelim úmida a sujeira encapsulada. Passe outra flanela de microfibra Protelim limpa e seca para dar o acabamento especial. * Todas as vezes que a flanela de microfibra umedecida for utilizada, lave-a com auxílio de um balde ou uma torneira para a reutilização da mesma. IMPORTANTE: Não aplicar o produto sob a luz do sol ou com a superfície aquecida. Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "500ml",
+    "fichaPdf": "",
+    "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-DRY_Rev07_2025.pdf",
+    "coletadoEm": "2026-08-14",
+    "linha": "Lavagem a seco pronto uso",
+    "fichaTecnica": "Produto inovador e de última geração para lavagem a seco automotiva, indicado para dar agilidade na limpeza da superfície de automóveis, ônibus, caminhões, etc. Para pronto uso, possui um bico pulverizador que agiliza os serviços. Ideal para manutenção de veículos em showrooms, concessionárias, locadoras, oficinas mecânicas etc, sem precisar lavar diariamente. Ideal para inspeção final em polimento, remoção de resíduos de ceras e polidores. EMBALAGEM: 500ml BENEFÍCIOS: Lava e encera Rende de 3 a 4 carros Acabamento impecável com alto brilho Toque de seda Embalagem Ergonômica EMBALAGENS: 500ml Diluição: 1 para 10 partes de água Produto pronto para uso. Modo de usar: Produto pronto para uso. Para começar a lavagem a seco automotiva, agite o produto. Aplique o produto com um pulverizador spray com diluição de 1 para 10 partes de água. Remova com uma flanela de microfibra Protelim úmida a sujeira encapsulada. Passe outra flanela de microfibra Protelim limpa e seca para dar o acabamento especial. * Todas as vezes que a flanela de microfibra umedecida for utilizada, lave-a com auxílio de um balde ou uma torneira para a reutilização da mesma."
+  },
+  {
+    "slug": "protelim-prot-ecco-ds-air-herbal",
+    "marca": "protelim",
+    "nome": "BACTERICIDA ECCO DS AIR – HERBAL",
+    "url": "https://protelim.com.br/produto/prot-ecco-ds-air-herbal/",
+    "resumo": "PROT ECCO DS AIR HERBAL é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "",
+    "usoRecomendado": "Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
+    "composicao": "",
+    "modoDeUsar": "Produto para pronto uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1L e 5L",
+    "fichaPdf": "",
+    "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-ECCO-DS_Rev04_2024.pdf",
+    "coletadoEm": "2026-08-14",
+    "linha": "Interior — bactericidas",
+    "fichaTecnica": "PROT ECCO DS AIR HERBAL é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. EMBALAGENS: 1L e 5L BENEFÍCIOS: Mata 99,9% de germes e bactérias Suave fragrância EMBALAGENS: 1L e 5L Diluição: Produto pronto para uso. Modo de usar: Produto para pronto uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs). Indicação: Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. Notas: Utilize Equipamento de Proteção Individual (EPIs)."
+  },
+  {
+    "slug": "protelim-bactericida-prot-ecco-ds-air-marine",
+    "marca": "protelim",
+    "nome": "BACTERICIDA ECCO DS AIR – MARINE",
+    "url": "https://protelim.com.br/produto/bactericida-prot-ecco-ds-air-marine/",
+    "resumo": "PROT ECCO DS AIR MARINE é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "",
+    "usoRecomendado": "Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
+    "composicao": "",
+    "modoDeUsar": "Produto pronto para uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1L e 5L",
+    "fichaPdf": "",
+    "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-ECCO-DS_Rev04_2024.pdf",
+    "coletadoEm": "2026-08-14",
+    "linha": "Interior — bactericidas",
+    "fichaTecnica": "PROT ECCO DS AIR MARINE é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. EMBALAGENS: 1L e 5L BENEFÍCIOS: Mata 99,9% de germes e bactérias Tem suave fragrância EMBALAGENS: 1L e 5L Diluição: Produto pronto para uso. Modo de usar: Produto pronto para uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs). Indicação: Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. Notas: Utilize Equipamento de Proteção Individual (EPIs)."
+  },
+  {
+    "slug": "protelim-bactericida-prot-ecco-ds-air-lavanda",
+    "marca": "protelim",
+    "nome": "BACTERICIDA ECCO DS AIR – LAVANDA",
+    "url": "https://protelim.com.br/produto/bactericida-prot-ecco-ds-air-lavanda/",
+    "resumo": "PROT ECCO DS AIR LAVANDA é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "diluicao": "",
+    "ph": "",
+    "usoRecomendado": "Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
+    "composicao": "",
+    "modoDeUsar": "Já vem pronto para o uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1L e 5L",
+    "fichaPdf": "",
+    "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-ECCO-DS_Rev04_2024.pdf",
+    "coletadoEm": "2026-08-14",
+    "linha": "Interior — bactericidas",
+    "fichaTecnica": "PROT ECCO DS AIR LAVANDA é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. EMBALAGENS: 1L e 5L BENEFÍCIOS: Mata 99,9% de germes e bactérias Tem suave fragrância EMBALAGENS: 1L e 5L Modo de usar: Já vem pronto para o uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs). Indicação: Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. Notas: Utilize Equipamento de Proteção Individual (EPIs)."
+  },
+  {
+    "slug": "protelim-desinfetante-bactericida-prot-ecco-air-talco",
+    "marca": "protelim",
+    "nome": "PROT ECCO DS AIR TALCO – DESINFETANTE BACTERICIDA",
+    "url": "https://protelim.com.br/produto/desinfetante-bactericida-prot-ecco-air-talco/",
+    "resumo": "PROT ECCO DS AIR TALCO é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "diluicao": "Produto pronto para uso.",
+    "ph": "",
+    "usoRecomendado": "Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização.",
+    "naoRecomendado": "Utilize Equipamento de Proteção Individual (EPIs).",
+    "composicao": "",
+    "modoDeUsar": "Produto pronto para uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs).",
+    "embalagens": "1L e 5L",
+    "fichaPdf": "",
+    "fdsPdf": "https://protelim.com.br/wp-content/uploads/2021/09/FDS-PROT-ECCO-DS_Rev04_2024.pdf",
+    "coletadoEm": "2026-08-14",
+    "linha": "Higiene geral — desinfetante",
+    "fichaTecnica": "PROT ECCO DS AIR TALCO é um produto bactericida de alto poder de desinfecção para superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. EMBALAGENS: 1L e 5L BENEFÍCIOS: Mata 99,9% de germes e bactérias Suave fragrância EMBALAGENS: 1L e 5L Diluição: Produto pronto para uso. Modo de usar: Produto pronto para uso. Aplique o produto na superfície a ser limpa. Deixe em contato no mínimo por 15 minutos. Não é necessário enxaguar. IMPORTANTE: Utilize Equipamento de Proteção Individual (EPIs). Indicação: Superfícies e ambientes como aeronaves, automóveis, ônibus, residências e escritórios que necessitam de higienização, limpeza e odorização. Notas: Utilize Equipamento de Proteção Individual (EPIs)."
   },
   {
     "slug": "easytech-ecotextil",
     "marca": "easytech",
     "nome": "Ecotextil Impermeabilizante para tecidos – Nanotecnologia",
     "url": "https://www.easytechshield.com.br/loja/ecotextil/",
-    "resumo": "Ecotextil é um impermeabilizante para tecidos totalmente sem toxicidade, sem cheiro e não inflamável, fabricado por nanotecnologia, última geração de impermeabilizantes.",
+    "resumo": "Impermeabilizantes Ecotextil é um impermeabilizante para tecidos totalmente sem toxicidade, sem cheiro e não inflamável, fabricado por nanotecnologia, última geração de impermeabilizantes.",
     "diluicao": "",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
-    "naoRecomendado": "",
+    "usoRecomendado": "não traz riscos a quem aplica, dispensando o uso de impermeabilizantes tóxicos, com solventes inflamáveis que causam riscos graves. Ecotextil pode ser usado tanto por profissionais quanto por um cidadão comum que quer proteger tecidos em sua casa ou escritório. Pode ser usado para proteger sofás, cadeiras, poltronas, roupas, calçados de tecido, bancos de carro, carpetes.",
+    "naoRecomendado": "Jamais deve ser aplicado menos do que o rendimento indicado. Qualquer contato vai retirar do tecido parte da proteção do produto.",
     "composicao": "",
     "modoDeUsar": "",
     "embalagens": "",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Impermeabilizante para tecidos — nanotecnologia",
+    "fichaTecnica": "não traz riscos a quem aplica, dispensando o uso de impermeabilizantes tóxicos, com solventes inflamáveis que causam riscos graves. Ecotextil pode ser usado tanto por profissionais quanto por um cidadão comum que quer proteger tecidos em sua casa ou escritório. Pode ser usado para proteger sofás, cadeiras, poltronas, roupas, calçados de tecido, bancos de carro, carpetes."
   },
   {
     "slug": "easytech-limpacouro",
@@ -585,101 +888,112 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "PLURI – Super APC Alcalino concentrado 1:60",
     "url": "https://www.easytechshield.com.br/loja/pluri/",
     "resumo": "Multilimpador APC PLURI é um limpador multi funcional destinado a remoção de sujeiras pesadas e desengraxe.",
-    "diluicao": "Indicada Incrustada: Diluir em até 1:5 Pesada: Diluir em até 1:10 Média Intensidade: Diluir em até 1:20 Leve: Diluir em até 1:60 Modo de Usar Diluia o produto de acordo com o grau de sujeira; Aplicar o produto na peça utilizando um borrifador;",
+    "diluicao": "Incrustada: Diluir em até 1:5 • Pesada: Diluir em até 1:10 • Média Intensidade: Diluir em até 1:20 • Leve: Diluir em até 1:60",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
-    "naoRecomendado": "",
+    "usoRecomendado": "",
+    "naoRecomendado": "não esqueça de utilizar EPI’s de segurança.",
     "composicao": "",
-    "modoDeUsar": "Diluia o produto de acordo com o grau de sujeira; Aplicar o produto na peça utilizando um borrifador; Deixe o produto agir por alguns minutos: Realize uma leve esfregação para remoção dos resíduos; Remova todo o resíduo de produto enxaguando.",
-    "embalagens": "",
+    "modoDeUsar": "Diluia o produto de acordo com o grau de sujeira; • Aplicar o produto na peça utilizando um borrifador; • Deixe o produto agir por alguns minutos: • Realize uma leve esfregação para remoção dos resíduos; • Remova todo o resíduo de produto enxaguando. No caso de tecidos como banco de carro ou sofás utilize uma extratora com água limpa.",
+    "embalagens": "5L, 1,5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "APC alcalino concentrado — estofados, colchões, tecidos",
+    "fichaTecnica": "Incrustada: Diluir em até 1:5 • Pesada: Diluir em até 1:10 • Média Intensidade: Diluir em até 1:20 • Leve: Diluir em até 1:60"
   },
   {
     "slug": "easytech-plurisensitive",
     "marca": "easytech",
     "nome": "PLURI SENSITIVE- super limpador sem cheiro biodegradável 1:60",
     "url": "https://www.easytechshield.com.br/loja/plurisensitive/",
-    "resumo": "Pluri é um poderoso limpador, que te salva de situações extremas. Pluri Sensitive é uma versão do Pluri com baixíssimo nível de odor, desenhada especialmente para uso em tecidos.",
-    "diluicao": "Indicada Incrustada: Diluir em até 1:5 Pesada: Diluir em até 1:10 Média Intensidade: Diluir em até 1:20 Leve: Diluir em até 1:60 Modo de Usar Diluia o produto de acordo com o grau de sujeira; Aplicar o produto na peça utilizando um borrifador;",
+    "resumo": "Pluri Sensitive é uma versão do Pluri com baixíssimo nível de odor, desenhada especialmente para uso em tecidos.",
+    "diluicao": "Incrustada: Diluir em até 1:5 • Pesada: Diluir em até 1:10 • Média Intensidade: Diluir em até 1:20 • Leve: Diluir em até 1:60",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "usoRecomendado": "",
     "naoRecomendado": "",
     "composicao": "",
-    "modoDeUsar": "Diluia o produto de acordo com o grau de sujeira; Aplicar o produto na peça utilizando um borrifador; Deixe o produto agir por alguns minutos: Realize uma leve esfregação para remoção dos resíduos; Remova todo o resíduo de produto enxaguando.",
+    "modoDeUsar": "Diluia o produto de acordo com o grau de sujeira; • Aplicar o produto na peça utilizando um borrifador; • Deixe o produto agir por alguns minutos: • Realize uma leve esfregação para remoção dos resíduos; • Remova todo o resíduo de produto enxaguando. No caso de tecidos como banco de carro ou sofás utilize uma extratora com água limpa.",
     "embalagens": "",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "APC baixa odor — tecidos / ambientes fechados",
+    "fichaTecnica": "Incrustada: Diluir em até 1:5 • Pesada: Diluir em até 1:10 • Média Intensidade: Diluir em até 1:20 • Leve: Diluir em até 1:60"
   },
   {
     "slug": "easytech-plurifast",
     "marca": "easytech",
-    "nome": "PLURI FAST",
+    "nome": "PLURI FAST – Limpador pronto uso – O poder do lendário Pluri na palma da sua mão",
     "url": "https://www.easytechshield.com.br/loja/plurifast/",
     "resumo": "Pluri Fast tem a mesma força bruta de limpeza do lendário Pluri concentrado, em uma versão pronto para uso. Borrifou, PLURIFICOU!",
-    "diluicao": ". É a ferramenta perfeita para remover graxas, óleos e encardidos severos com um simples borrifar. Diferenciais Estratégicos: Poder de Limpeza Extrema: Formulado para agir rapidamente em sujeiras, da mesma forma do lendário PLURI. Praticidade Real (RTU): Economize tempo.",
+    "diluicao": "",
     "ph": "",
-    "usoRecomendado": "com alto nível de contaminação, gorduras pesadas, colchão, sofás e tecidos em geral Segurança e Precisão: Concentração exata para garantir o resultado que você precisa.",
+    "usoRecomendado": "",
     "naoRecomendado": "",
     "composicao": "",
     "modoDeUsar": "",
-    "embalagens": "ergonômica de 500ml com gatilho spray. Ideal para quem não abre mão da performan…",
+    "embalagens": "500ml",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "APC Pluri pronto uso — colchão, sofás e tecidos"
   },
   {
     "slug": "easytech-multiinteriores",
     "marca": "easytech",
-    "nome": "MULTI INTERIORES",
+    "nome": "MULTI INTERIORES – APC Super Concentrado para limpeza interior",
     "url": "https://www.easytechshield.com.br/loja/multiinteriores/",
-    "resumo": "O APC Limpador Multi Interiores é um produto super concentrado de baixíssima espumação, destinado a remoção de sujeiras de tecidos, couro e vinil.",
-    "diluicao": "Indicada Incrustada: Diluir em até 1:5 Pesada: Diluir em até 1:10 Média Intensidade: Diluir em até 1:20 Leve: Diluir em até 1:50 Observação: pH – 11 Modo de Usar Ao utilizar APC MULTI INTERIORES não esqueça de utilizar EPI’s de segurança.",
-    "ph": "11 Modo de Usar Ao utilizar APC MULTI INTERIORES não esqueça de utilizar EPI’s de segurança.",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
-    "naoRecomendado": "",
+    "resumo": "APC Limpador Multi Interiores é um produto super concentrado de baixíssima espumação, destinado a remoção de sujeiras de tecidos, couro e vinil.",
+    "diluicao": "Incrustada: Diluir em até 1:5 • Pesada: Diluir em até 1:10 • Média Intensidade: Diluir em até 1:20 • Leve: Diluir em até 1:50 •",
+    "ph": "11",
+    "usoRecomendado": "",
+    "naoRecomendado": "não esqueça de utilizar EPI’s de segurança.",
     "composicao": "",
-    "modoDeUsar": "Ao utilizar APC MULTI INTERIORES não esqueça de utilizar EPI’s de segurança. Produto concentrado! Dilua o produto em água de acordo com o nível de sujidade a ser removida conforme tabela orientativa: Dilua o produto de acordo com o grau de sujeira que você deseja combater;",
-    "embalagens": "de 5 litros e 1,5L. PRODUTO NOTIFICADO NA ANVISA.",
+    "modoDeUsar": "Ao utilizar APC MULTI INTERIORES não esqueça de utilizar EPI’s de segurança. Produto concentrado! Dilua o produto em água de acordo com o nível de sujidade a ser removida conforme tabela orientativa: • Dilua o produto de acordo com o grau de sujeira que você deseja combater; • Aplicar o produto na peça utilizando um borrifador; • Deixe o produto agir por alguns minutos: • Realize uma leve esfregação para remoção dos resíduos; • Remova todo o resíduo de produto enxaguando. No caso de tecidos como banco de carro ou sofás utilize uma extratora com água limpa.",
+    "embalagens": "5L, 1,5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "APC baixa espumação — tecidos, couro e vinil",
+    "fichaTecnica": "dos limpadores destinados a limpeza de tecidos e interiores são a formação de espuma, prejudicando o uso de extratoras. O uso de extratoras para limpeza de tecidos é uma regra, no meio profissional. Produtos que tem grande formação de espuma prejudicam o uso da extratora, fazendo o profissional parar várias vezes o trabalho, perdendo tempo e eficiência. Além disso, a espuma, quando em contato com o motor da extratora, danifica de modo permanente o aparelho, causando prejuízo. Incrustada: Diluir em até 1:5 • Pesada: Diluir em até 1:10 • Média Intensidade: Diluir em até 1:20 • Leve: Diluir em até 1:50 • PRODUTO NOTIFICADO NA ANVISA (texto da página)."
   },
   {
     "slug": "easytech-quickinteriores",
     "marca": "easytech",
-    "nome": "QUICK INTERIORES",
+    "nome": "QUICK INTERIORES – Limpeza e proteção de interior de veículos",
     "url": "https://www.easytechshield.com.br/loja/quickinteriores/",
-    "resumo": "Quick Interiores é uma solução rápida para limpeza e proteção de interior de veículos. Perfeito para uma limpeza de manutenção rápida e eficiente, deixando um acabamento acetinado perfeito, tal qual novo.",
+    "resumo": "Quick Interiores é uma solução rápida para limpeza e proteção de interior de veículos.",
     "diluicao": "",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "usoRecomendado": "segura; • Alto poder de limpeza; • Pronto para uso; • Acabamento acetinado acentuando a tonalidade dos plásticos; • Pode ser aplicado em plásticos e couro; • Ação 2 em 1: limpa e protege em uma única aplicação; • Aplicação em plásticos e borrachas; • Não deixa a superfície grudenta • Protege o habitáculo contra incidência de raios UVA nocivos em 60%. Aplicação:",
     "naoRecomendado": "",
     "composicao": "",
     "modoDeUsar": "",
     "embalagens": "",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Limpeza e proteção de interior (manutenção)",
+    "fichaTecnica": "Não inflamável – aplicação segura; • Alto poder de limpeza; • Pronto para uso; • Acabamento acetinado acentuando a tonalidade dos plásticos; • Pode ser aplicado em plásticos e couro; • Ação 2 em 1: limpa e protege em uma única aplicação; • Aplicação em plásticos e borrachas; • Não deixa a superfície grudenta • Protege o habitáculo contra incidência de raios UVA nocivos em 60%. Aplicação: • Certifique-se de que a peça esteja fria – jamais aplicar ao sol; segura; • Alto poder de limpeza; • Pronto para uso; • Acabamento acetinado acentuando a tonalidade dos plásticos; • Pode ser aplicado em plásticos e couro; • Ação 2 em 1: limpa e protege em uma única aplicação; • Aplicação em plásticos e borrachas; • Não deixa a superfície grudenta • Protege o habitáculo contra incidência de raios UVA nocivos em 60%. Aplicação:"
   },
   {
     "slug": "easytech-oxyfast",
     "marca": "easytech",
-    "nome": "OXY FAST",
+    "nome": "OXY FAST – Limpador Multiuso com Oxigênio Ativo – Tira manchas pesadas",
     "url": "https://www.easytechshield.com.br/loja/oxyfast/",
-    "resumo": "Remova manchas difíceis em tecidos, estofados, tapetes, plásticos, rejuntes encardidos usando a tecnologia do Oxigênio Ativo. Oxy fast é prático, pronto para usar. Uma solução rápida e prática para resolver problemas de manchas.",
-    "diluicao": ". Características: Praticidade Instantânea: Por ser pronto uso , você economiza tempo e evita erros de diluição. Basta aplicar e limpar.",
-    "ph": "4.0 – 5.0 Tecnologia: Oxigênio Ativo de ação rápida. Embalagem: Prática para borrifadores simples.",
-    "usoRecomendado": ", desprendendo a sujeira e eliminando odores orgânicos na hora, podendo ser aplicado em qualquer tipo de tecido.",
+    "resumo": "Remova manchas difíceis com OXY FAST. Oxigênio ativo ideal para limpeza de teto tecidos, estofados, pisos, tapetes, teto veicular com rapidez",
+    "diluicao": "",
+    "ph": "4.0 – 5.0",
+    "usoRecomendado": "",
     "naoRecomendado": "",
     "composicao": "",
-    "modoDeUsar": "",
-    "embalagens": "Prática para borrifadores simples. Como utilizar: O modo de uso do Oxy Fast foi…",
+    "modoDeUsar": "O modo de uso do Oxy Fast foi desenhado para agilizar o processo de limpeza: • Aplique: Borrifar o Oxy Fast diretamente sobre a mancha ou superfície a ser limpa. • Ação: Deixe o oxigênio ativo agir por cerca de 2 a 3 minutos (para manchas persistentes, deixe agir um pouco mais). • Esfregação: Utilize uma escova de cerdas macias ou uma microfibra para realizar o processo de limpeza de forma leve. • Finalização: Com uma microfibra limpa e seca, remova o excesso de sujeira. Não necessita enxágue em aplicações de superfície. Dica de Especialista: Você vai ter sempre OXY FAST na sua prateleira quando descobrir como é fácil remoção de manchas de vinho, sangue em tecidos. Basta borrifar, esfregar e deixar agir. Para quem gosta de ter um produto coringa para limpeza de casa, OXY FAST é perfeito para limpar rejuntes encardidos em áreas úmidas como banheiro e cozinha.",
+    "embalagens": "",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Tira-manchas pronto uso — oxigênio ativo em tecidos",
+    "fichaTecnica": "Praticidade Instantânea: Por ser pronto uso , você economiza tempo e evita erros de"
   },
   {
     "slug": "easytech-oxy4d",
@@ -687,33 +1001,37 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "OXY-4D Tira Manchas Concentrado com peróxido de hidrogênio",
     "url": "https://www.easytechshield.com.br/loja/oxy4d/",
     "resumo": "Tira manchas concentrado Oxy4D é um poderoso limpador a base de peróxido de hidrogênio indicado para limpeza de estofados, tapetes, carpetes, couro sintético e natural, vinil e plásticos.",
-    "diluicao": "recomendadas Manchas de mofo preto: puro Manchas de alta intensidade (sangue e bolor): 1:10 Manchas de média intensidade: 1:20 Manchas de baixa intensidade: 1:30 Limpeza de manutenção: 1:50 PRODUTO NOTIFICADO NA ANVISA Como utilizar: Dilua Oxy-4D Tira Manchas em água de acordo co…",
-    "ph": "4.0 – 5.0 Ação pesada contra manchas extremamente difíceis Alta capacidade de realce de cores Remoção de manchas orgânic…",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "diluicao": "Manchas de mofo preto: puro • Manchas de alta intensidade (sangue e bolor): 1:10 • Manchas de média intensidade: 1:20 • Manchas de baixa intensidade: 1:30 • Limpeza de manutenção: 1:50",
+    "ph": "4.0 – 5.0",
+    "usoRecomendado": "Tecidos (sofás, colchões, roupas, poltronas) • Couro (sintético e natural) • Tapetes e Carpetes • Lonas • Plásticos • Vinil Pode ser usado em tornadores, extratoras ou borrifadores simples ou de compressão prévia.",
     "naoRecomendado": "",
-    "composicao": "faz com que Oxy-4D seja um dos mais eficientes produtos do mercado na ação de bloqueio de odores.",
-    "modoDeUsar": "",
-    "embalagens": "",
+    "composicao": "A alta concentração de peróxido de hidrogênio em sua composição faz com que Oxy-4D seja um dos mais eficientes produtos do mercado na ação de bloqueio de odores.",
+    "modoDeUsar": "Dilua Oxy-4D Tira Manchas em água de acordo com o grau de sujeira: • Com pulverizador, aplique sobre a superfície • Deixe o produto agir por pelo menos 5 minutos • Para manchas de maior intensidade deixe o produto agir por mais tempo • Realize processo de esfregação de modo leve • Utilize máquina extratora ou enxague para remover as sujeiras e resíduos de produto. • Repita o processo se necessário.",
+    "embalagens": "5L, 500ml",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Tira-manchas concentrado com peróxido — estofados e tapetes",
+    "fichaTecnica": "pH 4.0 – 5.0 • Ação pesada contra manchas extremamente difíceis • Alta capacidade de realce de cores • Remoção de manchas orgânicas de alta intensidade • Super concentrado • Sem cheiro, extremamente discreto. Manchas de mofo preto: puro • Manchas de alta intensidade (sangue e bolor): 1:10 • Manchas de média intensidade: 1:20 • Manchas de baixa intensidade: 1:30 • Limpeza de manutenção: 1:50 Tecidos (sofás, colchões, roupas, poltronas) • Couro (sintético e natural) • Tapetes e Carpetes • Lonas • Plásticos • Vinil Pode ser usado em tornadores, extratoras ou borrifadores simples ou de compressão prévia. PRODUTO NOTIFICADO NA ANVISA (texto da página)."
   },
   {
     "slug": "easytech-tapetex",
     "marca": "easytech",
-    "nome": "TAPETEX",
+    "nome": "TAPETEX – Detergente Concentrado para Limpeza de Tapetes e Carpetes",
     "url": "https://www.easytechshield.com.br/loja/tapetex/",
     "resumo": "TAPETEX é um detergente concentrado de alta performance, desenvolvido especialmente para limpeza de tapetes e carpetes .",
-    "diluicao": "Indicada Limpeza muito pesada: Diluir em até 1:20 Limpeza pesada: Diluir em até 1:50 Limpeza de média Intensidade: Diluir em até 1:100 Limpeza leve: Diluir em até 1:150 Em máquinas de lavar roupas, usar 50ml a 100ml dependendo da intensidade da sujeira.",
+    "diluicao": "Limpeza muito pesada: Diluir em até 1:20 • Limpeza pesada: Diluir em até 1:50 • Limpeza de média Intensidade: Diluir em até 1:100 • Limpeza leve: Diluir em até 1:150 • Em máquinas de lavar roupas, usar 50ml a 100ml dependendo da intensidade da sujeira.",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "usoRecomendado": "Outro diferencial está no seu uso em máquinas de lavar, para limpeza de toalhas, lençóis, cortinas. Sua alta capacidade desengordurante e sua alta capacidade de remoção de manchas tornam o uso em máquinas extremamente eficiente para uso em lavanderia industrial. Basta coloca na máquina entre 50 a 100ml de Tapetex, para um ciclo de lavagem.",
     "naoRecomendado": "",
     "composicao": "",
-    "modoDeUsar": "Diluia o produto de acordo com o grau de sujeira; Aplicar TAPETEX no tapete ou carpete; Deixe o produto agir por alguns minutos: Realize esfregação para remoção dos resíduos; Remova todo o resíduo com um generoso enxague.",
-    "embalagens": "",
+    "modoDeUsar": "Diluia o produto de acordo com o grau de sujeira; • Aplicar TAPETEX no tapete ou carpete; • Deixe o produto agir por alguns minutos: • Realize esfregação para remoção dos resíduos; • Remova todo o resíduo com um generoso enxague.",
+    "embalagens": "5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Detergente concentrado para tapetes e carpetes",
+    "fichaTecnica": "Limpeza muito pesada: Diluir em até 1:20 • Limpeza pesada: Diluir em até 1:50 • Limpeza de média Intensidade: Diluir em até 1:100 • Limpeza leve: Diluir em até 1:150 • Em máquinas de lavar roupas, usar 50ml a 100ml dependendo da intensidade da sujeira. Outro diferencial está no seu uso em máquinas de lavar, para limpeza de toalhas, lençóis, cortinas. Sua alta capacidade desengordurante e sua alta capacidade de remoção de manchas tornam o uso em máquinas extremamente eficiente para uso em lavanderia industrial. Basta coloca na máquina entre 50 a 100ml de Tapetex, para um ciclo de lavagem."
   },
   {
     "slug": "easytech-zbac",
@@ -721,16 +1039,18 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "ZBAC Limpador Concentrado Ácido Bactericida – Alveja e Bloqueia odor",
     "url": "https://www.easytechshield.com.br/loja/zbac/",
     "resumo": "ZBAC APC Bactericida é um limpador concentrado com poder alvejante com alto poder de ação sobre manchas e sujeiras orgânicas, indicado para limpeza de estofados, tapetes, carpetes, couro sintético e natural, vinil e plásticos.",
-    "diluicao": "recomendadas Manchas pesadas e/ou secas; micro organismos (mofo): puro Manchas de alta intensidade: 1:10 Manchas de média intensidade: 1:20 Manchas de baixa intensidade: 1:30 Limpeza de manutenção: 1:50 PRODUTO NOTIFICADO NA ANVISA Como utilizar: Dilua o produto em água de acordo…",
-    "ph": "5.0 – 6.0 Ação bactericida e anti ácaro Alta capacidade de realce de cores Remoção de manchas orgânicas de alta intensid…",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "diluicao": "Manchas pesadas e/ou secas; micro organismos (mofo): puro • Manchas de alta intensidade: 1:10 • Manchas de média intensidade: 1:20 • Manchas de baixa intensidade: 1:30 • Limpeza de manutenção: 1:50",
+    "ph": "5.0 – 6.0",
+    "usoRecomendado": "Tecidos (sofás, colchões, roupas, poltronas) • Couro (sintético e natural) • Tapetes e Carpetes • Lonas • Plásticos • Vinil Pode ser usado em tornadores, extratoras ou borrifadores simples ou de compressão prévia.",
     "naoRecomendado": "",
-    "composicao": ", ZBAC age de forma eficiente no bloqueio de maus odores. É extremamente recomendado para limpeza de tapetes e carpetes, sobretudo peças que sofreram por manchas de urinas, fezes, vômitos.",
-    "modoDeUsar": "",
-    "embalagens": "",
+    "composicao": "Por ter peróxido de hidrogênio em sua composição, ZBAC age de forma eficiente no bloqueio de maus odores.",
+    "modoDeUsar": "Dilua o produto em água de acordo com o grau de sujeira: • Com pulverizador, aplique sobre a superfície • Deixe o produto agir por pelo menos 5 minutos • Para manchas de maior intensidade deixe o produto agir por mais tempo • Realize processo de esfregação de modo leve • Utilize máquina extratora ou enxague para remover as sujeiras e resíduos de produto. • Repita o processo se necessário.",
+    "embalagens": "5L, 1,5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Limpador ácido bactericida — estofados, tapetes, odores orgânicos",
+    "fichaTecnica": "pH 5.0 – 6.0 • Ação bactericida e anti ácaro • Alta capacidade de realce de cores • Remoção de manchas orgânicas de alta intensidade • Super concentrado • Fragrancia equilibrada e deliciosa, dispensando uso de finalizadores Manchas pesadas e/ou secas; micro organismos (mofo): puro • Manchas de alta intensidade: 1:10 • Manchas de média intensidade: 1:20 • Manchas de baixa intensidade: 1:30 • Limpeza de manutenção: 1:50 Tecidos (sofás, colchões, roupas, poltronas) • Couro (sintético e natural) • Tapetes e Carpetes • Lonas • Plásticos • Vinil Pode ser usado em tornadores, extratoras ou borrifadores simples ou de compressão prévia. PRODUTO NOTIFICADO NA ANVISA (texto da página)."
   },
   {
     "slug": "easytech-float",
@@ -738,67 +1058,75 @@ export const fichasFabricantes: FichaFabricante[] = [
     "nome": "FLOAT APC Flotador Concentrado para extratoras",
     "url": "https://www.easytechshield.com.br/loja/float/",
     "resumo": "Float APC Flotador é um limpador concentrado com alta capacidade de flotação de sujeiras indicado para uso em estofados, tapetes, carpetes, couro sintético e natural, vinil e plásticos.",
-    "diluicao": "varia de acordo com os níveis de sujeiras e manchas. Sua fórmula é desenvolvida para promover baixíssima espumação, ideal para limpeza a seco, agindo pesado em em manchas inorgânicas de alta intensidade, podendo ser usado em tornadores e extratoras.",
-    "ph": "levemente alcalino sendo perfeito para utilização em manchas causadas por óleos e gorduras, manchas inorgânicas em geral…",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "diluicao": "Manchas incrustadas de óleo: puro • Manchas de alta intensidade: 1:10 • Manchas de média intensidade: 1:20 • Manchas de baixa intensidade: 1:30 • Limpeza de manutenção: 1:50",
+    "ph": "10,5",
+    "usoRecomendado": "Tecidos (sofás, colchões, roupas, poltronas) • Couro (sintético e natural) • Tapetes e Carpetes • Lonas • Plásticos • Vinil Pode ser usado em tornadores, extratoras ou borrifadores simples ou de compressão prévia.",
     "naoRecomendado": "",
-    "composicao": "amônia. Isso torna possível mistura com ZBAC em um processo de limpeza mais rápido, com funcionalidade desta mistura por um prazo de 2 horas. Float é super concentrado.",
-    "modoDeUsar": "",
-    "embalagens": "",
+    "composicao": "Outra característica única de Float é o fato de não conter em sua composição amônia.",
+    "modoDeUsar": "Dilua Float APC Flotador em água de acordo com o grau de sujeira: • Com pulverizador, aplique sobre a superfície • Deixe o produto agir por pelo menos 5 minutos • Para manchas de maior intensidade deixe o produto agir por mais tempo • Realize processo de esfregação de modo leve • Utilize máquina extratora ou enxague para remover as sujeiras e resíduos de produto. • Repita o processo se necessário.",
+    "embalagens": "1,5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "APC flotador concentrado — extratoras / estofados",
+    "fichaTecnica": "pH 10,5 • Ação contra manchas inorgânicas • Alta capacidade de flotação • Fórmula equilibrada e de uso seguro • Super concentrado • Odor levemente cítrico Manchas incrustadas de óleo: puro • Manchas de alta intensidade: 1:10 • Manchas de média intensidade: 1:20 • Manchas de baixa intensidade: 1:30 • Limpeza de manutenção: 1:50 Tecidos (sofás, colchões, roupas, poltronas) • Couro (sintético e natural) • Tapetes e Carpetes • Lonas • Plásticos • Vinil Pode ser usado em tornadores, extratoras ou borrifadores simples ou de compressão prévia. PRODUTO NOTIFICADO NA ANVISA (texto da página)."
   },
   {
     "slug": "easytech-proimper",
     "marca": "easytech",
     "nome": "Pro Imper – Impermeabilizante de tecidos base água",
     "url": "https://www.easytechshield.com.br/loja/proimper/",
-    "resumo": "Pro Imper impermeabilizante de tecidos é um produto a base de água, baixíssimo odor e não inflamável, fabricado com polímeros de Fluor, altamente resistente. Ajuda a preservação de tecidos evitando manchas de líquidos que podem, eventualmente, entrar em contato com o tecido.",
+    "resumo": "Pro Imper impermeabilizante de tecidos é um produto a base de água, baixíssimo odor e não inflamável, fabricado com polímeros de Fluor, altamente resistente.",
     "diluicao": "",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
-    "naoRecomendado": "",
+    "usoRecomendado": "Pode ser usado para proteger sofás, cadeiras, poltronas, roupas, calçados de tecido, bancos de carro, carpetes.",
+    "naoRecomendado": "Jamais deve ser aplicado menos do que o rendimento indicado. Qualquer contato vai retirar do tecido parte da proteção do produto.",
     "composicao": "",
-    "modoDeUsar": "",
-    "embalagens": "em embalagens de 5L e 500ml.",
+    "modoDeUsar": "Pro Imper vem pronto para uso e deve ser utilizado dentro do rendimento médio de 250ml por m². Deixar o produto secar por completo durante 24 horas sem tocar na área aplicada.",
+    "embalagens": "5L, 500ml",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Impermeabilizante de tecidos base água",
+    "fichaTecnica": "não traz riscos a quem aplica, dispensando o uso de impermeabilizantes tóxicos, com solventes inflamáveis que causam riscos graves. Pro Imper pode ser usado tanto por profissionais quanto por um cidadão comum que quer proteger tecidos em sua casa ou escritório. Pode ser usado para proteger sofás, cadeiras, poltronas, roupas, calçados de tecido, bancos de carro, carpetes."
   },
   {
     "slug": "easytech-proimperpremium",
     "marca": "easytech",
     "nome": "Pro Imper Premium – Impermeabilizante de tecidos base água",
     "url": "https://www.easytechshield.com.br/loja/proimperpremium/",
-    "resumo": "Pro Imper Premium é o mais resistente impermeabilizante de tecidos a base de água já fabricado, com híbridos de silício e fluor.",
+    "resumo": "Impermeabilizantes Pro Imper Premium é o mais resistente impermeabilizante de tecidos a base de água já fabricado, com híbridos de silício e fluor.",
     "diluicao": "",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
-    "naoRecomendado": "",
+    "usoRecomendado": "não traz riscos a quem aplica, dispensando o uso de impermeabilizantes tóxicos, com solventes inflamáveis que causam riscos graves. Pro Imper Premium pode ser usado tanto por profissionais quanto por um cidadão comum que quer proteger tecidos em sua casa ou escritório. Pode ser usado para proteger sofás, cadeiras, poltronas, roupas, calçados de tecido, bancos de carro, carpetes.",
+    "naoRecomendado": "Jamais deve ser aplicado menos do que o rendimento indicado. Qualquer contato vai retirar do tecido parte da proteção do produto.",
     "composicao": "",
     "modoDeUsar": "",
-    "embalagens": "em embalagens de 5L e 1,5L.",
+    "embalagens": "5L, 1,5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Impermeabilizante de tecidos base água (premium)",
+    "fichaTecnica": "hidrofóbicas e oleofóbicas, sendo altamente resistente. Dica, utilize sempre o Pro Imper Premium em conjunto com o Prepara , para garantir a remoção total dos tensoativos aniônicos da superfície. Principais Benefícios • Protege por aproximadamente 1 ano; • Rendimento médio: 250ml a 300ml por metro quadrado*; • Proteção UV; • Protege contra líquidos quentes (até 120 graus); • Deixa a superfície catiônica, evita proliferação de ácaros e bactérias; • Base de água; • Leve cheiro; que não traz riscos a quem aplica, dispensando o uso de impermeabilizantes tóxicos, com solventes inflamáveis que causam riscos graves. Pro Imper Premium pode ser usado tanto por profissionais quanto por um cidadão comum que quer proteger tecidos em sua casa ou escritório. Pode ser usado para proteger sofás, cadeiras, poltronas, roupas, calçados de tecido, bancos de carro, carpetes."
   },
   {
     "slug": "easytech-prepara",
     "marca": "easytech",
-    "nome": "Prepara",
+    "nome": "Prepara – neutralizador de superfície pré impermeabilização",
     "url": "https://www.easytechshield.com.br/loja/prepara/",
-    "resumo": "Impermeabilize tecidos ainda úmidos após a higienização preparando a superfície e neutralizando os tensoativos residuais do processo de limpeza usando PREPARA.",
-    "diluicao": "Indicada Higienização pesada: 50ml para cada 1 litro de água Higienização leve: 50ml para cada 3 litros de água. Modo de Usar Diluir o neutralizador de tensoativos Prepara em água conforme a recomendação de diluição.",
+    "resumo": "Prepara é um poderoso neutralizador de tensoativos, que normalmente são resíduos de um processo de higienização.",
+    "diluicao": "Higienização pesada: 50ml para cada 1 litro de água • Higienização leve: 50ml para cada 3 litros de água.",
     "ph": "",
-    "usoRecomendado": "e cuidados especializados, oferecendo produtos de alta performance capazes de solucionar problemas complexos com segurança, praticidade e eficiência.",
+    "usoRecomendado": "• Quando o tecido ainda está úmido, é recomendado o uso de uma quantidade maior de impermeabilizante.",
     "naoRecomendado": "",
     "composicao": "",
-    "modoDeUsar": "Diluir o neutralizador de tensoativos Prepara em água conforme a recomendação de diluição. Coloque em um recipiente e borrife na superfície de forma homogênea. Siga os passos abaixo: . : Realize uma esfregação leve para melhor penetração no tecido; Aguarde 10 minutos de ação do produto;",
-    "embalagens": "",
+    "modoDeUsar": "Diluir o neutralizador de tensoativos Prepara em água conforme a recomendação de diluição. Coloque em um recipiente e borrife na superfície de forma homogênea. Siga os passos abaixo: . : • Realize uma esfregação leve para melhor penetração no tecido; • Aguarde 10 minutos de ação do produto; • Utilize uma extratora ou aspirador para sugar o máximo de liquido que puder do tecido: • Aplique Pro Imper ou Pro Imper Premium conforme recomendação de",
+    "embalagens": "1,5L",
     "fichaPdf": "",
     "fdsPdf": "",
-    "coletadoEm": "2026-08-13"
+    "coletadoEm": "2026-08-14",
+    "linha": "Neutralizador de tensoativos — pré-impermeabilização",
+    "fichaTecnica": "Higienização pesada: 50ml para cada 1 litro de água • Higienização leve: 50ml para cada 3 litros de água. ; • Quando o tecido ainda está úmido, é recomendado o uso de uma quantidade maior de impermeabilizante."
   },
   {
     "slug": "easytech-soul",

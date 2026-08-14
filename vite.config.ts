@@ -44,6 +44,8 @@ const pages = [
   "/profissionais",
   "/codigo-da-comunidade",
   "/auth",
+  "/ia",
+  "/transicoes",
   ...tecidos.map((t) => `/tecidos/${t.slug}`),
   ...produtos.map((p) => `/produtos/${p.slug}`),
   ...manchas.map((m) => `/manchas/${m.slug}`),
@@ -59,6 +61,8 @@ export default defineConfig({
     server: { entry: "server" },
     ...(cpanel
       ? {
+          // HostGator: HTML estático + casco SPA. Sem Node no servidor.
+          spa: { enabled: true },
           prerender: {
             enabled: true,
             crawlLinks: true,

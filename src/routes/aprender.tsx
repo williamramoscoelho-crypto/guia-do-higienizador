@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { experienciaCampo } from "@/data/conteudo";
 import { Breadcrumbs, BulletList, InfoCard, ItemLink, PageHeader, Section } from "@/components/app/ui";
+import { isCommunityEnabled } from "@/lib/backend";
 
 export const Route = createFileRoute("/aprender")({
   head: () => ({
@@ -27,14 +28,16 @@ function Aprender() {
         eyebrow="Experiência de campo"
         descricao="Conteúdo prático de atendimento. Não substitui treinamento presencial nem a ficha do fabricante."
       />
-      <Section>
-        <ItemLink
-          to="/comunidade"
-          emoji="👥"
-          titulo="Comunidade"
-          descricao="Feed, dicas e antes e depois de quem atende"
-        />
-      </Section>
+      {isCommunityEnabled() ? (
+        <Section>
+          <ItemLink
+            to="/comunidade"
+            emoji="👥"
+            titulo="Comunidade"
+            descricao="Feed, dicas e antes e depois de quem atende"
+          />
+        </Section>
+      ) : null}
       <Section>
         <ItemLink
           to="/codigo-da-comunidade"

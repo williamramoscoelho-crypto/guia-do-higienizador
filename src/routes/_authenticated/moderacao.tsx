@@ -3,7 +3,9 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { Carregando, Vazio } from "@/components/app/community";
 import { supabase } from "@/integrations/supabase/client";
+import { apiDenuncias, apiOcultar, apiReportStatus } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { tempoRelativo } from "@/lib/community";
 
 export const Route = createFileRoute("/_authenticated/moderacao")({
@@ -33,6 +35,7 @@ function Moderacao() {
   const denuncias = useQuery({
     queryKey: ["denuncias"],
     queryFn: async () => {
+      if (usesPhpApi()) return apiDenuncias();
       const { data, error } = await supabase
         .from("reports")
         .select("*")
@@ -53,15 +56,20 @@ function Moderacao() {
   }
 
   async function ocultar(alvoTipo: string, alvoId: string, reportId: string) {
-    const tabela = TABELA_POR_ALVO[alvoTipo as keyof typeof TABELA_POR_ALVO];
-    if (!tabela) return;
-    await supabase.from(tabela).update({ oculto: true }).eq("id", alvoId);
-    await supabase.from("reports").update({ status: "resolvida" }).eq("id", reportId);
+    if (usesPhpApi()) {
+      await apiOcultar(alvoTipo, alvoId, reportId);
+    } else {
+      const tabela = TABELA_POR_ALVO[alvoTipo as keyof typeof TABELA_POR_ALVO];
+      if (!tabela) return;
+      await supabase.from(tabela).update({ oculto: true }).eq("id", alvoId);
+      await supabase.from("reports").update({ status: "resolvida" }).eq("id", reportId);
+    }
     void denuncias.refetch();
   }
 
   async function descartar(reportId: string) {
-    await supabase.from("reports").update({ status: "descartada" }).eq("id", reportId);
+    if (usesPhpApi()) await apiReportStatus(reportId, "descartada");
+    else await supabase.from("reports").update({ status: "descartada" }).eq("id", reportId);
     void denuncias.refetch();
   }
 
@@ -82,7 +90,7 @@ function Moderacao() {
               <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground">{d.alvo_tipo}</span>
               <span className="rounded-full bg-destructive/15 px-2.5 py-1 text-destructive">{d.motivo}</span>
               <span className="rounded-full bg-muted px-2.5 py-1 text-muted-foreground">{d.status}</span>
-              <span className="ml-auto font-normal text-muted-foreground">{tempoRelativo(d.created_at)}</span>
+              <span className="ml-auto font-normal text-muted-foreground">{tempoRelativo(d.created_at ?? "")}</span>
             </div>
 
             {d.detalhe ? <p className="mt-2 text-sm text-muted-foreground">{d.detalhe}</p> : null}

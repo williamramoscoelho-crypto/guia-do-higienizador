@@ -5,9 +5,12 @@ import { useState } from "react";
 import { z } from "zod";
 
 import { AutorLinha, Carregando, EntrarCTA, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { DenunciarBotao } from "@/components/app/DenunciarBotao";
 import { supabase } from "@/integrations/supabase/client";
+import { apiMelhorResposta, apiPergunta, apiResponder, apiRespostas } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 import { tempoRelativo } from "@/lib/community";
 import { COLUNAS_AUTOR } from "@/lib/community-data";
 
@@ -36,7 +39,10 @@ function PerguntaDetalhe() {
 
   const pergunta = useQuery({
     queryKey: ["pergunta", id],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return null;
+      if (usesPhpApi()) return apiPergunta(id);
       const { data, error } = await supabase
         .from("questions")
         .select(
@@ -51,7 +57,10 @@ function PerguntaDetalhe() {
 
   const respostas = useQuery({
     queryKey: ["respostas", id],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return [];
+      if (usesPhpApi()) return apiRespostas(id);
       const { data, error } = await supabase
         .from("answers")
         .select(`id,corpo,melhor,likes_count,created_at,author:profiles!answers_author_profile_fkey(${COLUNAS_AUTOR})`)
@@ -73,9 +82,17 @@ function PerguntaDetalhe() {
     if (!parsed.success) return setErro(parsed.error.issues[0]?.message ?? "Revise sua resposta.");
 
     setEnviando(true);
-    const { error } = await supabase.from("answers").insert({ question_id: id, author_id: user!.id, corpo: parsed.data });
+    try {
+      if (usesPhpApi()) await apiResponder(id, parsed.data);
+      else {
+        const { error } = await supabase.from("answers").insert({ question_id: id, author_id: user!.id, corpo: parsed.data });
+        if (error) throw error;
+      }
+    } catch {
+      setEnviando(false);
+      return setErro("Não foi possível enviar sua resposta agora.");
+    }
     setEnviando(false);
-    if (error) return setErro("Não foi possível enviar sua resposta agora.");
     setTexto("");
     void respostas.refetch();
     void pergunta.refetch();
@@ -84,11 +101,23 @@ function PerguntaDetalhe() {
   /** Somente autor da pergunta ou moderação marcam a melhor resposta. */
   async function marcarMelhor(respostaId: string) {
     if (!ehDono && !isStaff) return;
-    await supabase.from("answers").update({ melhor: false }).eq("question_id", id);
-    await supabase.from("answers").update({ melhor: true }).eq("id", respostaId);
-    await supabase.from("questions").update({ resolvida: true }).eq("id", id);
+    if (usesPhpApi()) {
+      await apiMelhorResposta(respostaId);
+    } else {
+      await supabase.from("answers").update({ melhor: false }).eq("question_id", id);
+      await supabase.from("answers").update({ melhor: true }).eq("id", respostaId);
+      await supabase.from("questions").update({ resolvida: true }).eq("id", id);
+    }
     void respostas.refetch();
     void pergunta.refetch();
+  }
+
+  if (!isCommunityEnabled()) {
+    return (
+      <div className="pt-6">
+        <AvisoHospedagemEstatica />
+      </div>
+    );
   }
 
   if (pergunta.isLoading) return <div className="pt-6"><Carregando linhas={2} /></div>;
@@ -127,7 +156,7 @@ function PerguntaDetalhe() {
           {q.author ? (
             <AutorLinha
               autor={q.author}
-              data={tempoRelativo(q.created_at)}
+              data={tempoRelativo(q.created_at ?? "")}
               extra={<DenunciarBotao alvoTipo="question" alvoId={q.id} />}
             />
           ) : null}
@@ -187,7 +216,7 @@ function PerguntaDetalhe() {
                 {r.author ? (
                   <AutorLinha
                     autor={r.author}
-                    data={tempoRelativo(r.created_at)}
+                    data={tempoRelativo(r.created_at ?? "")}
                     extra={<DenunciarBotao alvoTipo="answer" alvoId={r.id} />}
                   />
                 ) : null}

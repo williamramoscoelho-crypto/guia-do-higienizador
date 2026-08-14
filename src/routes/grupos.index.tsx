@@ -3,7 +3,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { Carregando, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { supabase } from "@/integrations/supabase/client";
+import { apiGrupos } from "@/lib/api";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 
 export const Route = createFileRoute("/grupos/")({
   head: () => ({
@@ -28,7 +31,10 @@ function GruposPage() {
 
   const grupos = useQuery({
     queryKey: ["grupos"],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return [];
+      if (usesPhpApi()) return apiGrupos();
       const { data, error } = await supabase.from("groups").select("*").order("nome");
       if (error) throw error;
       return data ?? [];
@@ -45,6 +51,12 @@ function GruposPage() {
         <p className="mt-2 text-sm opacity-85">Conversas por especialidade e por região, no ritmo de quem está perto de você.</p>
       </header>
 
+      {!isCommunityEnabled() ? (
+        <div className="mt-5">
+          <AvisoHospedagemEstatica />
+        </div>
+      ) : (
+        <>
       <div role="tablist" aria-label="Tipo de grupo" className="mt-5 flex gap-1 rounded-full border border-border bg-card p-1">
         {(["tema", "estado"] as const).map((t) => (
           <button
@@ -82,6 +94,8 @@ function GruposPage() {
           </Link>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }

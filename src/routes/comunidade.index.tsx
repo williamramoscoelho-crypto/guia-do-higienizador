@@ -4,7 +4,9 @@ import { PenLine } from "lucide-react";
 import { useState } from "react";
 
 import { Carregando, Chips, EntrarCTA, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { PostCard } from "@/components/app/PostCard";
+import { isCommunityEnabled } from "@/lib/backend";
 import { useAuth } from "@/lib/auth";
 import { TIPOS_POST } from "@/lib/community";
 import { buscarInteracoes, buscarPosts } from "@/lib/community-data";
@@ -35,6 +37,7 @@ function ComunidadePage() {
   const posts = useQuery({
     queryKey: ["posts", { tipo, ordem }],
     queryFn: () => buscarPosts({ kind: tipo, ordem }),
+    enabled: isCommunityEnabled(),
   });
 
   const ids = (posts.data ?? []).map((p) => p.id);
@@ -54,6 +57,12 @@ function ComunidadePage() {
         </p>
       </header>
 
+      {!isCommunityEnabled() ? (
+        <div className="mt-5">
+          <AvisoHospedagemEstatica />
+        </div>
+      ) : (
+        <>
       <div className="mt-5 space-y-3">
         <Chips
           rotulo="Filtrar por tipo de publicação"
@@ -120,6 +129,8 @@ function ComunidadePage() {
           />
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }

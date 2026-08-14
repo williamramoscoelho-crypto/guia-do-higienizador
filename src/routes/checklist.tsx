@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { checklistItens } from "@/data/conteudo";
 import { Aviso, Breadcrumbs, PageHeader, Section } from "@/components/app/ui";
+import { iaConfigurada } from "@/lib/ia";
 import { useLocalState } from "@/lib/local";
 
 export const Route = createFileRoute("/checklist")({
@@ -67,6 +68,13 @@ function Checklist() {
         Mesmo com o checklist completo, o teste em área discreta continua obrigatório antes de aplicar produto no painel
         inteiro.
       </Aviso>
+      {iaConfigurada() ? (
+        <p className="mt-4 text-sm">
+          <Link to="/ia" search={{ modo: "protocolo" }} className="font-semibold text-primary underline">
+            Gerar protocolo personalizado na IA
+          </Link>
+        </p>
+      ) : null}
     </div>
   );
 }

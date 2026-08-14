@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getFicha, marcasFichas } from "@/data/fichas-fabricantes";
 import {
   Aviso,
@@ -36,8 +36,9 @@ export const Route = createFileRoute("/fichas/$slug")({
 
 function campoUtil(valor: string) {
   if (!valor) return false;
-  if (valor.length < 8) return /ml|l\b|1:\d/i.test(valor);
-  return !/CEATOX|rótulo do produto/i.test(valor);
+  if (valor.length < 12) return /ml|l\b|1:\d|neutro|ácido|basico|básico|alcalino/i.test(valor);
+  if (valor.length < 80 && /CEATOX|rótulo do produto/i.test(valor)) return false;
+  return true;
 }
 
 function Detalhe() {
@@ -51,6 +52,7 @@ function Detalhe() {
     { label: "Composição", valor: f.composicao },
     { label: "Modo de usar", valor: f.modoDeUsar },
     { label: "Embalagens", valor: f.embalagens },
+    { label: "Ficha técnica (texto da página)", valor: f.fichaTecnica ?? "" },
   ].filter((c) => campoUtil(c.valor));
 
   return (
@@ -64,8 +66,15 @@ function Detalhe() {
         ]}
       />
       <PageHeader titulo={f.nome} eyebrow={marca?.nome ?? f.marca} descricao={f.resumo} />
-      <div className="mt-4">
+      <div className="mt-4 flex flex-wrap gap-2">
         <FavoritoBotao id={`ficha-${f.slug}`} tipo="Ficha" nome={f.nome} href={`/fichas/${f.slug}`} />
+        <Link
+          to="/ferramentas/diluicao"
+          search={{ produto: f.slug }}
+          className="inline-flex min-h-11 items-center rounded-full border border-border bg-card px-4 text-sm font-semibold hover:border-primary/60"
+        >
+          Calcular diluição
+        </Link>
       </div>
       {campos.length > 0 ? (
         <Section titulo="O que o fabricante publica">
@@ -80,6 +89,25 @@ function Detalhe() {
           </InfoCard>
         </Section>
       )}
+      {f.linha ? (
+        <Section titulo="Linha">
+          <InfoCard>
+            <p className="text-sm leading-relaxed">{f.linha}</p>
+          </InfoCard>
+        </Section>
+      ) : null}
+      {f.faq && f.faq.length > 0 ? (
+        <Section titulo="Perguntas na página oficial">
+          <dl className="space-y-3">
+            {f.faq.map((q) => (
+              <div key={q.p} className="rounded-2xl border border-border bg-card p-4">
+                <dt className="text-sm font-semibold">{q.p}</dt>
+                <dd className="mt-1 text-sm leading-relaxed text-muted-foreground">{q.r}</dd>
+              </div>
+            ))}
+          </dl>
+        </Section>
+      ) : null}
       <Section titulo="Documentos e fonte">
         <ul className="grid gap-2 text-sm">
           <li>
@@ -94,6 +122,13 @@ function Detalhe() {
               </a>
             </li>
           ) : null}
+          {f.sdsPdf ? (
+            <li>
+              <a href={f.sdsPdf} target="_blank" rel="noreferrer" className="text-primary underline">
+                SDS (PDF internacional do fabricante)
+              </a>
+            </li>
+          ) : null}
           {f.fichaPdf ? (
             <li>
               <a href={f.fichaPdf} target="_blank" rel="noreferrer" className="text-primary underline">
@@ -101,6 +136,13 @@ function Detalhe() {
               </a>
             </li>
           ) : null}
+          {f.documentos?.map((d) => (
+            <li key={d.url}>
+              <a href={d.url} target="_blank" rel="noreferrer" className="text-primary underline">
+                {d.label}
+              </a>
+            </li>
+          ))}
           {marca ? (
             <li>
               <a href={marca.site} target="_blank" rel="noreferrer" className="text-primary underline">

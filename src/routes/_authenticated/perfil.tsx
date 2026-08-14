@@ -5,7 +5,9 @@ import { z } from "zod";
 
 import { Avatar } from "@/components/app/community";
 import { supabase } from "@/integrations/supabase/client";
+import { apiMe, apiSalvarPerfil } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { ESPECIALIDADES, UFS } from "@/lib/community";
 
 export const Route = createFileRoute("/_authenticated/perfil")({
@@ -48,6 +50,7 @@ function EditarPerfil() {
   const perfilCompleto = useQuery({
     queryKey: ["perfil-completo", user?.id],
     queryFn: async () => {
+      if (usesPhpApi()) return apiMe();
       const { data, error } = await supabase.from("profiles").select("*").eq("id", user!.id).maybeSingle();
       if (error) throw error;
       return data;
@@ -120,30 +123,50 @@ function EditarPerfil() {
     if (!parsed.success) return setErro(parsed.error.issues[0]?.message ?? "Revise os campos.");
 
     setSalvando(true);
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        nome: parsed.data.nome,
-        handle: parsed.data.handle,
-        nome_profissional: parsed.data.nome_profissional || null,
-        bio: parsed.data.bio || null,
-        cidade: parsed.data.cidade || null,
-        estado: parsed.data.estado || null,
-        telefone: parsed.data.telefone || null,
-        instagram: parsed.data.instagram || null,
-        site: parsed.data.site || null,
-        experiencia: parsed.data.experiencia || null,
-        especialidades,
-        ...privacidade,
-      })
-      .eq("id", user!.id);
-    setSalvando(false);
-
-    if (error) {
-      return setErro(
-        /duplicate|unique/i.test(error.message) ? "Este nome de usuário já está em uso." : "Não foi possível salvar agora.",
-      );
+    try {
+      if (usesPhpApi()) {
+        await apiSalvarPerfil({
+          nome: parsed.data.nome,
+          handle: parsed.data.handle,
+          nome_profissional: parsed.data.nome_profissional || null,
+          bio: parsed.data.bio || null,
+          cidade: parsed.data.cidade || null,
+          estado: parsed.data.estado || null,
+          telefone: parsed.data.telefone || null,
+          instagram: parsed.data.instagram || null,
+          site: parsed.data.site || null,
+          experiencia: parsed.data.experiencia || null,
+          especialidades,
+          ...privacidade,
+        });
+      } else {
+        const { error } = await supabase
+          .from("profiles")
+          .update({
+            nome: parsed.data.nome,
+            handle: parsed.data.handle,
+            nome_profissional: parsed.data.nome_profissional || null,
+            bio: parsed.data.bio || null,
+            cidade: parsed.data.cidade || null,
+            estado: parsed.data.estado || null,
+            telefone: parsed.data.telefone || null,
+            instagram: parsed.data.instagram || null,
+            site: parsed.data.site || null,
+            experiencia: parsed.data.experiencia || null,
+            especialidades,
+            ...privacidade,
+          })
+          .eq("id", user!.id);
+        if (error) {
+          throw error;
+        }
+      }
+    } catch (error) {
+      setSalvando(false);
+      const msg = error instanceof Error ? error.message : "";
+      return setErro(/duplicate|unique|já está em uso/i.test(msg) ? "Este nome de usuário já está em uso." : "Não foi possível salvar agora.");
     }
+    setSalvando(false);
     setAviso("Perfil atualizado.");
     await Promise.all([recarregarPerfil(), perfilCompleto.refetch()]);
   }

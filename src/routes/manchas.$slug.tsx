@@ -14,6 +14,7 @@ import {
   RegistrarVisita,
   Section,
 } from "@/components/app/ui";
+import { iaConfigurada } from "@/lib/ia";
 
 export const Route = createFileRoute("/manchas/$slug")({
   loader: ({ params }) => {
@@ -143,6 +144,20 @@ function Detalhe() {
         <Aviso titulo="Não prometa remoção total">{m.limitacoes}</Aviso>
       </Section>
       <ConhecimentoVivo tema={m.nome} />
+      {iaConfigurada() ? (
+        <Section titulo="Higienizador IA">
+          <Link
+            to="/ia"
+            search={{
+              modo: "mancha",
+              q: `Mancha de ${m.nome}. ${m.caracteristica} Monte um protocolo seguro para o tecido que eu informar, sem inventar diluição.`,
+            }}
+            className="card-tap flex min-h-12 items-center justify-between rounded-2xl border border-border bg-card px-4 text-sm font-semibold"
+          >
+            Resolver esta mancha com a IA
+          </Link>
+        </Section>
+      ) : null}
     </div>
   );
 }

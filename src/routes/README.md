@@ -19,3 +19,14 @@ is `src/routes/__root.tsx`.
 | `__root.tsx` | app shell — wraps every page; preserve `<Outlet />` |
 
 `routeTree.gen.ts` is auto-generated. Don't edit it by hand.
+
+## Calculadora de diluição
+
+Rota: `/ferramentas/diluicao`. A conta lê razões `1:N` publicadas em
+`ficha.diluicao` (e, se vazio, `modoDeUsar` / `fichaTecnica`). Parser:
+`src/lib/diluicao.ts`.
+
+Para incluir uma proporção nova: grave o texto **do fabricante** no campo da
+ficha — não invente `1:10` / `1:30` / `1:60`. Sem `1:N` (nem “pronto uso”), a
+calculadora recusa e manda abrir o rótulo. Convenção da conta: `1:N` = 1 parte
+de concentrado + N partes de água.

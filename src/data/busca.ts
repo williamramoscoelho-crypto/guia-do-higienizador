@@ -187,6 +187,14 @@ export const indiceBusca: ResultadoBusca[] = [
     href: "/onde-comprar/comparar",
     termos: "comparar marcas lado a lado onde comprar",
   },
+  {
+    id: "pagina-ia",
+    grupo: "Ferramentas",
+    titulo: "Higienizador IA",
+    descricao: "Assistente técnico de tecidos, manchas, protocolos, diluição e precificação.",
+    href: "/ia",
+    termos: "ia assistente chat inteligencia artificial mancha tecido protocolo diluicao precificacao kit",
+  },
 ];
 
 export function buscar(q: string): ResultadoBusca[] {

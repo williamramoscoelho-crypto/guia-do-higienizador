@@ -1,7 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { Home, BookOpen, Users, MessagesSquare, CircleUser } from "lucide-react";
+import { BookOpen, Calculator, CircleUser, Home, Info, MessagesSquare, Star, Users } from "lucide-react";
 
-const itens = [
+import { isCommunityEnabled } from "@/lib/backend";
+
+const itensGuia = [
+  { to: "/", label: "Início", Icon: Home, exact: true },
+  { to: "/guia", label: "Guia", Icon: BookOpen, exact: false },
+  { to: "/ferramentas", label: "Ferramentas", Icon: Calculator, exact: false },
+  { to: "/favoritos", label: "Favoritos", Icon: Star, exact: false },
+  { to: "/sobre", label: "Sobre", Icon: Info, exact: false },
+] as const;
+
+const itensComunidade = [
   { to: "/", label: "Início", Icon: Home, exact: true },
   { to: "/guia", label: "Guia", Icon: BookOpen, exact: false },
   { to: "/comunidade", label: "Comunidade", Icon: Users, exact: false },
@@ -9,8 +19,9 @@ const itens = [
   { to: "/painel", label: "Perfil", Icon: CircleUser, exact: false },
 ] as const;
 
-
 export function BottomNav() {
+  const itens = isCommunityEnabled() ? itensComunidade : itensGuia;
+
   return (
     <nav
       aria-label="Navegação principal"

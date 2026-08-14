@@ -4,9 +4,12 @@ import { useState } from "react";
 import { z } from "zod";
 
 import { AutorLinha, Carregando, EntrarCTA, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { DenunciarBotao } from "@/components/app/DenunciarBotao";
 import { PostCard, type PostFeed } from "@/components/app/PostCard";
 import { supabase } from "@/integrations/supabase/client";
+import { apiComentar, apiComentarios, apiPost } from "@/lib/api";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 import { useAuth } from "@/lib/auth";
 import { tempoRelativo } from "@/lib/community";
 import { buscarInteracoes, COLUNAS_AUTOR, SELECT_POST } from "@/lib/community-data";
@@ -36,7 +39,10 @@ function PostDetalhe() {
 
   const post = useQuery({
     queryKey: ["post", id],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return null;
+      if (usesPhpApi()) return apiPost(id);
       const { data, error } = await supabase.from("posts").select(SELECT_POST).eq("id", id).maybeSingle();
       if (error) throw error;
       return (data as unknown as PostFeed) ?? null;
@@ -45,7 +51,10 @@ function PostDetalhe() {
 
   const comentarios = useQuery({
     queryKey: ["comentarios", id],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return [];
+      if (usesPhpApi()) return apiComentarios(id);
       const { data, error } = await supabase
         .from("comments")
         .select(`id,corpo,created_at,author:profiles!comments_author_profile_fkey(${COLUNAS_AUTOR})`)
@@ -71,12 +80,28 @@ function PostDetalhe() {
     if (!parsed.success) return setErro(parsed.error.issues[0]?.message ?? "Revise o comentário.");
 
     setEnviando(true);
-    const { error } = await supabase.from("comments").insert({ post_id: id, author_id: user!.id, corpo: parsed.data });
+    try {
+      if (usesPhpApi()) await apiComentar(id, parsed.data);
+      else {
+        const { error } = await supabase.from("comments").insert({ post_id: id, author_id: user!.id, corpo: parsed.data });
+        if (error) throw error;
+      }
+    } catch {
+      setEnviando(false);
+      return setErro("Não foi possível comentar agora.");
+    }
     setEnviando(false);
-    if (error) return setErro("Não foi possível comentar agora.");
     setTexto("");
     void comentarios.refetch();
     void post.refetch();
+  }
+
+  if (!isCommunityEnabled()) {
+    return (
+      <div className="pt-6">
+        <AvisoHospedagemEstatica />
+      </div>
+    );
   }
 
   if (post.isLoading) return <div className="pt-6"><Carregando linhas={2} /></div>;

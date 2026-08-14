@@ -2,9 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Carregando, EntrarCTA, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { PostCard } from "@/components/app/PostCard";
 import { supabase } from "@/integrations/supabase/client";
+import { apiEntrarGrupo, apiGrupo, type Grupo } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 import { buscarInteracoes, buscarPosts } from "@/lib/community-data";
 
 export const Route = createFileRoute("/grupos/$slug")({
@@ -30,7 +33,10 @@ function GrupoDetalhe() {
 
   const grupo = useQuery({
     queryKey: ["grupo", slug],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return null;
+      if (usesPhpApi()) return apiGrupo(slug);
       const { data, error } = await supabase.from("groups").select("*").eq("slug", slug).maybeSingle();
       if (error) throw error;
       return data;
@@ -42,6 +48,7 @@ function GrupoDetalhe() {
   const membro = useQuery({
     queryKey: ["membro", user?.id, grupoId],
     queryFn: async () => {
+      if (usesPhpApi()) return Boolean((grupo.data as Grupo | undefined)?.membro);
       const { data } = await supabase
         .from("group_members")
         .select("id")
@@ -68,9 +75,19 @@ function GrupoDetalhe() {
 
   async function alternarParticipacao() {
     if (!user || !grupoId) return;
-    if (membro.data) await supabase.from("group_members").delete().eq("user_id", user.id).eq("group_id", grupoId);
+    if (usesPhpApi()) await apiEntrarGrupo(grupoId, !membro.data);
+    else if (membro.data) await supabase.from("group_members").delete().eq("user_id", user.id).eq("group_id", grupoId);
     else await supabase.from("group_members").insert({ user_id: user.id, group_id: grupoId });
     void membro.refetch();
+    void grupo.refetch();
+  }
+
+  if (!isCommunityEnabled()) {
+    return (
+      <div className="pt-6">
+        <AvisoHospedagemEstatica />
+      </div>
+    );
   }
 
   if (grupo.isLoading) return <div className="pt-6"><Carregando linhas={2} /></div>;

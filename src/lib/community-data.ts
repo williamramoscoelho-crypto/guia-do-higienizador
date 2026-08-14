@@ -1,6 +1,13 @@
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 import type { AutorResumo } from "@/components/app/community";
 import type { PostFeed } from "@/components/app/PostCard";
+import {
+  apiInteracoes,
+  apiListarPosts,
+  apiPerfilHandle,
+  apiPontos,
+} from "@/lib/api";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 
 /** Colunas públicas do perfil embutidas em cada conteúdo. */
 export const COLUNAS_AUTOR =
@@ -16,9 +23,16 @@ export interface FiltroFeed {
   limite?: number | undefined;
 }
 
+function vazioInteracoes() {
+  return { curtidos: new Set<string>(), salvos: new Set<string>() };
+}
+
 /** Lê o feed público respeitando as políticas de acesso do banco. */
 export async function buscarPosts(filtro: FiltroFeed = {}): Promise<PostFeed[]> {
-  if (!isSupabaseConfigured()) return [];
+  if (!isCommunityEnabled()) return [];
+  if (typeof window === "undefined") return [];
+  if (usesPhpApi()) return apiListarPosts(filtro);
+
   let q = supabase.from("posts").select(SELECT_POST).is("deleted_at", null).eq("oculto", false);
 
   if (filtro.kind) q = q.eq("kind", filtro.kind as never);
@@ -37,7 +51,10 @@ export async function buscarPosts(filtro: FiltroFeed = {}): Promise<PostFeed[]> 
 
 /** Ids de posts curtidos/salvos pelo usuário atual, para exibir o estado dos botões. */
 export async function buscarInteracoes(userId: string | undefined, postIds: string[]) {
-  if (!isSupabaseConfigured() || !userId || postIds.length === 0) return { curtidos: new Set<string>(), salvos: new Set<string>() };
+  if (!isCommunityEnabled() || !userId || postIds.length === 0) return vazioInteracoes();
+  if (typeof window === "undefined") return vazioInteracoes();
+  if (usesPhpApi()) return apiInteracoes(postIds);
+
   const [curtidas, salvos] = await Promise.all([
     supabase.from("post_likes").select("post_id").eq("user_id", userId).in("post_id", postIds),
     supabase.from("post_saves").select("post_id").eq("user_id", userId).in("post_id", postIds),
@@ -49,13 +66,21 @@ export async function buscarInteracoes(userId: string | undefined, postIds: stri
 }
 
 export async function buscarPerfilPorHandle(handle: string): Promise<AutorResumo | null> {
-  if (!isSupabaseConfigured()) return null;
+  if (!isCommunityEnabled()) return null;
+  if (typeof window === "undefined") return null;
+  if (usesPhpApi()) return (await apiPerfilHandle(handle)) as unknown as AutorResumo;
+
   const { data } = await supabase.from("profiles").select("*").eq("handle", handle).maybeSingle();
   return (data as unknown as AutorResumo) ?? null;
 }
 
 export async function buscarPontos(userId: string): Promise<number> {
-  if (!isSupabaseConfigured()) return 0;
+  if (!isCommunityEnabled()) return 0;
+  if (typeof window === "undefined") return 0;
+  if (usesPhpApi()) return apiPontos(userId);
+
   const { data } = await supabase.from("user_points").select("pontos").eq("user_id", userId).maybeSingle();
   return data?.pontos ?? 0;
 }
+
+export { isCommunityEnabled };

@@ -3,6 +3,8 @@ import { Bookmark, Heart, MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
+import { apiCurtir, apiSalvarPost } from "@/lib/api";
+import { usesPhpApi } from "@/lib/backend";
 import { useAuth } from "@/lib/auth";
 import { tempoRelativo } from "@/lib/community";
 import { cn } from "@/lib/utils";
@@ -47,24 +49,39 @@ export function PostCard({
     if (!user) return;
     const proximo = !estaCurtido;
     setOtimistaCurtido(proximo);
-    const acao = proximo
-      ? supabase.from("post_likes").insert({ post_id: post.id, user_id: user.id })
-      : supabase.from("post_likes").delete().eq("post_id", post.id).eq("user_id", user.id);
-    const { error } = await acao;
-    if (error) setOtimistaCurtido(!proximo);
-    else onMudou?.();
+    try {
+      if (usesPhpApi()) await apiCurtir(post.id, proximo);
+      else {
+        const acao = proximo
+          ? supabase.from("post_likes").insert({ post_id: post.id, user_id: user.id })
+          : supabase.from("post_likes").delete().eq("post_id", post.id).eq("user_id", user.id);
+        const { error } = await acao;
+        if (error) throw error;
+      }
+    } catch {
+      setOtimistaCurtido(!proximo);
+      return;
+    }
+    onMudou?.();
   }
 
   async function alternarSalvo() {
     if (!user) return;
     const proximo = !estaSalvo;
     setOtimistaSalvo(proximo);
-    const acao = proximo
-      ? supabase.from("post_saves").insert({ post_id: post.id, user_id: user.id })
-      : supabase.from("post_saves").delete().eq("post_id", post.id).eq("user_id", user.id);
-    const { error } = await acao;
-    if (error) setOtimistaSalvo(!proximo);
-    else onMudou?.();
+    try {
+      if (usesPhpApi()) await apiSalvarPost(post.id, proximo);
+      else {
+        const { error } = await (proximo
+          ? supabase.from("post_saves").insert({ post_id: post.id, user_id: user.id })
+          : supabase.from("post_saves").delete().eq("post_id", post.id).eq("user_id", user.id));
+        if (error) throw error;
+      }
+    } catch {
+      setOtimistaSalvo(!proximo);
+      return;
+    }
+    onMudou?.();
   }
 
   async function compartilhar() {

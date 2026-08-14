@@ -16,13 +16,14 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AutomotivaRouteImport } from './routes/automotiva'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as ChecklistRouteImport } from './routes/checklist'
-import { Route as ComecarRouteImport } from './routes/comecar'
 import { Route as CodigoDaComunidadeRouteImport } from './routes/codigo-da-comunidade'
+import { Route as ComecarRouteImport } from './routes/comecar'
 import { Route as CuidadosRouteImport } from './routes/cuidados'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as FluxoRouteImport } from './routes/fluxo'
 import { Route as GlossarioRouteImport } from './routes/glossario'
 import { Route as GuiaRouteImport } from './routes/guia'
+import { Route as IaRouteImport } from './routes/ia'
 import { Route as IdentificarRouteImport } from './routes/identificar'
 import { Route as ParceriaRouteImport } from './routes/parceria'
 import { Route as PhRouteImport } from './routes/ph'
@@ -57,8 +58,8 @@ import { Route as PerguntasIndexRouteImport } from './routes/perguntas.index'
 import { Route as PerguntasIdRouteImport } from './routes/perguntas.$id'
 import { Route as PerguntasNovaRouteImport } from './routes/perguntas.nova'
 import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
-import { Route as ProdutosCompararRouteImport } from './routes/produtos.comparar'
 import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
+import { Route as ProdutosCompararRouteImport } from './routes/produtos.comparar'
 import { Route as TecidosIndexRouteImport } from './routes/tecidos.index'
 import { Route as TecidosSlugRouteImport } from './routes/tecidos.$slug'
 import { Route as ComunidadePostIdRouteImport } from './routes/comunidade.post.$id'
@@ -102,6 +103,11 @@ const CodigoDaComunidadeRoute = CodigoDaComunidadeRouteImport.update({
   path: '/codigo-da-comunidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComecarRoute = ComecarRouteImport.update({
+  id: '/comecar',
+  path: '/comecar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CuidadosRoute = CuidadosRouteImport.update({
   id: '/cuidados',
   path: '/cuidados',
@@ -125,6 +131,11 @@ const GlossarioRoute = GlossarioRouteImport.update({
 const GuiaRoute = GuiaRouteImport.update({
   id: '/guia',
   path: '/guia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IaRoute = IaRouteImport.update({
+  id: '/ia',
+  path: '/ia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IdentificarRoute = IdentificarRouteImport.update({
@@ -160,11 +171,6 @@ const TransicoesRoute = TransicoesRouteImport.update({
 const TransparenciaRoute = TransparenciaRouteImport.update({
   id: '/transparencia',
   path: '/transparencia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ComecarRoute = ComecarRouteImport.update({
-  id: '/comecar',
-  path: '/comecar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedModeracaoRoute = AuthenticatedModeracaoRouteImport.update({
@@ -303,14 +309,14 @@ const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
   path: '/produtos/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProdutosCompararRoute = ProdutosCompararRouteImport.update({
-  id: '/produtos/comparar',
-  path: '/produtos/comparar',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
   id: '/produtos/$slug',
   path: '/produtos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdutosCompararRoute = ProdutosCompararRouteImport.update({
+  id: '/produtos/comparar',
+  path: '/produtos/comparar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TecidosIndexRoute = TecidosIndexRouteImport.update({
@@ -336,13 +342,14 @@ export interface FileRoutesByFullPath {
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
-  '/comecar': typeof ComecarRoute
   '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
+  '/comecar': typeof ComecarRoute
   '/cuidados': typeof CuidadosRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
@@ -364,11 +371,11 @@ export interface FileRoutesByFullPath {
   '/manchas/$slug': typeof ManchasSlugRoute
   '/onde-comprar/$slug': typeof OndeComprarSlugRoute
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
-  '/produtos/comparar': typeof ProdutosCompararRoute
   '/p/$handle': typeof PHandleRoute
   '/perguntas/$id': typeof PerguntasIdRoute
   '/perguntas/nova': typeof PerguntasNovaRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
+  '/produtos/comparar': typeof ProdutosCompararRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
   '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
@@ -390,13 +397,14 @@ export interface FileRoutesByTo {
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
-  '/comecar': typeof ComecarRoute
   '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
+  '/comecar': typeof ComecarRoute
   '/cuidados': typeof CuidadosRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
@@ -418,11 +426,11 @@ export interface FileRoutesByTo {
   '/manchas/$slug': typeof ManchasSlugRoute
   '/onde-comprar/$slug': typeof OndeComprarSlugRoute
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
-  '/produtos/comparar': typeof ProdutosCompararRoute
   '/p/$handle': typeof PHandleRoute
   '/perguntas/$id': typeof PerguntasIdRoute
   '/perguntas/nova': typeof PerguntasNovaRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
+  '/produtos/comparar': typeof ProdutosCompararRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
   '/comunidade': typeof ComunidadeIndexRoute
   '/equipamentos': typeof EquipamentosIndexRoute
@@ -446,13 +454,14 @@ export interface FileRoutesById {
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
   '/checklist': typeof ChecklistRoute
-  '/comecar': typeof ComecarRoute
   '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
+  '/comecar': typeof ComecarRoute
   '/cuidados': typeof CuidadosRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
@@ -474,11 +483,11 @@ export interface FileRoutesById {
   '/manchas/$slug': typeof ManchasSlugRoute
   '/onde-comprar/$slug': typeof OndeComprarSlugRoute
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
-  '/produtos/comparar': typeof ProdutosCompararRoute
   '/p/$handle': typeof PHandleRoute
   '/perguntas/$id': typeof PerguntasIdRoute
   '/perguntas/nova': typeof PerguntasNovaRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
+  '/produtos/comparar': typeof ProdutosCompararRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
   '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
@@ -502,13 +511,14 @@ export interface FileRouteTypes {
     | '/automotiva'
     | '/buscar'
     | '/checklist'
-    | '/comecar'
     | '/codigo-da-comunidade'
+    | '/comecar'
     | '/cuidados'
     | '/favoritos'
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
@@ -530,11 +540,11 @@ export interface FileRouteTypes {
     | '/manchas/$slug'
     | '/onde-comprar/$slug'
     | '/onde-comprar/comparar'
-    | '/produtos/comparar'
     | '/p/$handle'
     | '/perguntas/$id'
     | '/perguntas/nova'
     | '/produtos/$slug'
+    | '/produtos/comparar'
     | '/tecidos/$slug'
     | '/comunidade/'
     | '/equipamentos/'
@@ -556,13 +566,14 @@ export interface FileRouteTypes {
     | '/automotiva'
     | '/buscar'
     | '/checklist'
-    | '/comecar'
     | '/codigo-da-comunidade'
+    | '/comecar'
     | '/cuidados'
     | '/favoritos'
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
@@ -584,11 +595,11 @@ export interface FileRouteTypes {
     | '/manchas/$slug'
     | '/onde-comprar/$slug'
     | '/onde-comprar/comparar'
-    | '/produtos/comparar'
     | '/p/$handle'
     | '/perguntas/$id'
     | '/perguntas/nova'
     | '/produtos/$slug'
+    | '/produtos/comparar'
     | '/tecidos/$slug'
     | '/comunidade'
     | '/equipamentos'
@@ -611,13 +622,14 @@ export interface FileRouteTypes {
     | '/automotiva'
     | '/buscar'
     | '/checklist'
-    | '/comecar'
     | '/codigo-da-comunidade'
+    | '/comecar'
     | '/cuidados'
     | '/favoritos'
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
@@ -639,11 +651,11 @@ export interface FileRouteTypes {
     | '/manchas/$slug'
     | '/onde-comprar/$slug'
     | '/onde-comprar/comparar'
-    | '/produtos/comparar'
     | '/p/$handle'
     | '/perguntas/$id'
     | '/perguntas/nova'
     | '/produtos/$slug'
+    | '/produtos/comparar'
     | '/tecidos/$slug'
     | '/comunidade/'
     | '/equipamentos/'
@@ -667,13 +679,14 @@ export interface RootRouteChildren {
   AutomotivaRoute: typeof AutomotivaRoute
   BuscarRoute: typeof BuscarRoute
   ChecklistRoute: typeof ChecklistRoute
-  ComecarRoute: typeof ComecarRoute
   CodigoDaComunidadeRoute: typeof CodigoDaComunidadeRoute
+  ComecarRoute: typeof ComecarRoute
   CuidadosRoute: typeof CuidadosRoute
   FavoritosRoute: typeof FavoritosRoute
   FluxoRoute: typeof FluxoRoute
   GlossarioRoute: typeof GlossarioRoute
   GuiaRoute: typeof GuiaRoute
+  IaRoute: typeof IaRoute
   IdentificarRoute: typeof IdentificarRoute
   ParceriaRoute: typeof ParceriaRoute
   PhRoute: typeof PhRoute
@@ -691,11 +704,11 @@ export interface RootRouteChildren {
   ManchasSlugRoute: typeof ManchasSlugRoute
   OndeComprarSlugRoute: typeof OndeComprarSlugRoute
   OndeComprarCompararRoute: typeof OndeComprarCompararRoute
-  ProdutosCompararRoute: typeof ProdutosCompararRoute
   PHandleRoute: typeof PHandleRoute
   PerguntasIdRoute: typeof PerguntasIdRoute
   PerguntasNovaRoute: typeof PerguntasNovaRoute
   ProdutosSlugRoute: typeof ProdutosSlugRoute
+  ProdutosCompararRoute: typeof ProdutosCompararRoute
   TecidosSlugRoute: typeof TecidosSlugRoute
   ComunidadeIndexRoute: typeof ComunidadeIndexRoute
   EquipamentosIndexRoute: typeof EquipamentosIndexRoute
@@ -769,6 +782,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CodigoDaComunidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comecar': {
+      id: '/comecar'
+      path: '/comecar'
+      fullPath: '/comecar'
+      preLoaderRoute: typeof ComecarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cuidados': {
       id: '/cuidados'
       path: '/cuidados'
@@ -802,6 +822,13 @@ declare module '@tanstack/react-router' {
       path: '/guia'
       fullPath: '/guia'
       preLoaderRoute: typeof GuiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ia': {
+      id: '/ia'
+      path: '/ia'
+      fullPath: '/ia'
+      preLoaderRoute: typeof IaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/identificar': {
@@ -851,13 +878,6 @@ declare module '@tanstack/react-router' {
       path: '/transparencia'
       fullPath: '/transparencia'
       preLoaderRoute: typeof TransparenciaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/comecar': {
-      id: '/comecar'
-      path: '/comecar'
-      fullPath: '/comecar'
-      preLoaderRoute: typeof ComecarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/moderacao': {
@@ -1014,13 +1034,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OndeComprarCompararRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/produtos/comparar': {
-      id: '/produtos/comparar'
-      path: '/produtos/comparar'
-      fullPath: '/produtos/comparar'
-      preLoaderRoute: typeof ProdutosCompararRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/p/$handle': {
       id: '/p/$handle'
       path: '/p/$handle'
@@ -1061,6 +1074,13 @@ declare module '@tanstack/react-router' {
       path: '/produtos/$slug'
       fullPath: '/produtos/$slug'
       preLoaderRoute: typeof ProdutosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produtos/comparar': {
+      id: '/produtos/comparar'
+      path: '/produtos/comparar'
+      fullPath: '/produtos/comparar'
+      preLoaderRoute: typeof ProdutosCompararRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tecidos/': {
@@ -1112,13 +1132,14 @@ const rootRouteChildren: RootRouteChildren = {
   AutomotivaRoute: AutomotivaRoute,
   BuscarRoute: BuscarRoute,
   ChecklistRoute: ChecklistRoute,
-  ComecarRoute: ComecarRoute,
   CodigoDaComunidadeRoute: CodigoDaComunidadeRoute,
+  ComecarRoute: ComecarRoute,
   CuidadosRoute: CuidadosRoute,
   FavoritosRoute: FavoritosRoute,
   FluxoRoute: FluxoRoute,
   GlossarioRoute: GlossarioRoute,
   GuiaRoute: GuiaRoute,
+  IaRoute: IaRoute,
   IdentificarRoute: IdentificarRoute,
   ParceriaRoute: ParceriaRoute,
   PhRoute: PhRoute,
@@ -1136,11 +1157,11 @@ const rootRouteChildren: RootRouteChildren = {
   ManchasSlugRoute: ManchasSlugRoute,
   OndeComprarSlugRoute: OndeComprarSlugRoute,
   OndeComprarCompararRoute: OndeComprarCompararRoute,
-  ProdutosCompararRoute: ProdutosCompararRoute,
   PHandleRoute: PHandleRoute,
   PerguntasIdRoute: PerguntasIdRoute,
   PerguntasNovaRoute: PerguntasNovaRoute,
   ProdutosSlugRoute: ProdutosSlugRoute,
+  ProdutosCompararRoute: ProdutosCompararRoute,
   TecidosSlugRoute: TecidosSlugRoute,
   ComunidadeIndexRoute: ComunidadeIndexRoute,
   EquipamentosIndexRoute: EquipamentosIndexRoute,

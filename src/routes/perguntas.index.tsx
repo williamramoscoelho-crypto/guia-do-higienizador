@@ -4,8 +4,11 @@ import { CheckCircle2, HelpCircle, MessageSquare, PenLine } from "lucide-react";
 import { useState } from "react";
 
 import { AutorLinha, Carregando, Chips, EntrarCTA, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { supabase } from "@/integrations/supabase/client";
+import { apiPerguntas } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 import { CATEGORIAS_DUVIDA, tempoRelativo } from "@/lib/community";
 import { COLUNAS_AUTOR } from "@/lib/community-data";
 
@@ -34,7 +37,10 @@ function PerguntasPage() {
 
   const perguntas = useQuery({
     queryKey: ["perguntas", { categoria, somenteAbertas }],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return [];
+      if (usesPhpApi()) return apiPerguntas({ categoria, somenteAbertas });
       let q = supabase
         .from("questions")
         .select(
@@ -61,6 +67,12 @@ function PerguntasPage() {
         </p>
       </header>
 
+      {!isCommunityEnabled() ? (
+        <div className="mt-5">
+          <AvisoHospedagemEstatica />
+        </div>
+      ) : (
+        <>
       <div className="mt-5 space-y-3">
         <Chips
           rotulo="Filtrar por categoria"
@@ -127,7 +139,7 @@ function PerguntasPage() {
             {p.corpo ? <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{p.corpo}</p> : null}
 
             <div className="mt-3 flex items-center justify-between gap-2">
-              {p.author ? <AutorLinha autor={p.author} data={tempoRelativo(p.created_at)} /> : <span />}
+              {p.author ? <AutorLinha autor={p.author} data={tempoRelativo(p.created_at ?? "")} /> : <span />}
               <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-muted-foreground">
                 <MessageSquare className="size-4" aria-hidden />
                 {p.answers_count}
@@ -136,6 +148,8 @@ function PerguntasPage() {
           </article>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }

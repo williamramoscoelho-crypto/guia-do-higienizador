@@ -5,7 +5,9 @@ import { Bell, Bookmark, HelpCircle, PenLine, Settings, ShieldCheck } from "luci
 import { Avatar, Carregando, NivelBadge, Vazio } from "@/components/app/community";
 import { PostCard } from "@/components/app/PostCard";
 import { supabase } from "@/integrations/supabase/client";
+import { apiNaoLidas, apiSalvos } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { nivelPorPontos } from "@/lib/community";
 import { buscarInteracoes, buscarPosts, SELECT_POST } from "@/lib/community-data";
 import type { PostFeed } from "@/components/app/PostCard";
@@ -37,6 +39,7 @@ function Painel() {
   const salvos = useQuery({
     queryKey: ["salvos", user?.id],
     queryFn: async () => {
+      if (usesPhpApi()) return apiSalvos();
       const { data: refs } = await supabase.from("post_saves").select("post_id").eq("user_id", user!.id).limit(20);
       const ids = (refs ?? []).map((r) => r.post_id);
       if (ids.length === 0) return [] as PostFeed[];
@@ -56,6 +59,7 @@ function Painel() {
   const naoLidas = useQuery({
     queryKey: ["nao-lidas", user?.id],
     queryFn: async () => {
+      if (usesPhpApi()) return apiNaoLidas();
       const { count } = await supabase
         .from("notifications")
         .select("id", { count: "exact", head: true })

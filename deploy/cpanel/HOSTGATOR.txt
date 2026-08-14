@@ -1,107 +1,36 @@
-Guia do Higienizador — instalação no cPanel / HostGator
-=======================================================
+Guia do Higienizador — HostGator (sem rodeios)
+==============================================
+
+JEITO RÁPIDO (recomendado)
+--------------------------
+No computador, na pasta do projeto:
+
+  npm run publicar
+
+Isso gera:
+
+  PUBLICAR-HOSTGATOR.zip   ← envie SÓ este arquivo
+
+Na HostGator (3 passos):
+
+  1) Extrair o zip em public_html/guiadohigienizador
+     (mostrar arquivos ocultos; não use a raiz da Auto Limpeza Pro)
+  2) phpMyAdmin → will3269_GUIA → Importar api/schema.sql
+  3) Abrir /api/health  (db: true)
+
+O zip de publicar já inclui api/config.php de TESTE.
+Troque a senha depois.
+IA (opcional): gemini_api_key e/ou openai_api_key em api/config.php
+(ia_provider=auto → Gemini primeiro).
+
+
+JEITO SEM SENHA NO ZIP
+----------------------
+  npm run build:cpanel
+  → cpanel.zip (sem config.php)
+  No servidor: copie config.example.php → config.php e preencha.
+
 
 Site: https://guiadohigienizador.autolimpezapro.com.br
-
-O servidor NÃO precisa de Node.js, npm, banco nem login.
-Envie só arquivos estáticos (HTML, CSS, JS).
-
-IMPORTANTE: este pacote é só do Guia. NÃO envie para a raiz
-do site da Auto Limpeza Pro (public_html do domínio principal).
-Use a pasta do SUBDOMÍNIO.
-
-------------------------------------------------------------
-PASSO 1 — Gerar o pacote (no computador, com Node)
-------------------------------------------------------------
-
-Abra o PowerShell:
-
-  cd C:\Users\Administrator\Projects\guia-do-higienizador
-  npm install
-  npm run build:cpanel
-
-Arquivos gerados (não vão para o git):
-
-  cpanel\        pasta pronta para enviar
-  cpanel.zip     mais fácil de subir no cPanel
-
-------------------------------------------------------------
-PASSO 2 — Criar o subdomínio no cPanel
-------------------------------------------------------------
-
-1. Entre no cPanel da HostGator (cliente.hostgator.com.br).
-2. Abra Domínios → Subdomínios  (ou “Domínios” → Criar um novo domínio).
-3. Preencha:
-     Subdomínio:  guiadohigienizador
-     Domínio:     autolimpezapro.com.br
-4. Pasta / document root (anote a que o cPanel mostrar).
-   Em HostGator costuma ser:
-
-     public_html/guiadohigienizador
-
-   Essa pasta é a raiz DO GUIA. Não use public_html sozinho
-   (aí você apagaria ou misturaria o site da Auto Limpeza Pro).
-
-5. Crie o subdomínio e espere o DNS (pode levar minutos).
-
-------------------------------------------------------------
-PASSO 3 — SSL (HTTPS)
-------------------------------------------------------------
-
-1. No cPanel abra SSL/TLS Status  (ou Let’s Encrypt / AutoSSL).
-2. Marque guiadohigienizador.autolimpezapro.com.br
-3. Instale o certificado gratuito.
-4. Sem HTTPS o site abre, mas o .htaccess redireciona para https.
-
-------------------------------------------------------------
-PASSO 4 — Enviar os arquivos
-------------------------------------------------------------
-
-1. Gerenciador de Arquivos.
-2. Canto superior direito: Configurações → Mostrar arquivos ocultos
-   (dotfiles). Sem isso o .htaccess some e as páginas quebram no F5.
-3. Abra SOMENTE a pasta do subdomínio, por exemplo:
-
-     public_html/guiadohigienizador
-
-4. Apague arquivos padrão da HostGator nessa pasta (index.html,
-   default.php), se existirem. Não mexa em public_html da ALP.
-5. Envie cpanel.zip para essa pasta.
-6. Botão direito no zip → Extrair.
-7. Os arquivos devem ficar NO MESMO NÍVEL da pasta do subdomínio,
-   não dentro de uma pasta chamada “cpanel”.
-
-   Tem que existir:
-
-     public_html/guiadohigienizador/index.html
-     public_html/guiadohigienizador/.htaccess
-     public_html/guiadohigienizador/index.php
-     public_html/guiadohigienizador/assets/
-     public_html/guiadohigienizador/tecidos/
-     public_html/guiadohigienizador/sitemap.xml
-
-   Se aparecer .../guiadohigienizador/cpanel/index.html,
-   mova tudo um nível acima e apague a pasta cpanel vazia.
-
-8. Apague o cpanel.zip depois de extrair (opcional).
-
-------------------------------------------------------------
-PASSO 5 — Testar
-------------------------------------------------------------
-
-  https://guiadohigienizador.autolimpezapro.com.br
-  https://guiadohigienizador.autolimpezapro.com.br/tecidos/suede
-  https://guiadohigienizador.autolimpezapro.com.br/comecar
-  https://guiadohigienizador.autolimpezapro.com.br/comunidade
-
-Atualize (F5) em /tecidos/suede — a página tem que continuar abrindo.
-
-------------------------------------------------------------
-NÃO ENVIE
-------------------------------------------------------------
-
-node_modules, src, package.json, .output, dist
-Só o conteúdo de cpanel/.
-
-Não use senha de MySQL no FTP. FTP e banco são senhas diferentes.
-Não coloque este site na raiz de autolimpezapro.com.br.
+Sem Node, sem Laravel, sem Supabase no servidor.
+Detalhes: docs/deploy-hostgator.md

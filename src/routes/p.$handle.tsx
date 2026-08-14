@@ -3,10 +3,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Instagram, Globe, MapPin } from "lucide-react";
 
 import { Avatar, Carregando, NivelBadge, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { DenunciarBotao } from "@/components/app/DenunciarBotao";
 import { PostCard } from "@/components/app/PostCard";
 import { supabase } from "@/integrations/supabase/client";
+import { apiPerfilHandle, apiSeguir } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 import { buscarInteracoes, buscarPontos, buscarPosts } from "@/lib/community-data";
 
 export const Route = createFileRoute("/p/$handle")({
@@ -35,7 +38,10 @@ function PerfilPublico() {
 
   const perfil = useQuery({
     queryKey: ["perfil", handle],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return null;
+      if (usesPhpApi()) return apiPerfilHandle(handle);
       const { data, error } = await supabase.from("profiles").select("*").eq("handle", handle).maybeSingle();
       if (error) throw error;
       return data;
@@ -66,6 +72,7 @@ function PerfilPublico() {
   const seguindo = useQuery({
     queryKey: ["seguindo", user?.id, perfilId],
     queryFn: async () => {
+      if (usesPhpApi()) return Boolean((perfil.data as { seguindo?: boolean } | undefined)?.seguindo);
       const { data } = await supabase
         .from("follows")
         .select("follower_id")
@@ -79,9 +86,19 @@ function PerfilPublico() {
 
   async function alternarSeguir() {
     if (!user || !perfilId) return;
-    if (seguindo.data) await supabase.from("follows").delete().eq("follower_id", user.id).eq("following_id", perfilId);
+    if (usesPhpApi()) await apiSeguir(perfilId, !seguindo.data);
+    else if (seguindo.data) await supabase.from("follows").delete().eq("follower_id", user.id).eq("following_id", perfilId);
     else await supabase.from("follows").insert({ follower_id: user.id, following_id: perfilId });
     void seguindo.refetch();
+    void perfil.refetch();
+  }
+
+  if (!isCommunityEnabled()) {
+    return (
+      <div className="pt-6">
+        <AvisoHospedagemEstatica />
+      </div>
+    );
   }
 
   if (perfil.isLoading) return <div className="pt-6"><Carregando linhas={2} /></div>;

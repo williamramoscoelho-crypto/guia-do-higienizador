@@ -1,6 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Search, ArrowRight, Clock } from "lucide-react";
 import { useState } from "react";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
+import { isCommunityEnabled } from "@/lib/backend";
+import { iaConfigurada } from "@/lib/ia";
 import { useRecentes } from "@/lib/local";
 import { SITE_ORIGIN, siteUrl } from "@/lib/site";
 
@@ -37,7 +40,8 @@ export const Route = createFileRoute("/")({
   component: Inicio,
 });
 
-const atalhos = [
+const atalhosTodos = [
+  { to: "/ia", emoji: "🤖", label: "IA", precisa: "ia" },
   { to: "/tecidos", emoji: "🧵", label: "Tecidos" },
   { to: "/produtos", emoji: "🧪", label: "Produtos" },
   { to: "/manchas", emoji: "🟤", label: "Manchas" },
@@ -45,24 +49,35 @@ const atalhos = [
   { to: "/automotiva", emoji: "🚗", label: "Automotiva" },
   { to: "/equipamentos", emoji: "🧰", label: "Equipamentos" },
   { to: "/comecar", emoji: "🚀", label: "Começar" },
-  { to: "/comunidade", emoji: "👥", label: "Comunidade" },
+  { to: "/comunidade", emoji: "👥", label: "Comunidade", precisa: "comunidade" },
   { to: "/fichas", emoji: "📄", label: "Fichas" },
   { to: "/onde-comprar", emoji: "🏪", label: "Onde comprar" },
   { to: "/aprender", emoji: "📚", label: "Aprender" },
   { to: "/cuidados", emoji: "⚠️", label: "Cuidados" },
 ] as const;
 
-const ferramentas = [
+const ferramentasTodas = [
+  { to: "/ia", emoji: "🤖", label: "Higienizador IA", desc: "Chat técnico: mancha, tecido e protocolo", precisa: "ia" },
   { to: "/checklist", emoji: "📋", label: "Checklist", desc: "Pré-inspeção passo a passo" },
-  { to: "/ferramentas/diluicao", emoji: "🧮", label: "Diluição", desc: "Calcule produto e água" },
+  { to: "/ferramentas/diluicao", emoji: "🧮", label: "Diluição", desc: "ml de concentrado pela ficha" },
   { to: "/ferramentas/precificacao", emoji: "💰", label: "Precificação", desc: "Custo e preço mínimo" },
   { to: "/identificar", emoji: "🔍", label: "Identificar tecido", desc: "Assistente por perguntas" },
 ] as const;
+
+function visivel(precisa?: string) {
+  if (precisa === "ia") return iaConfigurada();
+  if (precisa === "comunidade") return isCommunityEnabled();
+  return true;
+}
 
 function Inicio() {
   const [q, setQ] = useState("");
   const navigate = useNavigate();
   const recentes = useRecentes();
+  const temIA = iaConfigurada();
+  const temComunidade = isCommunityEnabled();
+  const atalhos = atalhosTodos.filter((a) => visivel("precisa" in a ? a.precisa : undefined));
+  const ferramentas = ferramentasTodas.filter((f) => visivel("precisa" in f ? f.precisa : undefined));
 
   return (
     <div className="pb-4">
@@ -105,6 +120,14 @@ function Inicio() {
           <Link to="/guia" className="btn-primary">
             Explorar conteúdos <ArrowRight className="size-4" aria-hidden />
           </Link>
+          {temIA ? (
+            <Link
+              to="/ia"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 text-sm font-semibold"
+            >
+              Perguntar ao Higienizador IA
+            </Link>
+          ) : null}
           <div className="grid grid-cols-2 gap-2">
             <Link
               to="/comecar"
@@ -112,15 +135,30 @@ function Inicio() {
             >
               Quero começar
             </Link>
-            <Link
-              to="/comunidade"
-              className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white/10 px-4 text-sm font-semibold"
-            >
-              Comunidade
-            </Link>
+            {temComunidade ? (
+              <Link
+                to="/comunidade"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white/10 px-4 text-sm font-semibold"
+              >
+                Comunidade
+              </Link>
+            ) : (
+              <Link
+                to="/identificar"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white/10 px-4 text-sm font-semibold"
+              >
+                Identificar tecido
+              </Link>
+            )}
           </div>
         </div>
       </header>
+
+      {!temComunidade && !temIA ? (
+        <div className="mt-5">
+          <AvisoHospedagemEstatica />
+        </div>
+      ) : null}
 
       <section className="mt-7">
         <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-muted-foreground">
@@ -207,9 +245,15 @@ function Inicio() {
         <Link to="/sobre" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
           📖 Sobre o projeto
         </Link>
-        <Link to="/comunidade" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
-          👥 Comunidade
-        </Link>
+        {temComunidade ? (
+          <Link to="/comunidade" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
+            👥 Comunidade
+          </Link>
+        ) : (
+          <Link to="/ferramentas" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
+            🧮 Ferramentas
+          </Link>
+        )}
         <Link to="/transparencia" className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold">
           🔎 Transparência
         </Link>

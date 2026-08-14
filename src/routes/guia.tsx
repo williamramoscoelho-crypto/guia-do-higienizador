@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ItemLink, PageHeader, Section } from "@/components/app/ui";
+import { isCommunityEnabled } from "@/lib/backend";
+import { iaConfigurada } from "@/lib/ia";
 
 export const Route = createFileRoute("/guia")({
   head: () => ({
@@ -33,6 +35,7 @@ const secoes = [
     itens: [
       { to: "/fluxo", emoji: "💦", titulo: "Passo a passo da higienização", desc: "12 etapas com avisos de segurança" },
       { to: "/identificar", emoji: "🔍", titulo: "Identificar o tecido", desc: "Assistente de identificação provável" },
+      { to: "/ia", emoji: "🤖", titulo: "Higienizador IA", desc: "Chat técnico com protocolo e avisos de risco" },
       { to: "/checklist", emoji: "📋", titulo: "Checklist de pré-inspeção", desc: "Salvo no seu dispositivo" },
       { to: "/ph", emoji: "⚗️", titulo: "Tabela de pH", desc: "Ácido, neutro e alcalino na prática" },
       { to: "/cuidados", emoji: "⚠️", titulo: "Riscos e cuidados", desc: "O que pode danificar um estofado" },
@@ -51,27 +54,37 @@ const secoes = [
       { to: "/codigo-da-comunidade", emoji: "📜", titulo: "Código da comunidade", desc: "Regras de respeito, segurança e privacidade" },
       { to: "/aprender", emoji: "📚", titulo: "Aprender", desc: "Experiência de campo e capacitação" },
       { to: "/transparencia", emoji: "🔎", titulo: "Transparência", desc: "Política editorial e independência" },
-      { to: "/ferramentas", emoji: "🧮", titulo: "Ferramentas", desc: "Diluição e precificação" },
+      { to: "/ferramentas", emoji: "🧮", titulo: "Ferramentas", desc: "Diluição pela ficha e precificação" },
       { to: "/glossario", emoji: "📖", titulo: "Glossário profissional", desc: "Termos técnicos em linguagem simples" },
     ],
   },
 ];
 
+function itemVisivel(to: string) {
+  if (to === "/ia") return iaConfigurada();
+  if (to === "/comunidade" || to === "/perguntas" || to === "/profissionais") return isCommunityEnabled();
+  return true;
+}
+
 function Guia() {
   return (
     <div className="pb-4">
       <PageHeader titulo="Guia" descricao="Todo o conteúdo técnico organizado por tema." eyebrow="Manual completo" />
-      {secoes.map((s) => (
-        <Section key={s.titulo} titulo={s.titulo}>
-          <ul className="grid gap-2">
-            {s.itens.map((i) => (
-              <li key={i.to}>
-                <ItemLink to={i.to} emoji={i.emoji} titulo={i.titulo} descricao={i.desc} />
-              </li>
-            ))}
-          </ul>
-        </Section>
-      ))}
+      {secoes.map((s) => {
+        const itens = s.itens.filter((i) => itemVisivel(i.to));
+        if (itens.length === 0) return null;
+        return (
+          <Section key={s.titulo} titulo={s.titulo}>
+            <ul className="grid gap-2">
+              {itens.map((i) => (
+                <li key={i.to}>
+                  <ItemLink to={i.to} emoji={i.emoji} titulo={i.titulo} descricao={i.desc} />
+                </li>
+              ))}
+            </ul>
+          </Section>
+        );
+      })}
     </div>
   );
 }

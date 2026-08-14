@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 
 import { lovable } from "@/integrations/lovable/index";
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
+import { apiForgot, apiLogin, apiReset, apiSignup } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 
 const searchSchema = z.object({
   modo: z.enum(["entrar", "criar", "recuperar"]).catch("entrar"),
   proximo: z.string().optional(),
+  token: z.string().optional(),
 });
 
 export const Route = createFileRoute("/auth")({
@@ -37,7 +41,7 @@ const credenciais = z.object({
 });
 
 function AuthPage() {
-  const { modo, proximo } = Route.useSearch();
+  const { modo, proximo, token } = Route.useSearch();
   const navigate = useNavigate();
   const { user, carregando } = useAuth();
   const [email, setEmail] = useState("");
@@ -58,14 +62,37 @@ function AuthPage() {
     e.preventDefault();
     setErro(null);
     setAviso(null);
-    if (!isSupabaseConfigured()) {
+    if (!isCommunityEnabled()) {
       return setErro("A comunidade ainda não está conectada neste ambiente. O guia técnico continua disponível.");
     }
 
     if (modo === "recuperar") {
       const emailOk = z.string().trim().email().safeParse(email);
+      if (usesPhpApi() && token) {
+        const parsedSenha = z.string().min(8).max(72).safeParse(senha);
+        if (!parsedSenha.success) return setErro("A senha precisa ter ao menos 8 caracteres.");
+        setEnviando(true);
+        try {
+          await apiReset(token, parsedSenha.data);
+        } catch (err) {
+          setEnviando(false);
+          return setErro(err instanceof Error ? traduzirErro(err.message) : "Não foi possível redefinir a senha.");
+        }
+        setEnviando(false);
+        return;
+      }
       if (!emailOk.success) return setErro("Informe um e-mail válido.");
       setEnviando(true);
+      if (usesPhpApi()) {
+        try {
+          await apiForgot(emailOk.data);
+        } catch (err) {
+          setEnviando(false);
+          return setErro(err instanceof Error ? err.message : "Não foi possível enviar o e-mail.");
+        }
+        setEnviando(false);
+        return setAviso("Se o e-mail existir, enviamos um link de redefinição.");
+      }
       const { error } = await supabase.auth.resetPasswordForEmail(emailOk.data, {
         redirectTo: `${window.location.origin}/perfil`,
       });
@@ -79,6 +106,16 @@ function AuthPage() {
 
     setEnviando(true);
     if (modo === "criar") {
+      if (usesPhpApi()) {
+        try {
+          await apiSignup({ email: parsed.data.email, password: parsed.data.senha, nome: parsed.data.nome });
+        } catch (err) {
+          setEnviando(false);
+          return setErro(err instanceof Error ? traduzirErro(err.message) : "Não foi possível criar a conta.");
+        }
+        setEnviando(false);
+        return;
+      }
       const { error } = await supabase.auth.signUp({
         email: parsed.data.email,
         password: parsed.data.senha,
@@ -89,6 +126,17 @@ function AuthPage() {
       });
       setEnviando(false);
       if (error) return setErro(traduzirErro(error.message));
+      return setAviso("Conta criada. Confira seu e-mail para confirmar o cadastro e depois entre.");
+    }
+
+    if (usesPhpApi()) {
+      try {
+        await apiLogin({ email: parsed.data.email, password: parsed.data.senha });
+      } catch (err) {
+        setEnviando(false);
+        return setErro(err instanceof Error ? traduzirErro(err.message) : "Não foi possível entrar.");
+      }
+      setEnviando(false);
       return;
     }
 
@@ -118,12 +166,25 @@ function AuthPage() {
         </p>
       </header>
 
+      {!isCommunityEnabled() ? (
+        <div className="mt-6">
+          <AvisoHospedagemEstatica />
+          <p className="mt-4 text-center text-sm">
+            <Link to="/" className="font-semibold text-primary">
+              Voltar ao guia técnico
+            </Link>
+          </p>
+        </div>
+      ) : (
+        <>
       <form onSubmit={enviar} className="mt-6 grid gap-3">
         {modo === "criar" ? (
           <Campo id="nome" label="Nome" value={nome} onChange={setNome} autoComplete="name" maxLength={80} />
         ) : null}
-        <Campo id="email" label="E-mail" type="email" value={email} onChange={setEmail} autoComplete="email" maxLength={255} />
-        {modo !== "recuperar" ? (
+        {!(usesPhpApi() && modo === "recuperar" && token) ? (
+          <Campo id="email" label="E-mail" type="email" value={email} onChange={setEmail} autoComplete="email" maxLength={255} />
+        ) : null}
+        {modo !== "recuperar" || (usesPhpApi() && token) ? (
           <Campo
             id="senha"
             label="Senha"
@@ -147,11 +208,11 @@ function AuthPage() {
         ) : null}
 
         <button type="submit" disabled={enviando} className="btn-primary w-full justify-center disabled:opacity-60">
-          {enviando ? "Enviando…" : modo === "criar" ? "Criar conta" : modo === "recuperar" ? "Enviar link" : "Entrar"}
+          {enviando ? "Enviando…" : modo === "criar" ? "Criar conta" : modo === "recuperar" && token ? "Definir nova senha" : modo === "recuperar" ? "Enviar link" : "Entrar"}
         </button>
       </form>
 
-      {modo !== "recuperar" ? (
+      {modo !== "recuperar" && !usesPhpApi() ? (
         <>
           <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
             <span className="h-px flex-1 bg-border" /> ou <span className="h-px flex-1 bg-border" />
@@ -193,6 +254,8 @@ function AuthPage() {
         </Link>
         .
       </p>
+        </>
+      )}
     </div>
   );
 }

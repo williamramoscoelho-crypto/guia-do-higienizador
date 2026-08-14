@@ -4,7 +4,9 @@ import { z } from "zod";
 
 import { EntrarCTA } from "@/components/app/community";
 import { supabase } from "@/integrations/supabase/client";
+import { apiCriarPergunta } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { CATEGORIAS_DUVIDA } from "@/lib/community";
 
 export const Route = createFileRoute("/perguntas/nova")({
@@ -51,20 +53,31 @@ function NovaPergunta() {
     if (!parsed.success) return setErro(parsed.error.issues[0]?.message ?? "Revise os campos.");
 
     setEnviando(true);
-    const { data, error } = await supabase
-      .from("questions")
-      .insert({
-        author_id: user!.id,
-        titulo: parsed.data.titulo,
-        corpo: parsed.data.corpo || null,
-        categoria: parsed.data.categoria,
-      })
-      .select("id")
-      .single();
+    try {
+      const data = usesPhpApi()
+        ? await apiCriarPergunta({
+            titulo: parsed.data.titulo,
+            corpo: parsed.data.corpo,
+            categoria: parsed.data.categoria,
+          })
+        : (
+            await supabase
+              .from("questions")
+              .insert({
+                author_id: user!.id,
+                titulo: parsed.data.titulo,
+                corpo: parsed.data.corpo || null,
+                categoria: parsed.data.categoria,
+              })
+              .select("id")
+              .single()
+          ).data;
+      if (!data?.id) throw new Error("fail");
+      void navigate({ to: "/perguntas/$id", params: { id: data.id } });
+    } catch {
+      setErro("Não foi possível enviar sua pergunta agora.");
+    }
     setEnviando(false);
-
-    if (error || !data) return setErro("Não foi possível enviar sua pergunta agora.");
-    void navigate({ to: "/perguntas/$id", params: { id: data.id } });
   }
 
   return (

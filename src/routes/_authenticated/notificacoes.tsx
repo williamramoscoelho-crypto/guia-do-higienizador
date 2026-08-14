@@ -4,7 +4,9 @@ import { useEffect } from "react";
 
 import { Carregando, Vazio } from "@/components/app/community";
 import { supabase } from "@/integrations/supabase/client";
+import { apiMarcarLidas, apiNotificacoes } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { tempoRelativo } from "@/lib/community";
 
 export const Route = createFileRoute("/_authenticated/notificacoes")({
@@ -26,6 +28,7 @@ function Notificacoes() {
   const lista = useQuery({
     queryKey: ["notificacoes", user?.id],
     queryFn: async () => {
+      if (usesPhpApi()) return apiNotificacoes();
       const { data, error } = await supabase
         .from("notifications")
         .select("*")
@@ -41,7 +44,8 @@ function Notificacoes() {
   /** Marca como lidas assim que a tela é aberta. */
   useEffect(() => {
     if (!user || !lista.data?.some((n) => !n.lida)) return;
-    void supabase.from("notifications").update({ lida: true }).eq("user_id", user.id).eq("lida", false);
+    if (usesPhpApi()) void apiMarcarLidas();
+    else void supabase.from("notifications").update({ lida: true }).eq("user_id", user.id).eq("lida", false);
   }, [user, lista.data]);
 
   return (
@@ -62,7 +66,7 @@ function Notificacoes() {
             <>
               <p className="text-sm font-semibold">{n.titulo}</p>
               {n.corpo ? <p className="mt-0.5 text-sm text-muted-foreground">{n.corpo}</p> : null}
-              <p className="mt-1 text-[11px] text-muted-foreground">{tempoRelativo(n.created_at)}</p>
+              <p className="mt-1 text-[11px] text-muted-foreground">{tempoRelativo(n.created_at ?? "")}</p>
             </>
           );
           return (
@@ -71,7 +75,7 @@ function Notificacoes() {
               className={`rounded-2xl border p-4 ${n.lida ? "border-border bg-card" : "border-primary/40 bg-primary/5"}`}
             >
               {n.link ? (
-                <Link to={n.link} className="block">
+                <Link to={n.link as "/"} className="block">
                   {conteudo}
                 </Link>
               ) : (

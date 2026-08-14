@@ -1093,3 +1093,18 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Publicar na HostGator (sem Node no servidor)
+
+```sh
+npm run publicar
+```
+
+Gera **`PUBLICAR-HOSTGATOR.zip`** (site + API PHP + `config.php` de teste).
+
+1. Extrair em `public_html/guiadohigienizador` (mostrar arquivos ocultos)
+2. phpMyAdmin → banco `will3269_GUIA` → Importar `api/schema.sql`
+3. Abrir `/api/health` → `"db": true`
+
+Sem Node, Laravel ou Supabase no servidor. OpenAI é opcional em `api/config.php`.  
+Detalhes: [docs/deploy-hostgator.md](docs/deploy-hostgator.md). Zip sem senha: `npm run build:cpanel` → `cpanel.zip`.

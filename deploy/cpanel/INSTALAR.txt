@@ -1,0 +1,47 @@
+═══════════════════════════════════════════════════════════
+  GUIA DO HIGIENIZADOR — INSTALAÇÃO EM 3 PASSOS (HostGator)
+═══════════════════════════════════════════════════════════
+
+Site: https://guiadohigienizador.autolimpezapro.com.br
+Pasta: public_html/guiadohigienizador
+(NÃO use a raiz da Auto Limpeza Pro.)
+
+───────────────────────────────────────────────────────────
+PASSO 1 — Extrair este zip
+───────────────────────────────────────────────────────────
+1. cPanel → Gerenciador de Arquivos → mostrar arquivos ocultos
+2. Abra public_html/guiadohigienizador
+3. Envie e EXTRAIA este zip DENTRO dessa pasta
+4. Confira no mesmo nível:
+     index.html
+     .htaccess
+     assets/
+     api/
+     INSTALAR.txt
+
+───────────────────────────────────────────────────────────
+PASSO 2 — Banco MySQL (uma vez)
+───────────────────────────────────────────────────────────
+Banco / usuário de teste (já no config.php deste pacote pronto):
+  will3269_GUIA
+
+1. phpMyAdmin → selecione will3269_GUIA
+2. Importar → escolha api/schema.sql → Executar
+3. Se o config.php NÃO veio no zip:
+     copie api/config.example.php → api/config.php
+     e preencha db_name, db_user, db_pass
+
+───────────────────────────────────────────────────────────
+PASSO 3 — Testar
+───────────────────────────────────────────────────────────
+  /api/health     → deve mostrar "db": true
+  /               → home do Guia
+  /auth           → cadastro / login
+  /comunidade     → posts
+  /ia             → só com openai_api_key no config.php
+
+SSL (Let’s Encrypt) no subdomínio guiadohigienizador.
+
+Troque a senha do MySQL depois (teste).
+IA: gemini_api_key (Google AI Studio) e/ou openai_api_key em api/config.php.
+Sem Node, sem Laravel, sem Supabase no servidor.

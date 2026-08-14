@@ -1,34 +1,12 @@
-Guia do Higienizador — cPanel (sem Node)
+Guia do Higienizador — leia INSTALAR.txt
 
-Domínio: https://guiadohigienizador.autolimpezapro.com.br
+Pacote pronto (com config de teste):
+  no PC →  npm run publicar
+  arquivo → PUBLICAR-HOSTGATOR.zip
 
-O servidor NÃO precisa de Node.js, npm, PHP-FPM especial nem banco.
-Basta Apache servindo arquivos estáticos. O index.php é plano B
-se o mod_rewrite estiver desligado.
+Extrair em: public_html/guiadohigienizador
+Importar:   api/schema.sql no MySQL will3269_GUIA
+Testar:     /api/health
 
-1. No computador:
-   npm install
-   npm run build:cpanel
-
-2. Pacote gerado: cpanel/  e  cpanel.zip
-
-3. No cPanel, crie o subdomínio guiadohigienizador
-   em autolimpezapro.com.br.
-
-   Pasta do site: public_html/guiadohigienizador
-   (NÃO envie para public_html da Auto Limpeza Pro.)
-
-4. Gerenciador de Arquivos → mostrar arquivos ocultos →
-   envie e extraia cpanel.zip nessa pasta.
-
-   Confirme: index.html, .htaccess e assets/ no mesmo nível.
-
-5. Ative SSL (Let’s Encrypt / AutoSSL) no subdomínio.
-
-6. Teste:
-   https://guiadohigienizador.autolimpezapro.com.br
-   https://guiadohigienizador.autolimpezapro.com.br/tecidos/suede
-
-Passo a passo completo: HOSTGATOR.txt (neste pacote).
-
-Não envie: node_modules, src, package.json, .output/server
+Site: https://guiadohigienizador.autolimpezapro.com.br
+Não misture com a Auto Limpeza Pro.

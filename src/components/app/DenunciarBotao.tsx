@@ -3,7 +3,9 @@ import { useState } from "react";
 import { z } from "zod";
 
 import { supabase } from "@/integrations/supabase/client";
+import { apiDenunciar } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { MOTIVOS_DENUNCIA } from "@/lib/community";
 
 const denunciaSchema = z.object({
@@ -25,15 +27,29 @@ export function DenunciarBotao({ alvoTipo, alvoId }: { alvoTipo: "post" | "comme
     const parsed = denunciaSchema.safeParse({ motivo, detalhe });
     if (!parsed.success) return setEstado("erro");
     setEstado("enviando");
-    const { error } = await supabase.from("reports").insert({
-      reporter_id: user!.id,
-      alvo_tipo: alvoTipo,
-      alvo_id: alvoId,
-      motivo: parsed.data.motivo,
-      detalhe: parsed.data.detalhe || null,
-    });
-    setEstado(error ? "erro" : "ok");
-    if (!error) setTimeout(() => setAberto(false), 1500);
+    try {
+      if (usesPhpApi()) {
+        await apiDenunciar({
+          alvo_tipo: alvoTipo,
+          alvo_id: alvoId,
+          motivo: parsed.data.motivo,
+          detalhe: parsed.data.detalhe || null,
+        });
+      } else {
+        const { error } = await supabase.from("reports").insert({
+          reporter_id: user!.id,
+          alvo_tipo: alvoTipo,
+          alvo_id: alvoId,
+          motivo: parsed.data.motivo,
+          detalhe: parsed.data.detalhe || null,
+        });
+        if (error) throw error;
+      }
+      setEstado("ok");
+      setTimeout(() => setAberto(false), 1500);
+    } catch {
+      setEstado("erro");
+    }
   }
 
   return (

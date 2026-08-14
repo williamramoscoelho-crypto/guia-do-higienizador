@@ -28,11 +28,12 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
 
 
 function supabaseEnv() {
-  const url = import.meta.env["VITE_SUPABASE_URL"] || process.env["SUPABASE_URL"];
-  const key = import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] || process.env["SUPABASE_PUBLISHABLE_KEY"];
+  const url = String(import.meta.env["VITE_SUPABASE_URL"] ?? "").trim();
+  const key = String(import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ?? "").trim();
   return { url, key };
 }
 
+/** HostGator estático: sem estas variáveis o guia técnico ainda sobe. */
 export function isSupabaseConfigured(): boolean {
   const { url, key } = supabaseEnv();
   return Boolean(url && key);

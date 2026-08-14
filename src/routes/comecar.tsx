@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { kitsHigienizacao } from "@/data/conteudo";
 import { Aviso, Breadcrumbs, BulletList, InfoCard, ItemLink, PageHeader, Section } from "@/components/app/ui";
+import { iaConfigurada } from "@/lib/ia";
 
 export const Route = createFileRoute("/comecar")({
   head: () => ({
@@ -40,6 +41,11 @@ function Comecar() {
       ))}
       <Section titulo="Primeiros passos no Guia">
         <ul className="grid gap-2">
+          {iaConfigurada() ? (
+            <li>
+              <ItemLink to="/ia" emoji="🤖" titulo="Higienizador IA" descricao="Tire dúvidas de kit, erros comuns e primeiro atendimento" />
+            </li>
+          ) : null}
           <li>
             <ItemLink to="/identificar" emoji="🔍" titulo="Identificar o tecido" descricao="Assistente por perguntas — resultado é provável, não certeza" />
           </li>

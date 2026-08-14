@@ -4,7 +4,9 @@ import { z } from "zod";
 
 import { EntrarCTA } from "@/components/app/community";
 import { supabase } from "@/integrations/supabase/client";
+import { apiCriarPost } from "@/lib/api";
 import { useAuth } from "@/lib/auth";
+import { usesPhpApi } from "@/lib/backend";
 import { TIPOS_POST } from "@/lib/community";
 
 export const Route = createFileRoute("/comunidade/novo")({
@@ -31,7 +33,7 @@ const postSchema = z.object({
 function NovoPost() {
   const { user, carregando } = useAuth();
   const navigate = useNavigate();
-  const [kind, setKind] = useState<string>("tip");
+  const [kind, setKind] = useState<string>("discussao");
   const [titulo, setTitulo] = useState("");
   const [corpo, setCorpo] = useState("");
   const [tagsTexto, setTagsTexto] = useState("");
@@ -61,21 +63,33 @@ function NovoPost() {
     if (!parsed.success) return setErro(parsed.error.issues[0]?.message ?? "Revise os campos.");
 
     setEnviando(true);
-    const { data, error } = await supabase
-      .from("posts")
-      .insert({
-        author_id: user!.id,
-        kind: parsed.data.kind as never,
-        titulo: parsed.data.titulo || null,
-        corpo: parsed.data.corpo,
-        tags: parsed.data.tags,
-      })
-      .select("id")
-      .single();
+    try {
+      const data = usesPhpApi()
+        ? await apiCriarPost({
+            kind: parsed.data.kind,
+            titulo: parsed.data.titulo || undefined,
+            corpo: parsed.data.corpo,
+            tags: parsed.data.tags,
+          })
+        : (
+            await supabase
+              .from("posts")
+              .insert({
+                author_id: user!.id,
+                kind: parsed.data.kind as never,
+                titulo: parsed.data.titulo || null,
+                corpo: parsed.data.corpo,
+                tags: parsed.data.tags,
+              })
+              .select("id")
+              .single()
+          ).data;
+      if (!data?.id) throw new Error("fail");
+      void navigate({ to: "/comunidade/post/$id", params: { id: data.id } });
+    } catch {
+      setErro("Não foi possível publicar agora. Tente novamente.");
+    }
     setEnviando(false);
-
-    if (error || !data) return setErro("Não foi possível publicar agora. Tente novamente.");
-    void navigate({ to: "/comunidade/post/$id", params: { id: data.id } });
   }
 
   return (

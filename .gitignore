@@ -24,14 +24,25 @@ dist/
 # Pacote gerado para cPanel (rode npm run build:cpanel)
 /cpanel/
 /cpanel.zip
+# Pacote com config.php de teste — NUNCA commitar (senhas)
+/PUBLICAR-HOSTGATOR/
+/PUBLICAR-HOSTGATOR.zip
 
 # Coleta bruta de páginas (navegação/HTML; não versionar)
 src/data/manchas-produtos.raw.json
+scripts/vonixx-estofados/out/
+scripts/vonixx-estofados/fispqs/
+scripts/protelim-estofados/out/
+scripts/protelim-estofados/fispqs/
+scripts/easytech-estofados/out/
+scripts/easytech-estofados/fispqs/
 
 # Segredos — nunca versionar
 .env
 .env.*
 !.env.example
+api/config.php
+api/config.php
 
 # Editor directories and files
 .vscode/*

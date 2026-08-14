@@ -7,7 +7,6 @@
  * invalidação de cache quando o usuário entra ou sai.
  */
 import { useQueryClient } from "@tanstack/react-query";
-import type { Session, User } from "@supabase/supabase-js";
 import {
   createContext,
   useCallback,
@@ -19,6 +18,8 @@ import {
 } from "react";
 
 import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
+import { apiLogout, apiSessao, gravarToken, type ApiUser } from "@/lib/api";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 
 export interface PerfilAtual {
   id: string;
@@ -32,11 +33,16 @@ export interface PerfilAtual {
   suspenso: boolean;
 }
 
+export type SessaoApp = {
+  access_token: string;
+  user: ApiUser;
+};
+
 interface AuthState {
   /** `undefined` enquanto a sessão ainda não foi resolvida no cliente. */
   carregando: boolean;
-  session: Session | null;
-  user: User | null;
+  session: SessaoApp | null;
+  user: ApiUser | null;
   perfil: PerfilAtual | null;
   pontos: number;
   isStaff: boolean;
@@ -49,11 +55,33 @@ const AuthContext = createContext<AuthState | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<SessaoApp | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [perfil, setPerfil] = useState<PerfilAtual | null>(null);
   const [pontos, setPontos] = useState(0);
   const [papeis, setPapeis] = useState<string[]>([]);
+
+  const aplicarPhp = useCallback(async () => {
+    try {
+      const s = await apiSessao();
+      if (!s.user) {
+        setSession(null);
+        setPerfil(null);
+        setPapeis([]);
+        setPontos(0);
+        return;
+      }
+      setSession({ access_token: s.token ?? "", user: s.user });
+      setPerfil(s.perfil);
+      setPapeis(s.papeis);
+      setPontos(s.pontos);
+    } catch {
+      setSession(null);
+      setPerfil(null);
+      setPapeis([]);
+      setPontos(0);
+    }
+  }, []);
 
   const carregarDadosDoUsuario = useCallback(async (userId: string | undefined) => {
     if (!userId) {
@@ -63,7 +91,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    // Executa em paralelo: são três leituras independentes.
+    if (usesPhpApi()) {
+      await aplicarPhp();
+      return;
+    }
+
     const [perfilRes, papeisRes, pontosRes] = await Promise.all([
       supabase
         .from("profiles")
@@ -77,23 +109,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setPerfil((perfilRes.data as PerfilAtual | null) ?? null);
     setPapeis((papeisRes.data ?? []).map((r) => r.role as string));
     setPontos(pontosRes.data?.pontos ?? 0);
-  }, []);
+  }, [aplicarPhp]);
 
   useEffect(() => {
-    if (!isSupabaseConfigured()) {
+    if (!isCommunityEnabled()) {
       setCarregando(false);
       return;
     }
 
     let ativo = true;
 
-    // Assina antes de ler a sessão para não perder o evento inicial.
+    if (usesPhpApi()) {
+      const onAuth = () => {
+        void aplicarPhp().then(() => {
+          if (ativo) {
+            void queryClient.invalidateQueries();
+          }
+        });
+      };
+      window.addEventListener("gh-auth", onAuth);
+      void aplicarPhp().then(() => {
+        if (ativo) setCarregando(false);
+      });
+      return () => {
+        ativo = false;
+        window.removeEventListener("gh-auth", onAuth);
+      };
+    }
+
     const { data: sub } = supabase.auth.onAuthStateChange((event, novaSessao) => {
       if (!ativo) return;
-      setSession(novaSessao);
+      setSession(
+        novaSessao?.user
+          ? { access_token: novaSessao.access_token, user: { id: novaSessao.user.id, email: novaSessao.user.email ?? null } }
+          : null,
+      );
 
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      // Evita atualizar estado dentro do callback síncrono do Supabase.
       setTimeout(() => {
         if (!ativo) return;
         void carregarDadosDoUsuario(novaSessao?.user?.id);
@@ -104,8 +156,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     void supabase.auth.getSession().then(async ({ data }) => {
       if (!ativo) return;
-      setSession(data.session);
-      await carregarDadosDoUsuario(data.session?.user?.id);
+      const s = data.session;
+      setSession(s?.user ? { access_token: s.access_token, user: { id: s.user.id, email: s.user.email ?? null } } : null);
+      await carregarDadosDoUsuario(s?.user?.id);
       if (ativo) setCarregando(false);
     });
 
@@ -113,14 +166,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       ativo = false;
       sub.subscription.unsubscribe();
     };
-  }, [carregarDadosDoUsuario, queryClient]);
+  }, [aplicarPhp, carregarDadosDoUsuario, queryClient]);
 
   const recarregarPerfil = useCallback(async () => {
+    if (usesPhpApi()) {
+      await aplicarPhp();
+      return;
+    }
     await carregarDadosDoUsuario(session?.user?.id);
-  }, [carregarDadosDoUsuario, session?.user?.id]);
+  }, [aplicarPhp, carregarDadosDoUsuario, session?.user?.id]);
 
   const sair = useCallback(async () => {
-    await supabase.auth.signOut();
+    if (usesPhpApi()) await apiLogout();
+    else if (isSupabaseConfigured()) await supabase.auth.signOut();
+    gravarToken(null);
+    setSession(null);
     setPerfil(null);
     setPapeis([]);
     queryClient.clear();

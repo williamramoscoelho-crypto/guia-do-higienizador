@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Fallback para hospedagem Apache/cPanel sem Node.
+ * Plano B se o mod_rewrite estiver desligado. Não é um app PHP/Laravel.
  * Serve HTML pré-renderizado; se a URL não existir, entrega o shell SPA.
  */
 $root = realpath(__DIR__);

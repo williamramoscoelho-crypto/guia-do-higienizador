@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
+import { isCommunityEnabled } from "@/lib/backend";
 import { nivelPorPontos, tipoPost } from "@/lib/community";
 import { cn } from "@/lib/utils";
 
@@ -130,6 +132,10 @@ export function Carregando({ linhas = 3 }: { linhas?: number }) {
 }
 
 export function EntrarCTA({ mensagem }: { mensagem: string }) {
+  if (!isCommunityEnabled()) {
+    return <AvisoHospedagemEstatica />;
+  }
+
   return (
     <div className="rounded-2xl border border-primary/40 bg-primary/10 p-4 text-center">
       <p className="text-sm font-semibold">{mensagem}</p>

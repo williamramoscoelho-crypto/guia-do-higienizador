@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { perguntasIdentificacao } from "@/data/conteudo";
 import { tecidos } from "@/data/tecidos";
 import { Aviso, Breadcrumbs, ItemLink, PageHeader, Section } from "@/components/app/ui";
+import { iaConfigurada } from "@/lib/ia";
 
 export const Route = createFileRoute("/identificar")({
   head: () => ({
@@ -100,6 +101,24 @@ function Identificar() {
           >
             Recomeçar
           </button>
+          {ranking[0] && iaConfigurada() ? (
+            <Link
+              to="/ia"
+              search={{
+                modo: "tecido",
+                q: `Hipótese do identificador: ${ranking
+                  .slice(0, 3)
+                  .map(([slug, n]) => {
+                    const t = tecidos.find((x) => x.slug === slug);
+                    return t ? `${t.nome} (${n} indício${n > 1 ? "s" : ""})` : slug;
+                  })
+                  .join(", ")}. Confirme pela etiqueta e oriente o método mais conservador.`,
+              }}
+              className="mt-3 inline-flex min-h-11 items-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
+            >
+              Continuar no Higienizador IA
+            </Link>
+          ) : null}
         </Section>
       )}
 

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ItemLink, PageHeader, Section } from "@/components/app/ui";
+import { iaConfigurada } from "@/lib/ia";
 
 export const Route = createFileRoute("/ferramentas/")({
   head: () => ({
@@ -24,12 +25,22 @@ function Ferramentas() {
       />
       <Section>
         <ul className="grid gap-2">
+          {iaConfigurada() ? (
+            <li>
+              <ItemLink
+                to="/ia"
+                emoji="🤖"
+                titulo="Higienizador IA"
+                descricao="Chat técnico: peça orientação e use as calculadoras com a ficha na mão"
+              />
+            </li>
+          ) : null}
           <li>
             <ItemLink
               to="/ferramentas/diluicao"
               emoji="🧮"
               titulo="Calculadora de diluição"
-              descricao="Volume desejado e proporção recomendada pelo fabricante"
+              descricao="Volume, embalagem e proporção citada na ficha do fabricante"
             />
           </li>
           <li>

@@ -1,0 +1,35 @@
+# Gera cpanel.zip (HTML/CSS/JS + .htaccess). O HostGator não usa Node.
+# Não faz FTP — baixe o artefato e envie pelo Gerenciador de Arquivos.
+name: Pacote cPanel
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build estático HostGator
+        run: npm run build:cpanel
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cpanel
+          path: |
+            cpanel.zip
+            cpanel
+          if-no-files-found: error
+          retention-days: 14

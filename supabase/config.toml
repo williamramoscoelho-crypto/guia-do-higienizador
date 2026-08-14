@@ -1,1 +1,6 @@
 project_id = "ivdymghkcwgwoedrruhx"
+
+# Higienizador IA: a chave OpenAI fica em Secrets, não no frontend.
+# verify_jwt = false porque a chave publishable nova (sb_publishable_) não é JWT.
+[functions.higienizador-ia]
+verify_jwt = false

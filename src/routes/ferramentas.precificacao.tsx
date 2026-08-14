@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Aviso, Breadcrumbs, DataList, PageHeader, Section } from "@/components/app/ui";
+import { iaConfigurada } from "@/lib/ia";
 
 export const Route = createFileRoute("/ferramentas/precificacao")({
   head: () => ({
@@ -75,6 +76,14 @@ function Precificacao() {
         Abaixo do custo você trabalha no prejuízo. Ajuste a margem conforme a sua região, a complexidade da peça e o
         risco do atendimento.
       </Aviso>
+      {iaConfigurada() ? (
+        <p className="mt-4 text-sm">
+          <Link to="/ia" search={{ modo: "precificacao" }} className="font-semibold text-primary underline">
+            Pedir orientação à IA
+          </Link>{" "}
+          — ela não publica tabela de mercado; ajuda a usar os seus números nesta calculadora.
+        </p>
+      ) : null}
     </div>
   );
 }

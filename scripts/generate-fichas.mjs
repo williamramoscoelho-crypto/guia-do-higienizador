@@ -46,6 +46,8 @@ const linhas = raw.map((row) => ({
   nome: titulo(row),
   url: row.url,
   resumo: clean(row.resumo, 280),
+  // Calculadora em /ferramentas/diluicao só parseia 1:N deste texto (e modoDeUsar /
+  // fichaTecnica). Nunca preencha diluicao com razão inventada.
   diluicao: clean(row.diluicao, 280),
   ph: clean(row.ph, 120),
   usoRecomendado: clean(row.usoRecomendado, 220),
@@ -64,6 +66,7 @@ const ts = `export type FichaFabricante = {
   nome: string;
   url: string;
   resumo: string;
+  /** Texto do fabricante. A calculadora parseia 1:N — nunca invente a razão. */
   diluicao: string;
   ph: string;
   usoRecomendado: string;
@@ -74,6 +77,11 @@ const ts = `export type FichaFabricante = {
   fichaPdf: string;
   fdsPdf: string;
   coletadoEm: string;
+  linha?: string;
+  fichaTecnica?: string;
+  sdsPdf?: string;
+  faq?: { p: string; r: string }[];
+  documentos?: { label: string; url: string }[];
 };
 
 /** Catálogo extraído de páginas oficiais. Confirme sempre no fabricante — fichas mudam. */

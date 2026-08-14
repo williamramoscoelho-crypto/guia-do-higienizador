@@ -4,7 +4,10 @@ import { MapPin, Search } from "lucide-react";
 import { useState } from "react";
 
 import { Avatar, Carregando, Vazio } from "@/components/app/community";
+import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
 import { supabase } from "@/integrations/supabase/client";
+import { apiProfissionais } from "@/lib/api";
+import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 import { ESPECIALIDADES, UFS } from "@/lib/community";
 
 export const Route = createFileRoute("/profissionais")({
@@ -32,7 +35,10 @@ function ProfissionaisPage() {
 
   const lista = useQuery({
     queryKey: ["profissionais", { uf, especialidade }],
+    enabled: isCommunityEnabled(),
     queryFn: async () => {
+      if (!isCommunityEnabled()) return [];
+      if (usesPhpApi()) return apiProfissionais({ uf, especialidade });
       let q = supabase
         .from("profiles")
         .select("id,handle,nome,nome_profissional,avatar_url,cidade,estado,mostrar_cidade,bio,especialidades")
@@ -68,6 +74,12 @@ function ProfissionaisPage() {
         </p>
       </header>
 
+      {!isCommunityEnabled() ? (
+        <div className="mt-5">
+          <AvisoHospedagemEstatica />
+        </div>
+      ) : (
+        <>
       <div className="mt-5 grid gap-3">
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
@@ -157,6 +169,8 @@ function ProfissionaisPage() {
           </article>
         ))}
       </div>
+        </>
+      )}
     </div>
   );
 }
