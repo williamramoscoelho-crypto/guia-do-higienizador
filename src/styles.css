@@ -216,3 +216,49 @@
   color: var(--color-primary-foreground);
   box-shadow: var(--brand-shadow);
 }
+
+/* Renderização de markdown das respostas do Higienizador IA */
+.prose-ia :is(h1, h2, h3) {
+  margin-top: 1rem;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.prose-ia p {
+  margin-bottom: 0.65rem;
+}
+.prose-ia :is(ul, ol) {
+  margin: 0 0 0.65rem 1.1rem;
+  display: grid;
+  gap: 0.3rem;
+}
+.prose-ia ul {
+  list-style: disc;
+}
+.prose-ia ol {
+  list-style: decimal;
+}
+.prose-ia strong {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.prose-ia code {
+  border-radius: 0.35rem;
+  background: var(--color-muted);
+  padding: 0.1rem 0.3rem;
+  font-size: 0.8rem;
+}
+.prose-ia table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 0.65rem;
+  font-size: 0.8rem;
+}
+.prose-ia :is(th, td) {
+  border: 1px solid var(--color-border);
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+}
+.prose-ia > :last-child {
+  margin-bottom: 0;
+}
