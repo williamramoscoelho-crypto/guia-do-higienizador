@@ -82,7 +82,8 @@ function Lista() {
                 to="/fichas/$slug"
                 params={{ slug: f.slug }}
                 titulo={f.nome}
-                descricao={`${marcasFichas.find((m) => m.slug === f.marca)?.nome ?? f.marca} — ${f.resumo}`}
+                descricao={`${marcasFichas.find((m) => m.slug === f.marca)?.nome ?? f.marca} — ${f.fdsPdf ? "FISPQ disponível" : "FISPQ: consulte o fabricante"} — ${f.resumo}`}
+
               />
             </li>
           ))}
