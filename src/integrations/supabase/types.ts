@@ -88,60 +88,7 @@ export type Database = {
       }
     }
     Views: {
-      perfis_publicos: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          cidade: string | null
-          created_at: string | null
-          empresa: string | null
-          especialidades: string[] | null
-          estado: string | null
-          id: string | null
-          instagram: string | null
-          nome: string | null
-          nome_profissional: string | null
-          permitir_mensagens: boolean | null
-          servicos: string[] | null
-          site: string | null
-          whatsapp: string | null
-        }
-        Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          cidade?: never
-          created_at?: string | null
-          empresa?: string | null
-          especialidades?: string[] | null
-          estado?: never
-          id?: string | null
-          instagram?: never
-          nome?: string | null
-          nome_profissional?: never
-          permitir_mensagens?: boolean | null
-          servicos?: string[] | null
-          site?: never
-          whatsapp?: never
-        }
-        Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          cidade?: never
-          created_at?: string | null
-          empresa?: string | null
-          especialidades?: string[] | null
-          estado?: never
-          id?: string | null
-          instagram?: never
-          nome?: string | null
-          nome_profissional?: never
-          permitir_mensagens?: boolean | null
-          servicos?: string[] | null
-          site?: never
-          whatsapp?: never
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       [_ in never]: never
