@@ -7,7 +7,7 @@ import { produtos } from "./src/data/produtos.ts";
 import { tecidos } from "./src/data/tecidos.ts";
 import { fichasFabricantes } from "./src/data/fichas-fabricantes.ts";
 
-const cpanel = process.env.CPANEL_BUILD === "1";
+const cpanel = process.env['CPANEL_BUILD'] === "1";
 
 const pages = [
   "/",
@@ -46,7 +46,8 @@ const pages = [
 ].map((path) => ({ path }));
 
 export default defineConfig({
-  nitro: cpanel ? false : undefined,
+  ...(cpanel ? { nitro: false as const } : {}),
+
   tanstackStart: {
     server: { entry: "server" },
     ...(cpanel
