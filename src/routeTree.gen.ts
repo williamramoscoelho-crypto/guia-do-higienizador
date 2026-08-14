@@ -19,11 +19,13 @@ import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as FluxoRouteImport } from './routes/fluxo'
 import { Route as GlossarioRouteImport } from './routes/glossario'
 import { Route as GuiaRouteImport } from './routes/guia'
+import { Route as IaRouteImport } from './routes/ia'
 import { Route as IdentificarRouteImport } from './routes/identificar'
 import { Route as ParceriaRouteImport } from './routes/parceria'
 import { Route as PhRouteImport } from './routes/ph'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
+import { Route as ApiIaRouteImport } from './routes/api/ia'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -93,6 +95,11 @@ const GuiaRoute = GuiaRouteImport.update({
   path: '/guia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IaRoute = IaRouteImport.update({
+  id: '/ia',
+  path: '/ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IdentificarRoute = IdentificarRouteImport.update({
   id: '/identificar',
   path: '/identificar',
@@ -116,6 +123,11 @@ const SobreRoute = SobreRouteImport.update({
 const TransparenciaRoute = TransparenciaRouteImport.update({
   id: '/transparencia',
   path: '/transparencia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiIaRoute = ApiIaRouteImport.update({
+  id: '/api/ia',
+  path: '/api/ia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
@@ -220,11 +232,13 @@ export interface FileRoutesByFullPath {
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
+  '/api/ia': typeof ApiIaRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -255,11 +269,13 @@ export interface FileRoutesByTo {
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
+  '/api/ia': typeof ApiIaRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -291,11 +307,13 @@ export interface FileRoutesById {
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
   '/guia': typeof GuiaRoute
+  '/ia': typeof IaRoute
   '/identificar': typeof IdentificarRoute
   '/parceria': typeof ParceriaRoute
   '/ph': typeof PhRoute
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
+  '/api/ia': typeof ApiIaRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -328,11 +346,13 @@ export interface FileRouteTypes {
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
     | '/sobre'
     | '/transparencia'
+    | '/api/ia'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -363,11 +383,13 @@ export interface FileRouteTypes {
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
     | '/sobre'
     | '/transparencia'
+    | '/api/ia'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -398,11 +420,13 @@ export interface FileRouteTypes {
     | '/fluxo'
     | '/glossario'
     | '/guia'
+    | '/ia'
     | '/identificar'
     | '/parceria'
     | '/ph'
     | '/sobre'
     | '/transparencia'
+    | '/api/ia'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -434,11 +458,13 @@ export interface RootRouteChildren {
   FluxoRoute: typeof FluxoRoute
   GlossarioRoute: typeof GlossarioRoute
   GuiaRoute: typeof GuiaRoute
+  IaRoute: typeof IaRoute
   IdentificarRoute: typeof IdentificarRoute
   ParceriaRoute: typeof ParceriaRoute
   PhRoute: typeof PhRoute
   SobreRoute: typeof SobreRoute
   TransparenciaRoute: typeof TransparenciaRoute
+  ApiIaRoute: typeof ApiIaRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
@@ -531,6 +557,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ia': {
+      id: '/ia'
+      path: '/ia'
+      fullPath: '/ia'
+      preLoaderRoute: typeof IaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/identificar': {
       id: '/identificar'
       path: '/identificar'
@@ -564,6 +597,13 @@ declare module '@tanstack/react-router' {
       path: '/transparencia'
       fullPath: '/transparencia'
       preLoaderRoute: typeof TransparenciaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/ia': {
+      id: '/api/ia'
+      path: '/api/ia'
+      fullPath: '/api/ia'
+      preLoaderRoute: typeof ApiIaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos/': {
@@ -706,11 +746,13 @@ const rootRouteChildren: RootRouteChildren = {
   FluxoRoute: FluxoRoute,
   GlossarioRoute: GlossarioRoute,
   GuiaRoute: GuiaRoute,
+  IaRoute: IaRoute,
   IdentificarRoute: IdentificarRoute,
   ParceriaRoute: ParceriaRoute,
   PhRoute: PhRoute,
   SobreRoute: SobreRoute,
   TransparenciaRoute: TransparenciaRoute,
+  ApiIaRoute: ApiIaRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
