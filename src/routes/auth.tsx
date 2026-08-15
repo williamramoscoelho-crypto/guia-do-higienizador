@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { PageHeader, InfoCard } from "@/components/app/ui";
-import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 
 const buscaSchema = z.object({ redirect: z.string().optional() });
@@ -76,14 +75,6 @@ function PaginaAuth() {
     }
   }
 
-  async function entrarComGoogle() {
-    try {
-      await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
-    } catch (erro) {
-      toast.error((erro as Error).message || "Não foi possível entrar com o Google.");
-    }
-  }
-
   return (
     <div className="pb-6">
       <PageHeader
@@ -129,15 +120,6 @@ function PaginaAuth() {
             </button>
           </div>
 
-          <button
-            type="button"
-            onClick={() => void entrarComGoogle()}
-            className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-border bg-card text-sm font-semibold"
-          >
-            Continuar com o Google
-          </button>
-
-          <p className="my-4 text-center text-xs uppercase tracking-widest text-muted-foreground">ou com e-mail</p>
 
           <form onSubmit={enviar} className="grid gap-3">
             {modo === "criar" ? (
