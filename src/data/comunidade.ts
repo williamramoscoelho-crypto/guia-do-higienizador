@@ -283,6 +283,6 @@ export const tagsPopulares = [
   "impermeabilização",
 ];
 
-export function autorPorId(id: string) {
-  return autores.find((a) => a.id === id) ?? autores[0];
+export function autorPorId(id: string): Autor {
+  return autores.find((a) => a.id === id) ?? (autores[0] as Autor);
 }
