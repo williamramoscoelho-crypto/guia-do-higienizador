@@ -1,6 +1,10 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getTecido } from "@/data/tecidos";
 import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
+import { EncontrouErro } from "@/components/app/EncontrouErro";
+import { FeedbackUtil } from "@/components/app/FeedbackUtil";
+import { RelacionadosConhecimento } from "@/components/app/RelacionadosConhecimento";
+import { AlertaPadrao } from "@/components/app/confiabilidade";
 import {
   Aviso,
   Breadcrumbs,
@@ -167,6 +171,11 @@ function Detalhe() {
         </Aviso>
       </Section>
 
+      <AlertaPadrao tipo="teste">
+        Em caso de risco de desbotamento, migração ou alteração de textura, faça teste em área discreta. O teste reduz
+        risco — não garante ausência de dano.
+      </AlertaPadrao>
+
       {t.faq.length > 0 ? (
         <Section titulo="Perguntas frequentes">
           <div className="grid gap-3">
@@ -180,6 +189,9 @@ function Detalhe() {
         </Section>
       ) : null}
 
+      <RelacionadosConhecimento tecidoNome={t.nome} />
+      <FeedbackUtil idPagina={`tecido-${t.slug}`} />
+      <EncontrouErro path={`/tecidos/${t.slug}`} />
       <ConhecimentoVivo tema={t.nome} />
     </div>
   );

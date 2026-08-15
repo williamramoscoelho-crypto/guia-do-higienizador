@@ -20,16 +20,24 @@ PASSO 1 — Extrair este zip
      INSTALAR.txt
 
 ───────────────────────────────────────────────────────────
-PASSO 2 — Banco MySQL (uma vez)
+PASSO 2 — Banco MySQL (1 clique)
 ───────────────────────────────────────────────────────────
-Banco / usuário de teste (já no config.php deste pacote pronto):
-  will3269_GUIA
+No cPanel, crie o banco + usuário e associe com todos os privilégios
+(ex.: will3269_GUIA). Não precisa importar schema no phpMyAdmin.
 
-1. phpMyAdmin → selecione will3269_GUIA
-2. Importar → escolha api/schema.sql → Executar
-3. Se o config.php NÃO veio no zip:
-     copie api/config.example.php → api/config.php
-     e preencha db_name, db_user, db_pass
+1. Abra no navegador:
+     https://guiadohigienizador.autolimpezapro.com.br/api/instalar.php
+2. Preencha host/banco/usuário/senha MySQL + senha do instalador
+   (ou, se já existe api/config.php, digite só a install_key)
+3. Clique em **Instalar em 1 clique** (primeira vez)
+   ou **Atualizar banco** (quando republicar o site)
+4. Teste /api/health → "db": true
+
+Alternativa antiga: phpMyAdmin → Importar api/schema.sql
+
+Se o zip NÃO trouxe config.php:
+  o próprio instalar.php pode criar; ou copie
+  api/config.example.php → api/config.php
 
 ───────────────────────────────────────────────────────────
 PASSO 3 — Testar
@@ -44,4 +52,5 @@ SSL (Let’s Encrypt) no subdomínio guiadohigienizador.
 
 Troque a senha do MySQL depois (teste).
 IA: gemini_api_key (Google AI Studio) e/ou openai_api_key em api/config.php.
+Opcional: apague api/instalar.php depois de usar.
 Sem Node, sem Laravel, sem Supabase no servidor.

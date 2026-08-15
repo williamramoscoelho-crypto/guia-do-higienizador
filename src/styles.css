@@ -1,6 +1,10 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import "@fontsource/plus-jakarta-sans/latin-400.css";
+@import "@fontsource/plus-jakarta-sans/latin-500.css";
+@import "@fontsource/plus-jakarta-sans/latin-600.css";
+@import "@fontsource/plus-jakarta-sans/latin-700.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -177,6 +181,26 @@
   padding-inline: 1rem;
 }
 
+@media (min-width: 768px) {
+  .app-shell {
+    max-width: 48rem;
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell {
+    max-width: 64rem;
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .app-shell {
+    max-width: 72rem;
+  }
+}
+
 @utility surface-hero {
   background:
     radial-gradient(ellipse 80% 55% at 88% -8%, hsl(200 95% 55% / 0.32), transparent 58%),
@@ -259,6 +283,202 @@
   padding: 0.35rem 0.5rem;
   text-align: left;
 }
+.prose-ia :has(> table) {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+.prose-ia table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 .prose-ia > :last-child {
   margin-bottom: 0;
 }
+
+/* Transições de página (opcionais; padrão é none / sem remount) */
+.pt-root {
+  animation-duration: var(--pt-duration, 280ms);
+  animation-timing-function: var(--pt-easing, ease);
+  animation-fill-mode: both;
+  will-change: transform, opacity;
+}
+.pt-fade {
+  animation-name: pt-fade;
+}
+.pt-zoom-in {
+  animation-name: pt-zoom-in;
+}
+.pt-zoom-out {
+  animation-name: pt-zoom-out;
+}
+.pt-blur-rise {
+  animation-name: pt-blur-rise;
+}
+.pt-flip-x {
+  animation-name: pt-flip-x;
+}
+.pt-flip-y {
+  animation-name: pt-flip-y;
+}
+.pt-slide-left {
+  animation-name: pt-slide-left;
+}
+.pt-slide-right {
+  animation-name: pt-slide-right;
+}
+.pt-slide-up {
+  animation-name: pt-slide-up;
+}
+.pt-slide-down {
+  animation-name: pt-slide-down;
+}
+.pt-parallax-right {
+  animation-name: pt-parallax-right;
+}
+.pt-parallax-up {
+  animation-name: pt-parallax-up;
+}
+.pt-parallax-down {
+  animation-name: pt-parallax-down;
+}
+
+@keyframes pt-fade {
+  from {
+    opacity: var(--pt-opacity, 0);
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pt-zoom-in {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes pt-zoom-out {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: scale(1.03);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes pt-blur-rise {
+  from {
+    opacity: var(--pt-opacity, 0);
+    filter: blur(6px);
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+@keyframes pt-flip-x {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: perspective(800px) rotateX(8deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0);
+  }
+}
+@keyframes pt-flip-y {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: perspective(800px) rotateY(8deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateY(0);
+  }
+}
+@keyframes pt-slide-left {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateX(calc(var(--pt-distance, 16px) * -1));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes pt-slide-right {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateX(var(--pt-distance, 16px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes pt-slide-up {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateY(calc(var(--pt-distance, 16px) * -1));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pt-slide-down {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateY(var(--pt-distance, 16px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pt-parallax-right {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateX(calc(var(--pt-distance, 16px) * 1.4));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes pt-parallax-up {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateY(calc(var(--pt-distance, 16px) * -1.4));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pt-parallax-down {
+  from {
+    opacity: var(--pt-opacity, 0);
+    transform: translateY(calc(var(--pt-distance, 16px) * 1.4));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pt-root {
+    animation: none !important;
+  }
+}
+

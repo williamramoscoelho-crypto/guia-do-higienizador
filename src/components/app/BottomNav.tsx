@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Calculator, CircleUser, Home, Info, MessagesSquare, Star, Users } from "lucide-react";
 
-import { isCommunityEnabled } from "@/lib/backend";
+import { isCommunityEnabled } from "@/lib/flags";
 
 const itensGuia = [
   { to: "/", label: "Início", Icon: Home, exact: true },
@@ -25,7 +25,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Navegação principal"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-card/90 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_32px_-12px_hsl(200_95%_55%/0.25)] backdrop-blur-xl"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-card pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_-14px_hsl(200_95%_55%/0.2)] lg:hidden"
     >
       <ul className="app-shell grid grid-cols-5 gap-1 py-1.5">
         {itens.map(({ to, label, Icon, exact }) => (

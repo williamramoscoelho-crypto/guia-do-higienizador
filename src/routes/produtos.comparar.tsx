@@ -54,7 +54,7 @@ function Comparar() {
       <Section titulo="Selecione">
         <div className="flex flex-wrap gap-2">
           {produtos.map((p) => (
-            <button key={p.slug} type="button" onClick={() => alternar(p.slug)} className="min-h-9">
+            <button key={p.slug} type="button" onClick={() => alternar(p.slug)} className="min-h-11">
               <Chip tone={sel.includes(p.slug) ? "ok" : "default"}>{p.nome}</Chip>
             </button>
           ))}
@@ -66,7 +66,24 @@ function Comparar() {
         </Section>
       ) : (
         <Section titulo="Comparação">
-          <div className="-mx-4 overflow-x-auto px-4">
+          <div className="grid gap-3 md:hidden">
+            {escolhidos.map((p) => (
+              <InfoCard key={p.slug}>
+                <Link to="/produtos/$slug" params={{ slug: p.slug }} className="text-sm font-bold underline-offset-4 hover:underline">
+                  {p.nome}
+                </Link>
+                <dl className="mt-3 space-y-2">
+                  {linhas.map((l) => (
+                    <div key={l.label}>
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{l.label}</dt>
+                      <dd className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{l.get(p)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </InfoCard>
+            ))}
+          </div>
+          <div className="-mx-4 hidden overflow-x-auto px-4 md:block">
             <table className="w-full min-w-[520px] border-collapse text-left text-sm">
               <thead>
                 <tr>

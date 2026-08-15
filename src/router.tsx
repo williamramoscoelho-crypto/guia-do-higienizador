@@ -1,15 +1,11 @@
-import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
 
-function Pending() {
-  return (
-    <div className="flex min-h-[40vh] items-center justify-center text-sm text-muted-foreground">
-      Carregando…
-    </div>
-  );
-}
-
+/**
+ * Sem defaultPendingComponent: no prerender cPanel a home não pode ficar só
+ * com “Carregando…” no HTML público (LCP/SEO).
+ */
 export const getRouter = () => {
   const queryClient = new QueryClient();
 
@@ -18,7 +14,6 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
-    defaultPendingComponent: Pending,
   });
 
   return router;

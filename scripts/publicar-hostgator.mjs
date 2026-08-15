@@ -70,9 +70,12 @@ writeFileSync(
     "4. No mesmo nível devem existir: index.html, .htaccess, assets/, api/",
     "",
     "───────────────────────────────────────────────────────────",
-    "PASSO 2 — Importar o banco (uma vez)",
+    "PASSO 2 — Banco MySQL (1 clique)",
     "───────────────────────────────────────────────────────────",
-    "phpMyAdmin → banco will3269_GUIA → Importar → api/schema.sql",
+    "1. Abra: https://guiadohigienizador.autolimpezapro.com.br/api/instalar.php",
+    "2. Digite a install_key do api/config.php (defina se ainda não tiver)",
+    "3. Clique em Instalar banco ou Atualizar banco",
+    "   (Alternativa: phpMyAdmin → Importar api/schema.sql)",
     "",
     "───────────────────────────────────────────────────────────",
     "PASSO 3 — Testar",
@@ -81,8 +84,7 @@ writeFileSync(
     "  https://guiadohigienizador.autolimpezapro.com.br/",
     "  /auth  /comunidade  /fichas  /ia",
     "",
-    "IA: gemini_api_key (Google AI Studio) e/ou openai_api_key em api/config.php.
-ia_provider=auto usa Gemini se houver chave.",
+    "IA: gemini_api_key e/ou openai_api_key em api/config.php (ia_provider=auto).",
     "Sem Node no servidor. Só Apache + PHP 8 + MySQL.",
     "",
   ].join("\n"),
@@ -111,4 +113,4 @@ console.log("PRONTO PARA PUBLICAR:");
 console.log(`  ${zipPronto}`);
 console.log(`  ${pastaPronto}`);
 console.log("");
-console.log("Na HostGator: extrair em public_html/guiadohigienizador → importar api/schema.sql → /api/health");
+console.log("Na HostGator: extrair → /api/instalar.php (1 clique) → /api/health");

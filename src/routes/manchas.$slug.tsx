@@ -2,6 +2,10 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getMancha } from "@/data/manchas";
 import { indicacoesDaMancha, nomeMarcaFicha, rotuloPapel } from "@/data/manchas-produtos";
 import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
+import { EncontrouErro } from "@/components/app/EncontrouErro";
+import { FeedbackUtil } from "@/components/app/FeedbackUtil";
+import { RelacionadosConhecimento } from "@/components/app/RelacionadosConhecimento";
+import { AlertaPadrao } from "@/components/app/confiabilidade";
 import {
   Aviso,
   Breadcrumbs,
@@ -14,7 +18,7 @@ import {
   RegistrarVisita,
   Section,
 } from "@/components/app/ui";
-import { iaConfigurada } from "@/lib/ia";
+import { iaConfigurada } from "@/lib/flags";
 
 export const Route = createFileRoute("/manchas/$slug")({
   loader: ({ params }) => {
@@ -122,7 +126,10 @@ function Detalhe() {
         )}
       </Section>
       <Section titulo="Procedimento sugerido">
-        <InfoCard>
+        <AlertaPadrao tipo="teste">
+          Faça teste prévio se houver risco de desbotamento ou alteração de fibra. Confirme diluição só na ficha/rótulo.
+        </AlertaPadrao>
+        <InfoCard className="mt-3">
           <ol className="space-y-2">
             {m.procedimento.map((passo, i) => (
               <li key={passo} className="flex gap-3 text-sm leading-relaxed">
@@ -143,6 +150,9 @@ function Detalhe() {
       <Section titulo="Limitações">
         <Aviso titulo="Não prometa remoção total">{m.limitacoes}</Aviso>
       </Section>
+      <RelacionadosConhecimento manchaNome={m.nome} />
+      <FeedbackUtil idPagina={`mancha-${m.slug}`} />
+      <EncontrouErro path={`/manchas/${m.slug}`} />
       <ConhecimentoVivo tema={m.nome} />
       {iaConfigurada() ? (
         <Section titulo="Higienizador IA">

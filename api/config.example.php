@@ -16,6 +16,9 @@ return [
     'db_pass' => '',
     'db_charset' => 'utf8mb4',
 
+    /** Senha da página /api/instalar.php (mín. 8 caracteres). Troque. */
+    'install_key' => 'troque-esta-senha-agora',
+
     'app_origin' => 'https://guiadohigienizador.autolimpezapro.com.br',
     'cookie_name' => 'gh_session',
     'session_days' => 30,

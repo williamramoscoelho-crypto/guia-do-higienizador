@@ -1,5 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getFicha, marcasFichas } from "@/data/fichas-fabricantes";
+import { EncontrouErro } from "@/components/app/EncontrouErro";
+import { FeedbackUtil } from "@/components/app/FeedbackUtil";
+import { AlertaPadrao, BadgeConfiabilidade } from "@/components/app/confiabilidade";
 import {
   Aviso,
   Breadcrumbs,
@@ -12,10 +14,12 @@ import {
 } from "@/components/app/ui";
 
 export const Route = createFileRoute("/fichas/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
+    const { getFicha, marcasFichas } = await import("@/data/fichas-fabricantes");
     const ficha = getFicha(params.slug);
     if (!ficha) throw notFound();
-    return { ficha };
+    const marca = marcasFichas.find((m) => m.slug === ficha.marca) ?? null;
+    return { ficha, marca };
   },
   head: ({ params, loaderData }) => {
     if (!loaderData) return { meta: [{ title: "Ficha não encontrada" }, { name: "robots", content: "noindex" }] };
@@ -42,8 +46,7 @@ function campoUtil(valor: string) {
 }
 
 function Detalhe() {
-  const { ficha: f } = Route.useLoaderData();
-  const marca = marcasFichas.find((m) => m.slug === f.marca);
+  const { ficha: f, marca } = Route.useLoaderData();
   const campos = [
     { label: "pH", valor: f.ph },
     { label: "Diluição", valor: f.diluicao },
@@ -66,6 +69,19 @@ function Detalhe() {
         ]}
       />
       <PageHeader titulo={f.nome} eyebrow={marca?.nome ?? f.marca} descricao={f.resumo} />
+      <div className="mt-3">
+        {campos.length > 0 ? (
+          <BadgeConfiabilidade
+            nivel="bem_fundamentado"
+            motivo={`Extraído da página oficial (${f.coletadoEm}). Confirme no rótulo do lote antes de aplicar.`}
+          />
+        ) : (
+          <BadgeConfiabilidade
+            nivel="insuficiente"
+            motivo="A página oficial não tinha diluição/pH estruturados o bastante. Não inventamos valores."
+          />
+        )}
+      </div>
       <div className="mt-4 flex flex-wrap gap-2">
         <FavoritoBotao id={`ficha-${f.slug}`} tipo="Ficha" nome={f.nome} href={`/fichas/${f.slug}`} />
         <Link
@@ -75,6 +91,11 @@ function Detalhe() {
         >
           Calcular diluição
         </Link>
+      </div>
+      <div className="mt-4">
+        <AlertaPadrao tipo="consulte_fabricante" titulo="Sempre confirme no fabricante">
+          Diluição e pH mudam de lote. Use este resumo só como índice — a fonte válida é o site/rótulo/FISPQ.
+        </AlertaPadrao>
       </div>
       {campos.length > 0 ? (
         <Section titulo="O que o fabricante publica">
@@ -143,6 +164,7 @@ function Detalhe() {
               </a>
             </li>
           ) : null}
+          {f.fichaPdf ? (
             <li>
               <a href={f.fichaPdf} target="_blank" rel="noreferrer" className="text-primary underline">
                 Boletim / ficha técnica (PDF)
@@ -170,6 +192,8 @@ function Detalhe() {
         Este resumo pode estar incompleto. Siga o rótulo do lote, a ficha atual e a FISPQ. Faça teste de compatibilidade
         em área pouco visível.
       </Aviso>
+      <FeedbackUtil idPagina={`ficha-${f.slug}`} />
+      <EncontrouErro path={`/fichas/${f.slug}`} />
     </div>
   );
 }

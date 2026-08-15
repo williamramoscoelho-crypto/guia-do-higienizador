@@ -17,7 +17,7 @@ export function PageHeader({
   children?: ReactNode;
 }) {
   return (
-    <header className="surface-hero -mx-4 px-4 pb-7 pt-7">
+    <header className="surface-hero -mx-4 px-4 pb-7 pt-[max(1.75rem,env(safe-area-inset-top))]">
       {eyebrow ? (
         <p className="text-xs font-semibold uppercase tracking-[0.18em] opacity-70">{eyebrow}</p>
       ) : null}
@@ -57,9 +57,12 @@ export function DataList({ itens }: { itens: { label: string; valor: string }[] 
   return (
     <dl className="divide-y divide-border rounded-2xl border border-border bg-card">
       {itens.map((i) => (
-        <div key={i.label} className="grid grid-cols-[38%_1fr] gap-3 p-3">
+        <div
+          key={i.label}
+          className="grid grid-cols-1 gap-1 p-3 min-[380px]:grid-cols-[minmax(7rem,38%)_1fr] min-[380px]:gap-3"
+        >
           <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{i.label}</dt>
-          <dd className="text-sm leading-relaxed">{i.valor}</dd>
+          <dd className="min-w-0 text-sm leading-relaxed break-words">{i.valor}</dd>
         </div>
       ))}
     </dl>

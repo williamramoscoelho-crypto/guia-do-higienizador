@@ -5,6 +5,9 @@
  * praticamente todo componente da comunidade (curtir, comentar, seguir). Um
  * provider único evita N chamadas a `getSession()` por render e centraliza a
  * invalidação de cache quando o usuário entra ou sai.
+ *
+ * Supabase só é importado dinamicamente no caminho opt-in — o boot PHP/HostGator
+ * não puxa `@supabase/supabase-js`.
  */
 import { useQueryClient } from "@tanstack/react-query";
 import {
@@ -17,7 +20,6 @@ import {
   type ReactNode,
 } from "react";
 
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { apiLogout, apiSessao, gravarToken, type ApiUser } from "@/lib/api";
 import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
 
@@ -53,6 +55,22 @@ interface AuthState {
 
 const AuthContext = createContext<AuthState | null>(null);
 
+type SupabaseClientMod = typeof import("@/integrations/supabase/client");
+
+async function loadSupabase(): Promise<SupabaseClientMod> {
+  return import("@/integrations/supabase/client");
+}
+
+function agendarIdle(fn: () => void): () => void {
+  if (typeof window === "undefined") return () => {};
+  if (typeof window.requestIdleCallback === "function") {
+    const id = window.requestIdleCallback(() => fn(), { timeout: 1800 });
+    return () => window.cancelIdleCallback(id);
+  }
+  const t = window.setTimeout(fn, 1);
+  return () => window.clearTimeout(t);
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const [session, setSession] = useState<SessaoApp | null>(null);
@@ -83,33 +101,37 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const carregarDadosDoUsuario = useCallback(async (userId: string | undefined) => {
-    if (!userId) {
-      setPerfil(null);
-      setPapeis([]);
-      setPontos(0);
-      return;
-    }
+  const carregarDadosDoUsuario = useCallback(
+    async (userId: string | undefined) => {
+      if (!userId) {
+        setPerfil(null);
+        setPapeis([]);
+        setPontos(0);
+        return;
+      }
 
-    if (usesPhpApi()) {
-      await aplicarPhp();
-      return;
-    }
+      if (usesPhpApi()) {
+        await aplicarPhp();
+        return;
+      }
 
-    const [perfilRes, papeisRes, pontosRes] = await Promise.all([
-      supabase
-        .from("profiles")
-        .select("id, handle, nome, nome_profissional, avatar_url, cidade, estado, perfil_publico, suspenso")
-        .eq("id", userId)
-        .maybeSingle(),
-      supabase.from("user_roles").select("role").eq("user_id", userId),
-      supabase.from("user_points").select("pontos").eq("user_id", userId).maybeSingle(),
-    ]);
+      const { supabase } = await loadSupabase();
+      const [perfilRes, papeisRes, pontosRes] = await Promise.all([
+        supabase
+          .from("profiles")
+          .select("id, handle, nome, nome_profissional, avatar_url, cidade, estado, perfil_publico, suspenso")
+          .eq("id", userId)
+          .maybeSingle(),
+        supabase.from("user_roles").select("role").eq("user_id", userId),
+        supabase.from("user_points").select("pontos").eq("user_id", userId).maybeSingle(),
+      ]);
 
-    setPerfil((perfilRes.data as PerfilAtual | null) ?? null);
-    setPapeis((papeisRes.data ?? []).map((r) => r.role as string));
-    setPontos(pontosRes.data?.pontos ?? 0);
-  }, [aplicarPhp]);
+      setPerfil((perfilRes.data as PerfilAtual | null) ?? null);
+      setPapeis((papeisRes.data ?? []).map((r) => r.role as string));
+      setPontos(pontosRes.data?.pontos ?? 0);
+    },
+    [aplicarPhp],
+  );
 
   useEffect(() => {
     if (!isCommunityEnabled()) {
@@ -118,53 +140,68 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     let ativo = true;
+    let cancelIdle = () => {};
+    let cleanupAuth = () => {};
 
-    if (usesPhpApi()) {
-      const onAuth = () => {
+    const iniciar = () => {
+      if (!ativo) return;
+
+      if (usesPhpApi()) {
+        const onAuth = () => {
+          void aplicarPhp().then(() => {
+            if (ativo) void queryClient.invalidateQueries();
+          });
+        };
+        window.addEventListener("gh-auth", onAuth);
+        cleanupAuth = () => window.removeEventListener("gh-auth", onAuth);
         void aplicarPhp().then(() => {
-          if (ativo) {
-            void queryClient.invalidateQueries();
-          }
+          if (ativo) setCarregando(false);
         });
-      };
-      window.addEventListener("gh-auth", onAuth);
-      void aplicarPhp().then(() => {
-        if (ativo) setCarregando(false);
-      });
-      return () => {
-        ativo = false;
-        window.removeEventListener("gh-auth", onAuth);
-      };
-    }
+        return;
+      }
 
-    const { data: sub } = supabase.auth.onAuthStateChange((event, novaSessao) => {
-      if (!ativo) return;
-      setSession(
-        novaSessao?.user
-          ? { access_token: novaSessao.access_token, user: { id: novaSessao.user.id, email: novaSessao.user.email ?? null } }
-          : null,
-      );
-
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
-      setTimeout(() => {
+      void loadSupabase().then(({ supabase }) => {
         if (!ativo) return;
-        void carregarDadosDoUsuario(novaSessao?.user?.id);
-        if (event === "SIGNED_OUT") queryClient.clear();
-        else void queryClient.invalidateQueries();
-      }, 0);
-    });
+        const { data: sub } = supabase.auth.onAuthStateChange((event, novaSessao) => {
+          if (!ativo) return;
+          setSession(
+            novaSessao?.user
+              ? {
+                  access_token: novaSessao.access_token,
+                  user: { id: novaSessao.user.id, email: novaSessao.user.email ?? null },
+                }
+              : null,
+          );
 
-    void supabase.auth.getSession().then(async ({ data }) => {
-      if (!ativo) return;
-      const s = data.session;
-      setSession(s?.user ? { access_token: s.access_token, user: { id: s.user.id, email: s.user.email ?? null } } : null);
-      await carregarDadosDoUsuario(s?.user?.id);
-      if (ativo) setCarregando(false);
-    });
+          if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+          setTimeout(() => {
+            if (!ativo) return;
+            void carregarDadosDoUsuario(novaSessao?.user?.id);
+            if (event === "SIGNED_OUT") queryClient.clear();
+            else void queryClient.invalidateQueries();
+          }, 0);
+        });
+        cleanupAuth = () => sub.subscription.unsubscribe();
+
+        void supabase.auth.getSession().then(async ({ data }) => {
+          if (!ativo) return;
+          const s = data.session;
+          setSession(
+            s?.user ? { access_token: s.access_token, user: { id: s.user.id, email: s.user.email ?? null } } : null,
+          );
+          await carregarDadosDoUsuario(s?.user?.id);
+          if (ativo) setCarregando(false);
+        });
+      });
+    };
+
+    // Sessão depois do primeiro paint (INP/LCP); timeout evita atraso infinito.
+    cancelIdle = agendarIdle(iniciar);
 
     return () => {
       ativo = false;
-      sub.subscription.unsubscribe();
+      cancelIdle();
+      cleanupAuth();
     };
   }, [aplicarPhp, carregarDadosDoUsuario, queryClient]);
 
@@ -178,7 +215,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const sair = useCallback(async () => {
     if (usesPhpApi()) await apiLogout();
-    else if (isSupabaseConfigured()) await supabase.auth.signOut();
+    else {
+      const { isSupabaseConfigured, supabase } = await loadSupabase();
+      if (isSupabaseConfigured()) await supabase.auth.signOut();
+    }
     gravarToken(null);
     setSession(null);
     setPerfil(null);

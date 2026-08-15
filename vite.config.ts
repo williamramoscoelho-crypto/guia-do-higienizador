@@ -46,6 +46,8 @@ const pages = [
   "/auth",
   "/ia",
   "/transicoes",
+  "/diagnostico",
+  "/casos-reais",
   ...tecidos.map((t) => `/tecidos/${t.slug}`),
   ...produtos.map((p) => `/produtos/${p.slug}`),
   ...manchas.map((m) => `/manchas/${m.slug}`),
@@ -63,13 +65,22 @@ export default defineConfig({
     ...(cpanel
       ? {
           // HostGator: HTML estático + casco SPA. Sem Node no servidor.
-          spa: { enabled: true },
+          // maskPath ≠ "/" para o casco não roubar o prerender da home (index.html).
+          spa: {
+            enabled: true,
+            maskPath: "/spa-shell",
+            prerender: {
+              outputPath: "/_shell.html",
+              crawlLinks: false,
+            },
+          },
           prerender: {
             enabled: true,
             crawlLinks: true,
             autoStaticPathsDiscovery: true,
             autoSubfolderIndex: true,
-            failOnError: false,
+            // Falhas no prerender da `/` viram casco vazio — falhar o build.
+            failOnError: true,
           },
           pages,
         }

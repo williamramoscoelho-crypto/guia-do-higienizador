@@ -2,12 +2,13 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Search, ArrowRight, Clock } from "lucide-react";
 import { useState } from "react";
 import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
-import { isCommunityEnabled } from "@/lib/backend";
-import { iaConfigurada } from "@/lib/ia";
+import { iaConfigurada, isCommunityEnabled } from "@/lib/flags";
 import { useRecentes } from "@/lib/local";
 import { SITE_ORIGIN, siteUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
+  // Garante HTML com conteúdo no prerender cPanel (não só Pending).
+  ssr: true,
   head: () => ({
     meta: [
       { title: "Guia do Higienizador — Manual digital de higienização de estofados" },
@@ -58,6 +59,7 @@ const atalhosTodos = [
 
 const ferramentasTodas = [
   { to: "/ia", emoji: "🤖", label: "Higienizador IA", desc: "Chat técnico: mancha, tecido e protocolo", precisa: "ia" },
+  { to: "/diagnostico", emoji: "🧭", label: "Diagnóstico", desc: "Peça → tecido → mancha no catálogo" },
   { to: "/checklist", emoji: "📋", label: "Checklist", desc: "Pré-inspeção passo a passo" },
   { to: "/ferramentas/diluicao", emoji: "🧮", label: "Diluição", desc: "ml de concentrado pela ficha" },
   { to: "/ferramentas/precificacao", emoji: "💰", label: "Precificação", desc: "Custo e preço mínimo" },
@@ -81,7 +83,7 @@ function Inicio() {
 
   return (
     <div className="pb-4">
-      <header className="surface-hero -mx-4 rounded-b-[2rem] px-4 pb-8 pt-8">
+      <header className="surface-hero -mx-4 rounded-b-[2rem] px-4 pb-8 pt-[max(2rem,env(safe-area-inset-top))]">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] opacity-70">Guia do Higienizador</p>
         <h1 className="mt-2 text-3xl font-bold leading-tight">Olá, Higienizador 👋</h1>
         <p className="mt-2 text-sm leading-relaxed opacity-90">
@@ -164,7 +166,7 @@ function Inicio() {
         <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-muted-foreground">
           O que você precisa saber?
         </h2>
-        <ul className="grid grid-cols-3 gap-2.5">
+        <ul className="grid grid-cols-2 gap-2.5 min-[380px]:grid-cols-3 lg:grid-cols-4">
           {atalhos.map((a) => (
             <li key={a.to}>
               <Link
@@ -212,8 +214,8 @@ function Inicio() {
                   to={r.href}
                   className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-3 text-sm"
                 >
-                  <span className="font-medium">{r.nome}</span>
-                  <span className="text-xs text-muted-foreground">{r.tipo}</span>
+                  <span className="min-w-0 flex-1 truncate font-medium">{r.nome}</span>
+                  <span className="shrink-0 text-xs text-muted-foreground">{r.tipo}</span>
                 </Link>
               </li>
             ))}

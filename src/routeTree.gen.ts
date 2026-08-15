@@ -15,10 +15,12 @@ import { Route as AprenderRouteImport } from './routes/aprender'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AutomotivaRouteImport } from './routes/automotiva'
 import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as CasosReaisRouteImport } from './routes/casos-reais'
 import { Route as ChecklistRouteImport } from './routes/checklist'
 import { Route as CodigoDaComunidadeRouteImport } from './routes/codigo-da-comunidade'
 import { Route as ComecarRouteImport } from './routes/comecar'
 import { Route as CuidadosRouteImport } from './routes/cuidados'
+import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as FluxoRouteImport } from './routes/fluxo'
 import { Route as GlossarioRouteImport } from './routes/glossario'
@@ -29,6 +31,7 @@ import { Route as ParceriaRouteImport } from './routes/parceria'
 import { Route as PhRouteImport } from './routes/ph'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as SpaShellRouteImport } from './routes/spa-shell'
 import { Route as TransicoesRouteImport } from './routes/transicoes'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as AuthenticatedModeracaoRouteImport } from './routes/_authenticated/moderacao'
@@ -93,6 +96,11 @@ const BuscarRoute = BuscarRouteImport.update({
   path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CasosReaisRoute = CasosReaisRouteImport.update({
+  id: '/casos-reais',
+  path: '/casos-reais',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChecklistRoute = ChecklistRouteImport.update({
   id: '/checklist',
   path: '/checklist',
@@ -111,6 +119,11 @@ const ComecarRoute = ComecarRouteImport.update({
 const CuidadosRoute = CuidadosRouteImport.update({
   id: '/cuidados',
   path: '/cuidados',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiagnosticoRoute = DiagnosticoRouteImport.update({
+  id: '/diagnostico',
+  path: '/diagnostico',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FavoritosRoute = FavoritosRouteImport.update({
@@ -161,6 +174,11 @@ const ProfissionaisRoute = ProfissionaisRouteImport.update({
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpaShellRoute = SpaShellRouteImport.update({
+  id: '/spa-shell',
+  path: '/spa-shell',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TransicoesRoute = TransicoesRouteImport.update({
@@ -341,10 +359,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
+  '/casos-reais': typeof CasosReaisRoute
   '/checklist': typeof ChecklistRoute
   '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
   '/comecar': typeof ComecarRoute
   '/cuidados': typeof CuidadosRoute
+  '/diagnostico': typeof DiagnosticoRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
@@ -355,6 +375,7 @@ export interface FileRoutesByFullPath {
   '/ph': typeof PhRoute
   '/profissionais': typeof ProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/spa-shell': typeof SpaShellRoute
   '/transicoes': typeof TransicoesRoute
   '/transparencia': typeof TransparenciaRoute
   '/moderacao': typeof AuthenticatedModeracaoRoute
@@ -396,10 +417,12 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
+  '/casos-reais': typeof CasosReaisRoute
   '/checklist': typeof ChecklistRoute
   '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
   '/comecar': typeof ComecarRoute
   '/cuidados': typeof CuidadosRoute
+  '/diagnostico': typeof DiagnosticoRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
@@ -410,6 +433,7 @@ export interface FileRoutesByTo {
   '/ph': typeof PhRoute
   '/profissionais': typeof ProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/spa-shell': typeof SpaShellRoute
   '/transicoes': typeof TransicoesRoute
   '/transparencia': typeof TransparenciaRoute
   '/moderacao': typeof AuthenticatedModeracaoRoute
@@ -453,10 +477,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/automotiva': typeof AutomotivaRoute
   '/buscar': typeof BuscarRoute
+  '/casos-reais': typeof CasosReaisRoute
   '/checklist': typeof ChecklistRoute
   '/codigo-da-comunidade': typeof CodigoDaComunidadeRoute
   '/comecar': typeof ComecarRoute
   '/cuidados': typeof CuidadosRoute
+  '/diagnostico': typeof DiagnosticoRoute
   '/favoritos': typeof FavoritosRoute
   '/fluxo': typeof FluxoRoute
   '/glossario': typeof GlossarioRoute
@@ -467,6 +493,7 @@ export interface FileRoutesById {
   '/ph': typeof PhRoute
   '/profissionais': typeof ProfissionaisRoute
   '/sobre': typeof SobreRoute
+  '/spa-shell': typeof SpaShellRoute
   '/transicoes': typeof TransicoesRoute
   '/transparencia': typeof TransparenciaRoute
   '/_authenticated/moderacao': typeof AuthenticatedModeracaoRoute
@@ -510,10 +537,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/automotiva'
     | '/buscar'
+    | '/casos-reais'
     | '/checklist'
     | '/codigo-da-comunidade'
     | '/comecar'
     | '/cuidados'
+    | '/diagnostico'
     | '/favoritos'
     | '/fluxo'
     | '/glossario'
@@ -524,6 +553,7 @@ export interface FileRouteTypes {
     | '/ph'
     | '/profissionais'
     | '/sobre'
+    | '/spa-shell'
     | '/transicoes'
     | '/transparencia'
     | '/moderacao'
@@ -565,10 +595,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/automotiva'
     | '/buscar'
+    | '/casos-reais'
     | '/checklist'
     | '/codigo-da-comunidade'
     | '/comecar'
     | '/cuidados'
+    | '/diagnostico'
     | '/favoritos'
     | '/fluxo'
     | '/glossario'
@@ -579,6 +611,7 @@ export interface FileRouteTypes {
     | '/ph'
     | '/profissionais'
     | '/sobre'
+    | '/spa-shell'
     | '/transicoes'
     | '/transparencia'
     | '/moderacao'
@@ -621,10 +654,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/automotiva'
     | '/buscar'
+    | '/casos-reais'
     | '/checklist'
     | '/codigo-da-comunidade'
     | '/comecar'
     | '/cuidados'
+    | '/diagnostico'
     | '/favoritos'
     | '/fluxo'
     | '/glossario'
@@ -635,6 +670,7 @@ export interface FileRouteTypes {
     | '/ph'
     | '/profissionais'
     | '/sobre'
+    | '/spa-shell'
     | '/transicoes'
     | '/transparencia'
     | '/_authenticated/moderacao'
@@ -678,10 +714,12 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   AutomotivaRoute: typeof AutomotivaRoute
   BuscarRoute: typeof BuscarRoute
+  CasosReaisRoute: typeof CasosReaisRoute
   ChecklistRoute: typeof ChecklistRoute
   CodigoDaComunidadeRoute: typeof CodigoDaComunidadeRoute
   ComecarRoute: typeof ComecarRoute
   CuidadosRoute: typeof CuidadosRoute
+  DiagnosticoRoute: typeof DiagnosticoRoute
   FavoritosRoute: typeof FavoritosRoute
   FluxoRoute: typeof FluxoRoute
   GlossarioRoute: typeof GlossarioRoute
@@ -692,6 +730,7 @@ export interface RootRouteChildren {
   PhRoute: typeof PhRoute
   ProfissionaisRoute: typeof ProfissionaisRoute
   SobreRoute: typeof SobreRoute
+  SpaShellRoute: typeof SpaShellRoute
   TransicoesRoute: typeof TransicoesRoute
   TransparenciaRoute: typeof TransparenciaRoute
   ComunidadeNovoRoute: typeof ComunidadeNovoRoute
@@ -768,6 +807,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/casos-reais': {
+      id: '/casos-reais'
+      path: '/casos-reais'
+      fullPath: '/casos-reais'
+      preLoaderRoute: typeof CasosReaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checklist': {
       id: '/checklist'
       path: '/checklist'
@@ -794,6 +840,13 @@ declare module '@tanstack/react-router' {
       path: '/cuidados'
       fullPath: '/cuidados'
       preLoaderRoute: typeof CuidadosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/diagnostico': {
+      id: '/diagnostico'
+      path: '/diagnostico'
+      fullPath: '/diagnostico'
+      preLoaderRoute: typeof DiagnosticoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/favoritos': {
@@ -864,6 +917,13 @@ declare module '@tanstack/react-router' {
       path: '/sobre'
       fullPath: '/sobre'
       preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spa-shell': {
+      id: '/spa-shell'
+      path: '/spa-shell'
+      fullPath: '/spa-shell'
+      preLoaderRoute: typeof SpaShellRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/transicoes': {
@@ -1131,10 +1191,12 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   AutomotivaRoute: AutomotivaRoute,
   BuscarRoute: BuscarRoute,
+  CasosReaisRoute: CasosReaisRoute,
   ChecklistRoute: ChecklistRoute,
   CodigoDaComunidadeRoute: CodigoDaComunidadeRoute,
   ComecarRoute: ComecarRoute,
   CuidadosRoute: CuidadosRoute,
+  DiagnosticoRoute: DiagnosticoRoute,
   FavoritosRoute: FavoritosRoute,
   FluxoRoute: FluxoRoute,
   GlossarioRoute: GlossarioRoute,
@@ -1145,6 +1207,7 @@ const rootRouteChildren: RootRouteChildren = {
   PhRoute: PhRoute,
   ProfissionaisRoute: ProfissionaisRoute,
   SobreRoute: SobreRoute,
+  SpaShellRoute: SpaShellRoute,
   TransicoesRoute: TransicoesRoute,
   TransparenciaRoute: TransparenciaRoute,
   ComunidadeNovoRoute: ComunidadeNovoRoute,

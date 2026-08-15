@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { experienciaCampo } from "@/data/conteudo";
 import { Breadcrumbs, BulletList, InfoCard, ItemLink, PageHeader, Section } from "@/components/app/ui";
-import { isCommunityEnabled } from "@/lib/backend";
+import { isCommunityEnabled } from "@/lib/flags";
 
 export const Route = createFileRoute("/aprender")({
   head: () => ({
@@ -38,6 +38,14 @@ function Aprender() {
           />
         </Section>
       ) : null}
+      <Section>
+        <ItemLink
+          to="/casos-reais"
+          emoji="📓"
+          titulo="Modelo de caso profissional"
+          descricao="Material, procedimento, resultado e limitações — sem inventar química"
+        />
+      </Section>
       <Section>
         <ItemLink
           to="/codigo-da-comunidade"

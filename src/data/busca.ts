@@ -5,8 +5,7 @@ import { estofados } from "./estofados";
 import { equipamentos } from "./equipamentos";
 import { glossario } from "./glossario";
 import { marcas } from "./marcas";
-import { fichasFabricantes, marcasFichas } from "./fichas-fabricantes";
-import { indicacoesPorMancha } from "./manchas-produtos";
+import { fichasMetaLeve, marcasFichasLeves } from "./fichas-meta-leve";
 import { fluxoHigienizacao, experienciaCampo, etapasAutomotivas } from "./conteudo";
 
 export type ResultadoBusca = {
@@ -24,6 +23,8 @@ const norm = (s: string) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 
+const nomeMarca = (slug: string) => marcasFichasLeves.find((m) => m.slug === slug)?.nome ?? slug;
+
 export const indiceBusca: ResultadoBusca[] = [
   ...tecidos.map((t) => ({
     id: `tecido-${t.slug}`,
@@ -39,17 +40,7 @@ export const indiceBusca: ResultadoBusca[] = [
     titulo: m.nome,
     descricao: `${m.categoria} — ${m.caracteristica}`,
     href: `/manchas/${m.slug}`,
-    termos: [
-      m.nome,
-      m.categoria,
-      m.origem,
-      m.caracteristica,
-      ...m.produtos,
-      ...(indicacoesPorMancha[m.slug] ?? []).flatMap((i) => {
-        const f = fichasFabricantes.find((x) => x.slug === i.fichaSlug);
-        return f ? [f.nome, f.marca] : [];
-      }),
-    ].join(" "),
+    termos: [m.nome, m.categoria, m.origem, m.caracteristica, ...m.produtos].join(" "),
   })),
   ...produtos.map((p) => ({
     id: `produto-${p.slug}`,
@@ -99,13 +90,13 @@ export const indiceBusca: ResultadoBusca[] = [
     href: `/onde-comprar/${m.slug}`,
     termos: [m.nome, ...m.categorias, m.tipoProduto].join(" "),
   })),
-  ...fichasFabricantes.map((f) => ({
+  ...fichasMetaLeve.map((f) => ({
     id: `ficha-${f.slug}`,
     grupo: "Fichas técnicas",
     titulo: f.nome,
     descricao: f.resumo,
     href: `/fichas/${f.slug}`,
-    termos: [f.nome, f.marca, f.resumo, f.diluicao, f.usoRecomendado, marcasFichas.find((m) => m.slug === f.marca)?.nome ?? ""].join(" "),
+    termos: [f.nome, f.marca, nomeMarca(f.marca), f.resumo].join(" "),
   })),
   ...experienciaCampo.map((e) => ({
     id: `exp-${e.slug}`,
@@ -194,6 +185,22 @@ export const indiceBusca: ResultadoBusca[] = [
     descricao: "Assistente técnico de tecidos, manchas, protocolos, diluição e precificação.",
     href: "/ia",
     termos: "ia assistente chat inteligencia artificial mancha tecido protocolo diluicao precificacao kit",
+  },
+  {
+    id: "pagina-diagnostico",
+    grupo: "Ferramentas",
+    titulo: "Diagnóstico do Higienizador",
+    descricao: "Fluxo peça → tecido → mancha só com páginas do catálogo.",
+    href: "/diagnostico",
+    termos: "diagnostico wizard peca tecido mancha protocolo atendimento",
+  },
+  {
+    id: "pagina-casos-reais",
+    grupo: "Aprender",
+    titulo: "Casos profissionais",
+    descricao: "Modelo material → procedimento → resultado → limitações.",
+    href: "/casos-reais",
+    termos: "casos reais experiencia campo relato profissional",
   },
 ];
 

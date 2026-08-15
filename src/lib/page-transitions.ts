@@ -54,12 +54,12 @@ export type TransitionConfig = {
 };
 
 export const CONFIG_PADRAO: TransitionConfig = {
-  efeito: "fade",
-  duracao: 380,
+  efeito: "none",
+  duracao: 280,
   easing: EASING_PADRAO,
   direcao: "auto",
-  opacidadeInicial: 0,
-  distancia: 24,
+  opacidadeInicial: 1,
+  distancia: 16,
   respeitarReducedMotion: true,
 };
 

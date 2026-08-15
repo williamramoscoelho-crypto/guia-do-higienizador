@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { checklistItens } from "@/data/conteudo";
 import { Aviso, Breadcrumbs, PageHeader, Section } from "@/components/app/ui";
-import { iaConfigurada } from "@/lib/ia";
+import { iaConfigurada } from "@/lib/flags";
 import { useLocalState } from "@/lib/local";
 
 export const Route = createFileRoute("/checklist")({

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, Copy } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Aviso, Breadcrumbs, InfoCard, PageHeader, Section } from "@/components/app/ui";
-import { fichasFabricantes, getFicha, marcasFichas } from "@/data/fichas-fabricantes";
+import type { FichaFabricante } from "@/data/fichas-fabricantes";
 import {
   analisarDiluicao,
   calcularSolucao,
@@ -15,7 +15,7 @@ import {
   temProporcaoCalculavel,
   type IntensidadeDiluicao,
 } from "@/lib/diluicao";
-import { copiarTexto, iaConfigurada } from "@/lib/ia";
+import { iaConfigurada } from "@/lib/flags";
 import { useLocalState } from "@/lib/local";
 
 type SearchDiluicao = { produto?: string };
@@ -49,6 +49,14 @@ export const Route = createFileRoute("/ferramentas/diluicao")({
     if (typeof raw === "string" && raw) return { produto: raw };
     return {};
   },
+  loader: async () => {
+    const { fichasFabricantes, marcasFichas } = await import("@/data/fichas-fabricantes");
+    return {
+      fichasFabricantes,
+      marcasFichas: [...marcasFichas],
+      bySlug: Object.fromEntries(fichasFabricantes.map((f) => [f.slug, f])) as Record<string, FichaFabricante>,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Calculadora de diluição — Guia do Higienizador" },
@@ -66,6 +74,8 @@ export const Route = createFileRoute("/ferramentas/diluicao")({
 });
 
 function Diluicao() {
+  const { fichasFabricantes, marcasFichas, bySlug } = Route.useLoaderData();
+  const getFicha = (slug: string): FichaFabricante | undefined => bySlug[slug];
   const search = Route.useSearch();
   const [salvo, setSalvo] = useLocalState<Persistido>(STORAGE_KEY, {
     ...padrao,
@@ -89,7 +99,7 @@ function Diluicao() {
         ...(packs[0] ? { packMl: String(packs[0]) } : {}),
       };
     });
-  }, [search.produto, setSalvo]);
+  }, [search.produto, setSalvo, bySlug]);
 
   const produtoSlug = salvo.produtoSlug;
   const ficha = produtoSlug && produtoSlug !== MANUAL ? (getFicha(produtoSlug) ?? null) : null;
@@ -147,7 +157,7 @@ function Diluicao() {
   async function copiar() {
     if (!textoCopia) return;
     try {
-      await copiarTexto(textoCopia);
+      await navigator.clipboard.writeText(textoCopia);
       setCopiado(true);
       window.setTimeout(() => setCopiado(false), 2000);
     } catch {
@@ -367,8 +377,8 @@ function Diluicao() {
                       onClick={() => patch({ packMl: String(ml) })}
                       className={
                         Number(salvo.packMl) === ml
-                          ? "min-h-9 rounded-full bg-secondary px-3 text-xs font-semibold"
-                          : "min-h-9 rounded-full border border-border px-3 text-xs"
+                          ? "min-h-11 rounded-full bg-secondary px-3 text-xs font-semibold"
+                          : "min-h-11 rounded-full border border-border px-3 text-xs"
                       }
                     >
                       {ml >= 1000 ? `${ml / 1000} L` : `${ml} ml`}

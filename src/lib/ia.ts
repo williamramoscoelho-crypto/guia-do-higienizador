@@ -1,8 +1,12 @@
-import { catalogoParaIA, extraDoModo, type ModoIA } from "@/data/ia-prompt";
 import { endpointIaPhp } from "@/lib/api";
-import { isIaEnabled, usesPhpApi } from "@/lib/backend";
+import { usesPhpApi } from "@/lib/backend";
+import type { ModoIA } from "@/data/ia-prompt";
 
 export type PapelIA = "user" | "assistant";
+
+/** Reexporta flag leve — preferir `@/lib/flags` na home/nav. */
+export { iaConfigurada } from "@/lib/flags";
+export type { ModoIA } from "@/data/ia-prompt";
 
 export type MensagemIA = {
   role: PapelIA;
@@ -76,14 +80,6 @@ export function limitarHistorico(msgs: MensagemIA[]) {
   return msgs.slice(-MAX_MENSAGENS);
 }
 
-export function iaConfigurada() {
-  try {
-    return isIaEnabled();
-  } catch {
-    return false;
-  }
-}
-
 function endpointIA() {
   const custom = import.meta.env["VITE_IA_API_URL"] as string | undefined;
   if (custom) return custom;
@@ -148,6 +144,7 @@ export async function transmitirRespostaIA(opts: {
   onDelta: (texto: string) => void;
   signal?: AbortSignal;
 }): Promise<string> {
+  const { catalogoParaIA, extraDoModo } = await import("@/data/ia-prompt");
   const res = await fetch(endpointIA(), {
     method: "POST",
     headers: headersIA(),

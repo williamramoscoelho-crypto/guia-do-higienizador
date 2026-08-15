@@ -15,11 +15,11 @@ Na HostGator (3 passos):
 
   1) Extrair o zip em public_html/guiadohigienizador
      (mostrar arquivos ocultos; não use a raiz da Auto Limpeza Pro)
-  2) phpMyAdmin → will3269_GUIA → Importar api/schema.sql
+  2) Abrir /api/instalar.php → Instalar ou Atualizar banco (1 clique)
   3) Abrir /api/health  (db: true)
 
 O zip de publicar já inclui api/config.php de TESTE.
-Troque a senha depois.
+Troque a senha depois e defina install_key no config.php.
 IA (opcional): gemini_api_key e/ou openai_api_key em api/config.php
 (ia_provider=auto → Gemini primeiro).
 
@@ -28,7 +28,8 @@ JEITO SEM SENHA NO ZIP
 ----------------------
   npm run build:cpanel
   → cpanel.zip (sem config.php)
-  No servidor: copie config.example.php → config.php e preencha.
+  No servidor: abra /api/instalar.php (cria config + tabelas)
+  ou copie config.example.php → config.php e use o instalador.
 
 
 Site: https://guiadohigienizador.autolimpezapro.com.br

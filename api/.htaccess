@@ -5,15 +5,24 @@ Options -Indexes
   <Files "config.php">
     Require all denied
   </Files>
+  <Files "schema.sql">
+    Require all denied
+  </Files>
 </IfModule>
 <IfModule !mod_authz_core.c>
   <Files "config.php">
+    Deny from all
+  </Files>
+  <Files "schema.sql">
     Deny from all
   </Files>
 </IfModule>
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Arquivos reais (ex.: instalar.php) não vão para o front controller
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^ index.php [L,QSA]
 </IfModule>

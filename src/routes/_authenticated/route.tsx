@@ -1,8 +1,8 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-import { isSupabaseConfigured, supabase } from "@/integrations/supabase/client";
 import { apiSessao } from "@/lib/api";
 import { isCommunityEnabled, usesPhpApi } from "@/lib/backend";
+import { hasSupabaseEnv } from "@/lib/flags";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -13,7 +13,8 @@ export const Route = createFileRoute("/_authenticated")({
       if (!s?.user) throw redirect({ to: "/auth", search: { modo: "entrar" } });
       return { user: s.user };
     }
-    if (!isSupabaseConfigured()) throw redirect({ to: "/" });
+    if (!hasSupabaseEnv()) throw redirect({ to: "/" });
+    const { supabase } = await import("@/integrations/supabase/client");
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) throw redirect({ to: "/auth", search: { modo: "entrar" } });
     return { user: data.user };

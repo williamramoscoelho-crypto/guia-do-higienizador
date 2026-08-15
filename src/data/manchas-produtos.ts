@@ -1,4 +1,4 @@
-import { getFicha, marcasFichas } from "./fichas-fabricantes";
+import { fichasMetaLeve, marcasFichasLeves } from "./fichas-meta-leve";
 
 export type PapelIndicacao = "principal" | "alternativa" | "sintetico" | "tecido-delicado" | "couro";
 
@@ -450,13 +450,13 @@ export function rotuloPapel(papel: PapelIndicacao) {
 }
 
 export function nomeMarcaFicha(marcaSlug: string) {
-  return marcasFichas.find((m) => m.slug === marcaSlug)?.nome ?? marcaSlug;
+  return marcasFichasLeves.find((m) => m.slug === marcaSlug)?.nome ?? marcaSlug;
 }
 
 export function indicacoesDaMancha(slug: string) {
   return (indicacoesPorMancha[slug] ?? [])
     .map((ind) => {
-      const ficha = getFicha(ind.fichaSlug);
+      const ficha = fichasMetaLeve.find((f) => f.slug === ind.fichaSlug);
       return ficha ? { ...ind, ficha } : null;
     })
     .filter((x): x is NonNullable<typeof x> => x !== null);

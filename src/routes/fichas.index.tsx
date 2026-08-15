@@ -1,9 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { fichasFabricantes, marcasFichas } from "@/data/fichas-fabricantes";
+import type { FichaFabricante } from "@/data/fichas-fabricantes";
 import { Aviso, Breadcrumbs, ItemLink, PageHeader, Section } from "@/components/app/ui";
 
+type MarcaFicha = { slug: string; nome: string; site: string };
+
 export const Route = createFileRoute("/fichas/")({
+  loader: async () => {
+    const { fichasFabricantes, marcasFichas } = await import("@/data/fichas-fabricantes");
+    return {
+      fichasFabricantes,
+      marcasFichas: [...marcasFichas] as MarcaFicha[],
+    };
+  },
   head: () => ({
     meta: [
       { title: "Fichas técnicas de fabricantes — Guia do Higienizador" },
@@ -21,16 +30,17 @@ export const Route = createFileRoute("/fichas/")({
 });
 
 function Lista() {
+  const { fichasFabricantes, marcasFichas } = Route.useLoaderData();
   const [marca, setMarca] = useState("todas");
   const [q, setQ] = useState("");
   const filtrados = useMemo(
     () =>
-      fichasFabricantes.filter((f) => {
+      fichasFabricantes.filter((f: FichaFabricante) => {
         if (marca !== "todas" && f.marca !== marca) return false;
         const blob = `${f.nome} ${f.resumo} ${f.marca}`.toLowerCase();
         return blob.includes(q.toLowerCase());
       }),
-    [marca, q],
+    [fichasFabricantes, marca, q],
   );
 
   return (
@@ -41,32 +51,34 @@ function Lista() {
         eyebrow="Catálogo oficial"
         descricao="Produtos de higienização de estofados, interior e couro lidos nos sites oficiais. Não é ranking e não substitui o rótulo do lote."
       />
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => setMarca("todas")}
-          className={
-            marca === "todas"
-              ? "min-h-11 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
-              : "min-h-11 rounded-full border border-border bg-card px-4 text-sm"
-          }
-        >
-          Todas
-        </button>
-        {marcasFichas.map((m) => (
+      <div className="-mx-1 mt-4 overflow-x-auto pb-1 [scrollbar-width:thin]">
+        <div className="flex w-max min-w-full gap-2 px-1">
           <button
-            key={m.slug}
             type="button"
-            onClick={() => setMarca(m.slug)}
+            onClick={() => setMarca("todas")}
             className={
-              marca === m.slug
-                ? "min-h-11 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
-                : "min-h-11 rounded-full border border-border bg-card px-4 text-sm"
+              marca === "todas"
+                ? "min-h-11 shrink-0 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
+                : "min-h-11 shrink-0 rounded-full border border-border bg-card px-4 text-sm"
             }
           >
-            {m.nome}
+            Todas
           </button>
-        ))}
+          {marcasFichas.map((m) => (
+            <button
+              key={m.slug}
+              type="button"
+              onClick={() => setMarca(m.slug)}
+              className={
+                marca === m.slug
+                  ? "min-h-11 shrink-0 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground"
+                  : "min-h-11 shrink-0 rounded-full border border-border bg-card px-4 text-sm"
+              }
+            >
+              {m.nome}
+            </button>
+          ))}
+        </div>
       </div>
       <input
         value={q}
@@ -83,7 +95,6 @@ function Lista() {
                 params={{ slug: f.slug }}
                 titulo={f.nome}
                 descricao={`${marcasFichas.find((m) => m.slug === f.marca)?.nome ?? f.marca} — ${f.fdsPdf ? "FISPQ disponível" : "FISPQ: consulte o fabricante"} — ${f.resumo}`}
-
               />
             </li>
           ))}

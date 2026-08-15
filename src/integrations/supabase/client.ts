@@ -39,6 +39,9 @@ export function isSupabaseConfigured(): boolean {
   return Boolean(url && key);
 }
 
+/** Alias estável para quem só precisa do check de env (preferir `@/lib/flags`). */
+export { hasSupabaseEnv } from "@/lib/flags";
+
 function createSupabaseClient() {
   const { url, key } = supabaseEnv();
 

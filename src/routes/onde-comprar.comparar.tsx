@@ -50,7 +50,7 @@ function Comparar() {
         trilha={[{ label: "Início", to: "/" }, { label: "Onde comprar", to: "/onde-comprar" }, { label: "Comparar" }]}
       />
       <PageHeader
-        titulo="⚖️ Comparador de marcas"
+        titulo="Comparador de marcas"
         eyebrow="Onde comprar"
         descricao="Selecione até 3 marcas para comparar. A comparação é descritiva — não existe ranking."
       />
@@ -58,7 +58,7 @@ function Comparar() {
       <Section titulo="Selecione as marcas">
         <div className="flex flex-wrap gap-2">
           {marcas.map((m) => (
-            <button key={m.slug} type="button" onClick={() => alternar(m.slug)} className="min-h-9">
+            <button key={m.slug} type="button" onClick={() => alternar(m.slug)} className="min-h-11">
               <Chip tone={sel.includes(m.slug) ? "ok" : "default"}>{m.nome}</Chip>
             </button>
           ))}
@@ -71,7 +71,33 @@ function Comparar() {
         </Section>
       ) : (
         <Section titulo="Comparação">
-          <div className="-mx-4 overflow-x-auto px-4">
+          <div className="grid gap-3 md:hidden">
+            {escolhidas.map((m) => (
+              <InfoCard key={m.slug}>
+                <Link
+                  to="/onde-comprar/$slug"
+                  params={{ slug: m.slug }}
+                  className="text-sm font-bold underline-offset-4 hover:underline"
+                >
+                  {m.nome}
+                </Link>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {m.categorias.map((c) => (
+                    <Chip key={c}>{c}</Chip>
+                  ))}
+                </div>
+                <dl className="mt-3 space-y-2">
+                  {linhas.map((l) => (
+                    <div key={l.label}>
+                      <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{l.label}</dt>
+                      <dd className="mt-0.5 text-sm leading-relaxed text-muted-foreground">{l.get(m)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </InfoCard>
+            ))}
+          </div>
+          <div className="-mx-4 hidden overflow-x-auto px-4 md:block">
             <table className="w-full min-w-[520px] border-collapse text-left text-sm">
               <thead>
                 <tr>

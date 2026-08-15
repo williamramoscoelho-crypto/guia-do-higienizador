@@ -1,6 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { getMarca } from "@/data/marcas";
-import { fichasPorMarca, marcasFichas } from "@/data/fichas-fabricantes";
 import {
   Aviso,
   Breadcrumbs,
@@ -13,10 +12,15 @@ import {
 } from "@/components/app/ui";
 
 export const Route = createFileRoute("/onde-comprar/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const marca = getMarca(params.slug);
     if (!marca) throw notFound();
-    return { marca };
+    const { fichasPorMarca, marcasFichas } = await import("@/data/fichas-fabricantes");
+    return {
+      marca,
+      fichas: fichasPorMarca(marca.slug),
+      marcaFicha: marcasFichas.find((m) => m.slug === marca.slug) ?? null,
+    };
   },
   head: ({ params, loaderData }) => {
     if (!loaderData) return { meta: [{ title: "Marca não encontrada" }, { name: "robots", content: "noindex" }] };
@@ -36,9 +40,7 @@ export const Route = createFileRoute("/onde-comprar/$slug")({
 });
 
 function Detalhe() {
-  const { marca: m } = Route.useLoaderData();
-  const fichas = fichasPorMarca(m.slug);
-  const catalogo = marcasFichas.find((x) => x.slug === m.slug);
+  const { marca: m, fichas, marcaFicha: catalogo } = Route.useLoaderData();
   return (
     <div className="pb-4">
       <RegistrarVisita nome={m.nome} href={`/onde-comprar/${m.slug}`} tipo="Marca" />

@@ -33,22 +33,24 @@ function lerConfig(): TransitionConfig {
 }
 
 /**
- * Envolve o conteúdo da rota e anima a entrada de cada página.
- *
- * Só usa `transform`/`opacity`/`filter` (aceleração por hardware) e remove a
- * classe de animação ao terminar, evitando custo em repaints subsequentes.
+ * Envolve o conteúdo da rota. Por padrão (efeito none) não remonta nem anima —
+ * navegação instantânea e HTML de prerender visível (sem opacity 0).
  */
 export function PageTransition({ children, config, transitionKey }: PageTransitionProps) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const chave = transitionKey ?? pathname;
 
   const [configLocal, setConfigLocal] = useState<TransitionConfig>(CONFIG_PADRAO);
-  const [reduzirMovimento, setReduzirMovimento] = useState(false);
+  const [reduzirMovimento, setReduzirMovimento] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [hidrated, setHidrated] = useState(false);
   const anteriorRef = useRef<string>(chave);
   const direcaoRef = useRef<Exclude<Direcao, "auto">>("right");
+  const primeira = useRef(true);
 
-  // Hidratação: config e preferência de movimento só existem no cliente.
   useEffect(() => {
+    setHidrated(true);
     setConfigLocal(lerConfig());
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const sync = () => setReduzirMovimento(mq.matches);
@@ -67,16 +69,24 @@ export function PageTransition({ children, config, transitionKey }: PageTransiti
 
   const ativa = config ?? configLocal;
 
-  // Resolvido na própria renderização (sem setState em efeito): evita um
-  // frame intermediário sem animação e avisos de atualização cruzada.
   if (anteriorRef.current !== chave) {
     direcaoRef.current = ativa.direcao === "auto" ? direcaoAutomatica(anteriorRef.current, chave) : direcaoRef.current;
     anteriorRef.current = chave;
+    primeira.current = false;
   }
   const direcao = ativa.direcao === "auto" ? direcaoRef.current : ativa.direcao;
 
-  const desligada = ativa.efeito === "none" || (ativa.respeitarReducedMotion && reduzirMovimento);
-  const classe = desligada ? "" : classeDaTransicao(ativa.efeito, direcao);
+  const desligada =
+    !hidrated ||
+    primeira.current ||
+    ativa.efeito === "none" ||
+    (ativa.respeitarReducedMotion && reduzirMovimento);
+
+  if (desligada) {
+    return <div>{children}</div>;
+  }
+
+  const classe = classeDaTransicao(ativa.efeito, direcao);
 
   return (
     <Camada
@@ -92,10 +102,6 @@ export function PageTransition({ children, config, transitionKey }: PageTransiti
   );
 }
 
-/**
- * Camada remontada a cada navegação (via `key`), o que reinicia a animação.
- * Ao terminar, a classe é removida para não manter `will-change` ativo.
- */
 function Camada({
   children,
   classe,
@@ -112,7 +118,7 @@ function Camada({
   distancia: number;
 }) {
   const [animando, setAnimando] = useState(true);
-  const aplicar = classe && animando;
+  const aplicar = Boolean(classe) && animando;
 
   return (
     <div

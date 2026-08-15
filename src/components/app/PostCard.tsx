@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Bookmark, Heart, MessageCircle, Share2 } from "lucide-react";
 import { useState } from "react";
 
-import { supabase } from "@/integrations/supabase/client";
 import { apiCurtir, apiSalvarPost } from "@/lib/api";
 import { usesPhpApi } from "@/lib/backend";
 import { useAuth } from "@/lib/auth";
@@ -52,6 +51,7 @@ export function PostCard({
     try {
       if (usesPhpApi()) await apiCurtir(post.id, proximo);
       else {
+        const { supabase } = await import("@/integrations/supabase/client");
         const acao = proximo
           ? supabase.from("post_likes").insert({ post_id: post.id, user_id: user.id })
           : supabase.from("post_likes").delete().eq("post_id", post.id).eq("user_id", user.id);
@@ -72,6 +72,7 @@ export function PostCard({
     try {
       if (usesPhpApi()) await apiSalvarPost(post.id, proximo);
       else {
+        const { supabase } = await import("@/integrations/supabase/client");
         const { error } = await (proximo
           ? supabase.from("post_saves").insert({ post_id: post.id, user_id: user.id })
           : supabase.from("post_saves").delete().eq("post_id", post.id).eq("user_id", user.id));
@@ -131,7 +132,7 @@ export function PostCard({
         </ul>
       ) : null}
 
-      <footer className="mt-4 flex items-center gap-1">
+      <footer className="mt-4 flex flex-wrap items-center gap-1">
         <BotaoAcao
           rotulo={estaCurtido ? "Remover curtida" : "Curtir"}
           ativo={estaCurtido}
@@ -145,7 +146,7 @@ export function PostCard({
         <Link
           to="/comunidade/post/$id"
           params={{ id: post.id }}
-          className="inline-flex min-h-10 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-muted-foreground"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold text-muted-foreground"
         >
           <MessageCircle className="size-4" aria-hidden />
           {post.comments_count}
@@ -189,7 +190,7 @@ function BotaoAcao({
       aria-label={rotulo}
       aria-pressed={ativo}
       className={cn(
-        "inline-flex min-h-10 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold transition-colors disabled:opacity-40",
+        "inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2.5 text-xs font-semibold transition-colors disabled:opacity-40",
         ativo ? "text-primary" : "text-muted-foreground hover:text-foreground",
       )}
     >

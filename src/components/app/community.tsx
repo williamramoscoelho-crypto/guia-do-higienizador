@@ -173,7 +173,7 @@ export function Chips<T extends string>({
         onClick={() => onChange(null)}
         aria-pressed={valor === null}
         className={cn(
-          "min-h-9 shrink-0 rounded-full border px-3 text-xs font-semibold transition-colors",
+          "min-h-11 shrink-0 rounded-full border px-3 text-xs font-semibold transition-colors",
           valor === null ? "border-primary bg-primary/15 text-primary" : "border-border bg-card text-muted-foreground",
         )}
       >
@@ -186,7 +186,7 @@ export function Chips<T extends string>({
           onClick={() => onChange(valor === i.slug ? null : i.slug)}
           aria-pressed={valor === i.slug}
           className={cn(
-            "min-h-9 shrink-0 rounded-full border px-3 text-xs font-semibold transition-colors",
+            "min-h-11 shrink-0 rounded-full border px-3 text-xs font-semibold transition-colors",
             valor === i.slug ? "border-primary bg-primary/15 text-primary" : "border-border bg-card text-muted-foreground",
           )}
         >

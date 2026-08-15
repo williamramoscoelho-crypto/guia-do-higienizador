@@ -271,6 +271,15 @@ CREATE TABLE IF NOT EXISTS ia_rate_limits (
   PRIMARY KEY (ip, janela)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Demanda editorial: termos buscados sem resultado (sem dados pessoais)
+CREATE TABLE IF NOT EXISTS search_misses (
+  id CHAR(36) NOT NULL PRIMARY KEY,
+  termo VARCHAR(120) NOT NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_search_misses_termo (termo),
+  KEY idx_search_misses_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT IGNORE INTO badges (slug, nome, emoji, descricao) VALUES

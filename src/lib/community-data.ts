@@ -1,4 +1,3 @@
-import { supabase } from "@/integrations/supabase/client";
 import type { AutorResumo } from "@/components/app/community";
 import type { PostFeed } from "@/components/app/PostCard";
 import {
@@ -27,12 +26,18 @@ function vazioInteracoes() {
   return { curtidos: new Set<string>(), salvos: new Set<string>() };
 }
 
+async function supabaseClient() {
+  const m = await import("@/integrations/supabase/client");
+  return m.supabase;
+}
+
 /** Lê o feed público respeitando as políticas de acesso do banco. */
 export async function buscarPosts(filtro: FiltroFeed = {}): Promise<PostFeed[]> {
   if (!isCommunityEnabled()) return [];
   if (typeof window === "undefined") return [];
   if (usesPhpApi()) return apiListarPosts(filtro);
 
+  const supabase = await supabaseClient();
   let q = supabase.from("posts").select(SELECT_POST).is("deleted_at", null).eq("oculto", false);
 
   if (filtro.kind) q = q.eq("kind", filtro.kind as never);
@@ -55,6 +60,7 @@ export async function buscarInteracoes(userId: string | undefined, postIds: stri
   if (typeof window === "undefined") return vazioInteracoes();
   if (usesPhpApi()) return apiInteracoes(postIds);
 
+  const supabase = await supabaseClient();
   const [curtidas, salvos] = await Promise.all([
     supabase.from("post_likes").select("post_id").eq("user_id", userId).in("post_id", postIds),
     supabase.from("post_saves").select("post_id").eq("user_id", userId).in("post_id", postIds),
@@ -70,6 +76,7 @@ export async function buscarPerfilPorHandle(handle: string): Promise<AutorResumo
   if (typeof window === "undefined") return null;
   if (usesPhpApi()) return (await apiPerfilHandle(handle)) as unknown as AutorResumo;
 
+  const supabase = await supabaseClient();
   const { data } = await supabase.from("profiles").select("*").eq("handle", handle).maybeSingle();
   return (data as unknown as AutorResumo) ?? null;
 }
@@ -79,6 +86,7 @@ export async function buscarPontos(userId: string): Promise<number> {
   if (typeof window === "undefined") return 0;
   if (usesPhpApi()) return apiPontos(userId);
 
+  const supabase = await supabaseClient();
   const { data } = await supabase.from("user_points").select("pontos").eq("user_id", userId).maybeSingle();
   return data?.pontos ?? 0;
 }

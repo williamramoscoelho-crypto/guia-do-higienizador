@@ -1,4 +1,4 @@
-import { copyFileSync, cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,7 +14,7 @@ const deployDir = join(root, "deploy", "cpanel");
 const outDir = join(root, "cpanel");
 const zipPath = join(root, "cpanel.zip");
 const SITE_ORIGIN = "https://guiadohigienizador.autolimpezapro.com.br";
-const SKIP_SITEMAP = new Set(["favoritos"]);
+const SKIP_SITEMAP = new Set(["favoritos", "spa-shell"]);
 const DEPLOY_FILES = [".htaccess", "index.php", "LEIA-ME.txt", "HOSTGATOR.txt", "INSTALAR.txt"];
 
 if (!publicDir) {
@@ -63,7 +63,7 @@ if (!createZip(outDir, zipPath)) {
 console.log(`Pacote cPanel pronto: ${outDir}`);
 if (existsSync(zipPath)) console.log(`Zip: ${zipPath}`);
 console.log("Envie o conteúdo de cpanel/ para public_html/guiadohigienizador — o servidor não precisa de Node.");
-console.log("Depois: MySQL + api/schema.sql + api/config.php (veja HOSTGATOR.txt).");
+console.log("Depois: /api/instalar.php (1 clique) ou MySQL + api/schema.sql + api/config.php (veja HOSTGATOR.txt).");
 
 function countFiles(dir) {
   let n = 0;
@@ -106,7 +106,7 @@ function writeSitemap(dir) {
 }
 
 function assertDropIn(dir) {
-  const required = ["index.html", ".htaccess", "assets", "api/index.php", "api/schema.sql", "api/config.example.php"];
+  const required = ["index.html", ".htaccess", "assets", "api/index.php", "api/schema.sql", "api/config.example.php", "api/instalar.php"];
   const missing = required.filter((name) => !existsSync(join(dir, name)));
   if (missing.length) {
     console.error(`Pacote incompleto (faltando: ${missing.join(", ")}).`);
@@ -114,6 +114,19 @@ function assertDropIn(dir) {
   }
   if (existsSync(join(dir, "api", "config.php"))) {
     console.error("Não envie api/config.php no zip (segredo).");
+    process.exit(1);
+  }
+  const home = readFileSync(join(dir, "index.html"), "utf8");
+  if (home.length < 200) {
+    console.error("index.html vazio ou quase vazio — prerender da / falhou.");
+    process.exit(1);
+  }
+  if (!/<h1[\s>]/.test(home)) {
+    console.error("Home index.html sem <h1> — ainda é casco SPA, não a home prerenderizada.");
+    process.exit(1);
+  }
+  if (/Carregando…|Carregando\.\.\./.test(home) && !/<h1[\s>]/.test(home)) {
+    console.error('Home index.html ainda é só "Carregando…" — prerender da / falhou.');
     process.exit(1);
   }
 }

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Bell, Bookmark, HelpCircle, PenLine, Settings, ShieldCheck } from "lucide-react";
+import { Bell, Bookmark, BookOpen, HelpCircle, PenLine, Settings, ShieldCheck } from "lucide-react";
 
 import { Avatar, Carregando, NivelBadge, Vazio } from "@/components/app/community";
 import { PostCard } from "@/components/app/PostCard";
@@ -98,6 +98,7 @@ function Painel() {
       <nav aria-label="Atalhos" className="mt-5 grid grid-cols-2 gap-2">
         <Atalho to="/comunidade/novo" Icon={PenLine} rotulo="Publicar" />
         <Atalho to="/perguntas/nova" Icon={HelpCircle} rotulo="Perguntar" />
+        <Atalho to="/casos-reais" Icon={BookOpen} rotulo="Modelo de caso" />
         <Atalho to="/notificacoes" Icon={Bell} rotulo={`Notificações${naoLidas.data ? ` (${naoLidas.data})` : ""}`} />
         <Atalho to="/perfil" Icon={Settings} rotulo="Editar perfil" />
         {isStaff ? <Atalho to="/moderacao" Icon={ShieldCheck} rotulo="Moderação" /> : null}

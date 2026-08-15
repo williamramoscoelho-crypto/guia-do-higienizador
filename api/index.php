@@ -182,6 +182,23 @@ try {
     if ($path === '/ia' && $method === 'POST') {
         gh_ia();
     }
+
+    if ($path === '/search-miss' && $method === 'POST') {
+        $body = gh_body();
+        $termo = trim((string) ($body['termo'] ?? ''));
+        if (mb_strlen($termo) < 2 || mb_strlen($termo) > 120) {
+            gh_json(['error' => 'Termo inválido.'], 400);
+        }
+        $id = gh_uuid();
+        try {
+            $st = gh_pdo()->prepare('INSERT INTO search_misses (id, termo) VALUES (?, ?)');
+            $st->execute([$id, $termo]);
+        } catch (Throwable $e) {
+            // Tabela pode ainda não existir em installs antigos — falha silenciosa editorial
+            gh_json(['ok' => false, 'skipped' => true], 200);
+        }
+        gh_json(['ok' => true], 201);
+    }
 } catch (PDOException $e) {
     gh_json(['error' => 'Falha no banco de dados.'], 500);
 } catch (Throwable $e) {

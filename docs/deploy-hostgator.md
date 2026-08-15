@@ -20,11 +20,15 @@ No subdomínio o Apache já trata essa pasta como raiz do vhost. O `.htaccess` u
 2. Crie um banco (anote o nome completo, em geral `usuario_nomedobanco`).
 3. Crie um usuário com senha forte e **adicione o usuário ao banco** com todos os privilégios.
 
-### 2. Importar o schema no phpMyAdmin
+### 2. Instalar / atualizar o schema (1 clique)
 
-1. Abra **phpMyAdmin** e selecione o banco recém-criado.
-2. Aba **Importar** → envie `api/schema.sql` (está no zip / na pasta `cpanel/api/` depois do build, ou no repositório em `api/schema.sql`).
-3. Confirme que existem tabelas `users`, `profiles`, `posts`, `groups`, etc.
+1. Crie o banco + usuário no cPanel (passo 1) e associe com todos os privilégios.
+2. Abra **`/api/instalar.php`** no navegador.
+3. **Primeira vez (sem `config.php`):** preencha MySQL + senha do instalador → **Instalar em 1 clique** (grava `config.php` e aplica `schema.sql`).
+4. **Já tem `config.php`:** digite `install_key` → **Instalar banco** ou **Atualizar banco** (mesmo schema seguro: `IF NOT EXISTS` / `INSERT IGNORE`).
+5. Confirme tabelas `users`, `profiles`, `posts`, `groups`, `search_misses`, etc.
+
+Alternativa: phpMyAdmin → Importar `api/schema.sql`.
 
 Para tornar alguém moderador depois do cadastro (phpMyAdmin):
 
@@ -36,17 +40,19 @@ UPDATE user_roles SET role = 'admin' WHERE user_id = 'UUID-DO-USUARIO';
 
 ### 3. Configurar a API PHP
 
-No servidor, em `public_html/guiadohigienizador/api/`:
+Se usou o instalador, o `config.php` já foi criado. Senão, em `public_html/guiadohigienizador/api/`:
 
 1. Copie `config.example.php` para `config.php`.
 2. Preencha `db_host` (quase sempre `localhost`), `db_name`, `db_user`, `db_pass`.
-3. `app_origin`: `https://guiadohigienizador.autolimpezapro.com.br`
-4. **Opcional** — Higienizador IA (chave **só** em `config.php`, nunca em `VITE_`):
+3. Defina `install_key` (senha de `/api/instalar.php`, mín. 8 caracteres).
+4. `app_origin`: `https://guiadohigienizador.autolimpezapro.com.br`
+5. **Opcional** — Higienizador IA (chave **só** em `config.php`, nunca em `VITE_`):
    - `gemini_api_key` — [Google AI Studio](https://aistudio.google.com/apikey) (preferido se `ia_provider` = `auto`)
    - `openai_api_key` — alternativa OpenAI
    - `ia_provider`: `auto` | `gemini` | `openai`
    - Modelos: `gemini_model` (padrão `gemini-2.0-flash`) / `openai_model`
-5. Permissões: `config.php` só o dono lê (ex.: `chmod 600`). Pastas `api/` e o restante: 755 arquivos 644.
+6. Permissões: `config.php` só o dono lê (ex.: `chmod 600`). Pastas `api/` e o restante: 755 arquivos 644.
+7. Opcional após instalar: apague ou renomeie `api/instalar.php`.
 
 Sem chave de IA, login e comunidade funcionam; `/ia` avisa que ainda não está configurada.
 

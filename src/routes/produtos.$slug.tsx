@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getProduto } from "@/data/produtos";
 import { ConhecimentoVivo } from "@/components/app/ConhecimentoVivo";
-import { fichasDoProduto, nomeDaMarca } from "@/data/fichas-fabricantes";
 import {
   Aviso,
   Breadcrumbs,
@@ -15,10 +14,15 @@ import {
 } from "@/components/app/ui";
 
 export const Route = createFileRoute("/produtos/$slug")({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const produto = getProduto(params.slug);
     if (!produto) throw notFound();
-    return { produto };
+    const { fichasDoProduto, nomeDaMarca } = await import("@/data/fichas-fabricantes");
+    return {
+      produto,
+      fichas: fichasDoProduto(produto.slug),
+      nomeDaMarca,
+    };
   },
   head: ({ params, loaderData }) => {
     if (!loaderData) return { meta: [{ title: "Produto não encontrado" }, { name: "robots", content: "noindex" }] };
@@ -38,8 +42,7 @@ export const Route = createFileRoute("/produtos/$slug")({
 });
 
 function Detalhe() {
-  const { produto: p } = Route.useLoaderData();
-  const fichas = fichasDoProduto(p.slug);
+  const { produto: p, fichas, nomeDaMarca } = Route.useLoaderData();
 
   return (
     <div className="pb-4">

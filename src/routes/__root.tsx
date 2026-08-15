@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/app/BottomNav";
+import { AppHeader } from "@/components/app/AppHeader";
 import { PageTransition } from "@/components/app/PageTransition";
 import { SITE_ORIGIN } from "@/lib/site";
 
@@ -91,12 +92,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
-      },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "manifest", href: "/manifest.webmanifest" },
@@ -125,11 +120,22 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+    const id = window.setTimeout(() => {
+      void navigator.serviceWorker.register("/sw.js").catch(() => {
+        /* SW opcional — falha silenciosa em ambiente sem HTTPS/local */
+      });
+    }, 2500);
+    return () => window.clearTimeout(id);
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <div className="min-h-screen bg-background">
-          <main className="app-shell overflow-x-hidden pb-28">
+          <AppHeader />
+          <main className="app-shell overflow-x-hidden pb-28 pt-1 lg:pb-10">
             <PageTransition>
               <Outlet />
             </PageTransition>
