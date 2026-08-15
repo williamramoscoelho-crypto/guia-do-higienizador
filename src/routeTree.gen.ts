@@ -27,6 +27,9 @@ import { Route as PhRouteImport } from './routes/ph'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as ApiIaRouteImport } from './routes/api/ia'
+import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
+import { Route as ComunidadePerguntasRouteImport } from './routes/comunidade.perguntas'
+import { Route as ComunidadeRankingRouteImport } from './routes/comunidade.ranking'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -134,6 +137,21 @@ const TransparenciaRoute = TransparenciaRouteImport.update({
 const ApiIaRoute = ApiIaRouteImport.update({
   id: '/api/ia',
   path: '/api/ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
+  id: '/comunidade/',
+  path: '/comunidade/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadePerguntasRoute = ComunidadePerguntasRouteImport.update({
+  id: '/comunidade/perguntas',
+  path: '/comunidade/perguntas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeRankingRoute = ComunidadeRankingRouteImport.update({
+  id: '/comunidade/ranking',
+  path: '/comunidade/ranking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
@@ -246,6 +264,8 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -256,6 +276,7 @@ export interface FileRoutesByFullPath {
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
   '/estofados/': typeof EstofadosIndexRoute
   '/ferramentas/': typeof FerramentasIndexRoute
@@ -284,6 +305,8 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -294,6 +317,7 @@ export interface FileRoutesByTo {
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade': typeof ComunidadeIndexRoute
   '/equipamentos': typeof EquipamentosIndexRoute
   '/estofados': typeof EstofadosIndexRoute
   '/ferramentas': typeof FerramentasIndexRoute
@@ -323,6 +347,8 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -333,6 +359,7 @@ export interface FileRoutesById {
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
   '/estofados/': typeof EstofadosIndexRoute
   '/ferramentas/': typeof FerramentasIndexRoute
@@ -363,6 +390,8 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/api/ia'
+    | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -373,6 +402,7 @@ export interface FileRouteTypes {
     | '/onde-comprar/comparar'
     | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade/'
     | '/equipamentos/'
     | '/estofados/'
     | '/ferramentas/'
@@ -401,6 +431,8 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/api/ia'
+    | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -411,6 +443,7 @@ export interface FileRouteTypes {
     | '/onde-comprar/comparar'
     | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade'
     | '/equipamentos'
     | '/estofados'
     | '/ferramentas'
@@ -439,6 +472,8 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/api/ia'
+    | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -449,6 +484,7 @@ export interface FileRouteTypes {
     | '/onde-comprar/comparar'
     | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade/'
     | '/equipamentos/'
     | '/estofados/'
     | '/ferramentas/'
@@ -478,6 +514,8 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   TransparenciaRoute: typeof TransparenciaRoute
   ApiIaRoute: typeof ApiIaRoute
+  ComunidadePerguntasRoute: typeof ComunidadePerguntasRoute
+  ComunidadeRankingRoute: typeof ComunidadeRankingRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
@@ -488,6 +526,7 @@ export interface RootRouteChildren {
   OndeComprarCompararRoute: typeof OndeComprarCompararRoute
   ProdutosSlugRoute: typeof ProdutosSlugRoute
   TecidosSlugRoute: typeof TecidosSlugRoute
+  ComunidadeIndexRoute: typeof ComunidadeIndexRoute
   EquipamentosIndexRoute: typeof EquipamentosIndexRoute
   EstofadosIndexRoute: typeof EstofadosIndexRoute
   FerramentasIndexRoute: typeof FerramentasIndexRoute
@@ -624,6 +663,27 @@ declare module '@tanstack/react-router' {
       path: '/api/ia'
       fullPath: '/api/ia'
       preLoaderRoute: typeof ApiIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade/': {
+      id: '/comunidade/'
+      path: '/comunidade'
+      fullPath: '/comunidade/'
+      preLoaderRoute: typeof ComunidadeIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade/perguntas': {
+      id: '/comunidade/perguntas'
+      path: '/comunidade/perguntas'
+      fullPath: '/comunidade/perguntas'
+      preLoaderRoute: typeof ComunidadePerguntasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade/ranking': {
+      id: '/comunidade/ranking'
+      path: '/comunidade/ranking'
+      fullPath: '/comunidade/ranking'
+      preLoaderRoute: typeof ComunidadeRankingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos/': {
@@ -774,6 +834,8 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   TransparenciaRoute: TransparenciaRoute,
   ApiIaRoute: ApiIaRoute,
+  ComunidadePerguntasRoute: ComunidadePerguntasRoute,
+  ComunidadeRankingRoute: ComunidadeRankingRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
@@ -784,6 +846,7 @@ const rootRouteChildren: RootRouteChildren = {
   OndeComprarCompararRoute: OndeComprarCompararRoute,
   ProdutosSlugRoute: ProdutosSlugRoute,
   TecidosSlugRoute: TecidosSlugRoute,
+  ComunidadeIndexRoute: ComunidadeIndexRoute,
   EquipamentosIndexRoute: EquipamentosIndexRoute,
   EstofadosIndexRoute: EstofadosIndexRoute,
   FerramentasIndexRoute: FerramentasIndexRoute,
