@@ -28,6 +28,7 @@ import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as ApiIaRouteImport } from './routes/api/ia'
 import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
+import { Route as ComunidadePerguntasRouteImport } from './routes/comunidade.perguntas'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -142,6 +143,11 @@ const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
   path: '/comunidade/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadePerguntasRoute = ComunidadePerguntasRouteImport.update({
+  id: '/comunidade/perguntas',
+  path: '/comunidade/perguntas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
   id: '/equipamentos/',
   path: '/equipamentos/',
@@ -252,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -291,6 +298,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -331,6 +339,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -372,6 +381,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/api/ia'
+    | '/comunidade/perguntas'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -411,6 +421,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/api/ia'
+    | '/comunidade/perguntas'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -450,6 +461,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/transparencia'
     | '/api/ia'
+    | '/comunidade/perguntas'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -490,6 +502,7 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   TransparenciaRoute: typeof TransparenciaRoute
   ApiIaRoute: typeof ApiIaRoute
+  ComunidadePerguntasRoute: typeof ComunidadePerguntasRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
@@ -646,6 +659,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComunidadeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidade/perguntas': {
+      id: '/comunidade/perguntas'
+      path: '/comunidade/perguntas'
+      fullPath: '/comunidade/perguntas'
+      preLoaderRoute: typeof ComunidadePerguntasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/equipamentos/': {
       id: '/equipamentos/'
       path: '/equipamentos'
@@ -794,6 +814,7 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   TransparenciaRoute: TransparenciaRoute,
   ApiIaRoute: ApiIaRoute,
+  ComunidadePerguntasRoute: ComunidadePerguntasRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
