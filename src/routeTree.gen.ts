@@ -29,6 +29,7 @@ import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as ApiIaRouteImport } from './routes/api/ia'
 import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
 import { Route as ComunidadePerguntasRouteImport } from './routes/comunidade.perguntas'
+import { Route as ComunidadeRankingRouteImport } from './routes/comunidade.ranking'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -148,6 +149,11 @@ const ComunidadePerguntasRoute = ComunidadePerguntasRouteImport.update({
   path: '/comunidade/perguntas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadeRankingRoute = ComunidadeRankingRouteImport.update({
+  id: '/comunidade/ranking',
+  path: '/comunidade/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
   id: '/equipamentos/',
   path: '/equipamentos/',
@@ -259,6 +265,7 @@ export interface FileRoutesByFullPath {
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
   '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -299,6 +306,7 @@ export interface FileRoutesByTo {
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
   '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -340,6 +348,7 @@ export interface FileRoutesById {
   '/transparencia': typeof TransparenciaRoute
   '/api/ia': typeof ApiIaRoute
   '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -382,6 +391,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/api/ia'
     | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -422,6 +432,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/api/ia'
     | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -462,6 +473,7 @@ export interface FileRouteTypes {
     | '/transparencia'
     | '/api/ia'
     | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -503,6 +515,7 @@ export interface RootRouteChildren {
   TransparenciaRoute: typeof TransparenciaRoute
   ApiIaRoute: typeof ApiIaRoute
   ComunidadePerguntasRoute: typeof ComunidadePerguntasRoute
+  ComunidadeRankingRoute: typeof ComunidadeRankingRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
@@ -666,6 +679,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComunidadePerguntasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidade/ranking': {
+      id: '/comunidade/ranking'
+      path: '/comunidade/ranking'
+      fullPath: '/comunidade/ranking'
+      preLoaderRoute: typeof ComunidadeRankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/equipamentos/': {
       id: '/equipamentos/'
       path: '/equipamentos'
@@ -815,6 +835,7 @@ const rootRouteChildren: RootRouteChildren = {
   TransparenciaRoute: TransparenciaRoute,
   ApiIaRoute: ApiIaRoute,
   ComunidadePerguntasRoute: ComunidadePerguntasRoute,
+  ComunidadeRankingRoute: ComunidadeRankingRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,
