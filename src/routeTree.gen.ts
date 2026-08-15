@@ -40,6 +40,8 @@ import { Route as AuthenticatedPainelRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedPerfilRouteImport } from './routes/_authenticated/perfil'
 import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
 import { Route as ComunidadeNovoRouteImport } from './routes/comunidade.novo'
+import { Route as ComunidadePerguntasRouteImport } from './routes/comunidade.perguntas'
+import { Route as ComunidadeRankingRouteImport } from './routes/comunidade.ranking'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -222,6 +224,16 @@ const ComunidadeNovoRoute = ComunidadeNovoRouteImport.update({
   path: '/comunidade/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComunidadePerguntasRoute = ComunidadePerguntasRouteImport.update({
+  id: '/comunidade/perguntas',
+  path: '/comunidade/perguntas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeRankingRoute = ComunidadeRankingRouteImport.update({
+  id: '/comunidade/ranking',
+  path: '/comunidade/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
   id: '/equipamentos/',
   path: '/equipamentos/',
@@ -383,6 +395,8 @@ export interface FileRoutesByFullPath {
   '/painel': typeof AuthenticatedPainelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/comunidade/novo': typeof ComunidadeNovoRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -441,6 +455,8 @@ export interface FileRoutesByTo {
   '/painel': typeof AuthenticatedPainelRoute
   '/perfil': typeof AuthenticatedPerfilRoute
   '/comunidade/novo': typeof ComunidadeNovoRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -501,6 +517,8 @@ export interface FileRoutesById {
   '/_authenticated/painel': typeof AuthenticatedPainelRoute
   '/_authenticated/perfil': typeof AuthenticatedPerfilRoute
   '/comunidade/novo': typeof ComunidadeNovoRoute
+  '/comunidade/perguntas': typeof ComunidadePerguntasRoute
+  '/comunidade/ranking': typeof ComunidadeRankingRoute
   '/equipamentos/$slug': typeof EquipamentosSlugRoute
   '/estofados/$slug': typeof EstofadosSlugRoute
   '/ferramentas/diluicao': typeof FerramentasDiluicaoRoute
@@ -561,6 +579,8 @@ export interface FileRouteTypes {
     | '/painel'
     | '/perfil'
     | '/comunidade/novo'
+    | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -619,6 +639,8 @@ export interface FileRouteTypes {
     | '/painel'
     | '/perfil'
     | '/comunidade/novo'
+    | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -678,6 +700,8 @@ export interface FileRouteTypes {
     | '/_authenticated/painel'
     | '/_authenticated/perfil'
     | '/comunidade/novo'
+    | '/comunidade/perguntas'
+    | '/comunidade/ranking'
     | '/equipamentos/$slug'
     | '/estofados/$slug'
     | '/ferramentas/diluicao'
@@ -734,6 +758,8 @@ export interface RootRouteChildren {
   TransicoesRoute: typeof TransicoesRoute
   TransparenciaRoute: typeof TransparenciaRoute
   ComunidadeNovoRoute: typeof ComunidadeNovoRoute
+  ComunidadePerguntasRoute: typeof ComunidadePerguntasRoute
+  ComunidadeRankingRoute: typeof ComunidadeRankingRoute
   EquipamentosSlugRoute: typeof EquipamentosSlugRoute
   EstofadosSlugRoute: typeof EstofadosSlugRoute
   FerramentasDiluicaoRoute: typeof FerramentasDiluicaoRoute
@@ -982,6 +1008,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ComunidadeNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/comunidade/perguntas': {
+      id: '/comunidade/perguntas'
+      path: '/comunidade/perguntas'
+      fullPath: '/comunidade/perguntas'
+      preLoaderRoute: typeof ComunidadePerguntasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade/ranking': {
+      id: '/comunidade/ranking'
+      path: '/comunidade/ranking'
+      fullPath: '/comunidade/ranking'
+      preLoaderRoute: typeof ComunidadeRankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/equipamentos/': {
       id: '/equipamentos/'
       path: '/equipamentos'
@@ -1211,6 +1251,8 @@ const rootRouteChildren: RootRouteChildren = {
   TransicoesRoute: TransicoesRoute,
   TransparenciaRoute: TransparenciaRoute,
   ComunidadeNovoRoute: ComunidadeNovoRoute,
+  ComunidadePerguntasRoute: ComunidadePerguntasRoute,
+  ComunidadeRankingRoute: ComunidadeRankingRoute,
   EquipamentosSlugRoute: EquipamentosSlugRoute,
   EstofadosSlugRoute: EstofadosSlugRoute,
   FerramentasDiluicaoRoute: FerramentasDiluicaoRoute,

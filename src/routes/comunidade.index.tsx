@@ -5,8 +5,9 @@ import { useState } from "react";
 
 import { Carregando, Chips, EntrarCTA, Vazio } from "@/components/app/community";
 import { AvisoHospedagemEstatica } from "@/components/app/AvisoHospedagemEstatica";
+import { AbasComunidade } from "@/components/app/comunidade-ui";
 import { PostCard } from "@/components/app/PostCard";
-import { isCommunityEnabled } from "@/lib/backend";
+import { isCommunityEnabled } from "@/lib/flags";
 import { useAuth } from "@/lib/auth";
 import { TIPOS_POST } from "@/lib/community";
 import { buscarInteracoes, buscarPosts } from "@/lib/community-data";
@@ -56,6 +57,8 @@ function ComunidadePage() {
           Resultados reais, dicas testadas e dúvidas respondidas por quem vive o dia a dia do serviço.
         </p>
       </header>
+
+      <AbasComunidade />
 
       {!isCommunityEnabled() ? (
         <div className="mt-5">
