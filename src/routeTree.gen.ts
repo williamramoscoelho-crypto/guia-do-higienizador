@@ -27,6 +27,7 @@ import { Route as PhRouteImport } from './routes/ph'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TransparenciaRouteImport } from './routes/transparencia'
 import { Route as ApiIaRouteImport } from './routes/api/ia'
+import { Route as ComunidadeIndexRouteImport } from './routes/comunidade.index'
 import { Route as EquipamentosIndexRouteImport } from './routes/equipamentos.index'
 import { Route as EquipamentosSlugRouteImport } from './routes/equipamentos.$slug'
 import { Route as EstofadosIndexRouteImport } from './routes/estofados.index'
@@ -134,6 +135,11 @@ const TransparenciaRoute = TransparenciaRouteImport.update({
 const ApiIaRoute = ApiIaRouteImport.update({
   id: '/api/ia',
   path: '/api/ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeIndexRoute = ComunidadeIndexRouteImport.update({
+  id: '/comunidade/',
+  path: '/comunidade/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EquipamentosIndexRoute = EquipamentosIndexRouteImport.update({
@@ -256,6 +262,7 @@ export interface FileRoutesByFullPath {
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
   '/estofados/': typeof EstofadosIndexRoute
   '/ferramentas/': typeof FerramentasIndexRoute
@@ -294,6 +301,7 @@ export interface FileRoutesByTo {
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade': typeof ComunidadeIndexRoute
   '/equipamentos': typeof EquipamentosIndexRoute
   '/estofados': typeof EstofadosIndexRoute
   '/ferramentas': typeof FerramentasIndexRoute
@@ -333,6 +341,7 @@ export interface FileRoutesById {
   '/onde-comprar/comparar': typeof OndeComprarCompararRoute
   '/produtos/$slug': typeof ProdutosSlugRoute
   '/tecidos/$slug': typeof TecidosSlugRoute
+  '/comunidade/': typeof ComunidadeIndexRoute
   '/equipamentos/': typeof EquipamentosIndexRoute
   '/estofados/': typeof EstofadosIndexRoute
   '/ferramentas/': typeof FerramentasIndexRoute
@@ -373,6 +382,7 @@ export interface FileRouteTypes {
     | '/onde-comprar/comparar'
     | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade/'
     | '/equipamentos/'
     | '/estofados/'
     | '/ferramentas/'
@@ -411,6 +421,7 @@ export interface FileRouteTypes {
     | '/onde-comprar/comparar'
     | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade'
     | '/equipamentos'
     | '/estofados'
     | '/ferramentas'
@@ -449,6 +460,7 @@ export interface FileRouteTypes {
     | '/onde-comprar/comparar'
     | '/produtos/$slug'
     | '/tecidos/$slug'
+    | '/comunidade/'
     | '/equipamentos/'
     | '/estofados/'
     | '/ferramentas/'
@@ -488,6 +500,7 @@ export interface RootRouteChildren {
   OndeComprarCompararRoute: typeof OndeComprarCompararRoute
   ProdutosSlugRoute: typeof ProdutosSlugRoute
   TecidosSlugRoute: typeof TecidosSlugRoute
+  ComunidadeIndexRoute: typeof ComunidadeIndexRoute
   EquipamentosIndexRoute: typeof EquipamentosIndexRoute
   EstofadosIndexRoute: typeof EstofadosIndexRoute
   FerramentasIndexRoute: typeof FerramentasIndexRoute
@@ -624,6 +637,13 @@ declare module '@tanstack/react-router' {
       path: '/api/ia'
       fullPath: '/api/ia'
       preLoaderRoute: typeof ApiIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade/': {
+      id: '/comunidade/'
+      path: '/comunidade'
+      fullPath: '/comunidade/'
+      preLoaderRoute: typeof ComunidadeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/equipamentos/': {
@@ -784,6 +804,7 @@ const rootRouteChildren: RootRouteChildren = {
   OndeComprarCompararRoute: OndeComprarCompararRoute,
   ProdutosSlugRoute: ProdutosSlugRoute,
   TecidosSlugRoute: TecidosSlugRoute,
+  ComunidadeIndexRoute: ComunidadeIndexRoute,
   EquipamentosIndexRoute: EquipamentosIndexRoute,
   EstofadosIndexRoute: EstofadosIndexRoute,
   FerramentasIndexRoute: FerramentasIndexRoute,
